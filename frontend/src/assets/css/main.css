@@ -1,0 +1,1259 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /*
+    *
+    * This all are the rgb values which are used inside the
+    * tailwind config file and custom plugins css file
+    *
+    */
+
+    /*
+    * primary color
+    */
+    --color-accent: 199, 66, 39;
+
+    /*
+    * Hover state color of primary color
+    */
+    --color-accent-hover: 237, 187, 28;
+
+    /*
+    * shade of primary color
+    */
+    --color-accent-200: 204, 236, 229;
+
+    /*
+    * shade of primary color
+    */
+    --color-accent-300: 153, 217, 204;
+
+    /*
+    * shade of primary color
+    */
+    --color-accent-400: 77, 188, 165;
+
+    /*
+    * shade of primary color
+    */
+    --color-accent-500: 0, 159, 127;
+
+    /*
+    * shade of primary color
+    */
+    --color-accent-600: 0, 143, 114;
+
+    /*
+    * shade of primary color
+    */
+    --color-accent-700: 0, 119, 95;
+
+    /*
+    * light color
+    */
+    --color-light: 255, 255, 255;
+
+    /*
+    * dark color
+    */
+    --color-dark: 0, 0, 0;
+
+    /*
+    * Black muted color
+    */
+    --color-muted-black: 17, 17, 17;
+
+    /*
+    * Current color
+    */
+    --color-current: currentColor;
+
+    /*
+    *
+    * TEXT colors
+    *
+    */
+
+    /*
+    * text color used for body/base text -> gray-500
+    */
+    --text-base: 107, 114, 128;
+
+    /*
+    * dark base text color  -> gray-600
+    */
+    --text-base-dark: 75, 85, 99;
+
+    /*
+    * muted text color -> gray-400
+    */
+    --text-muted: 156, 163, 175;
+
+    /*
+    * light muted text color - gray-300
+    */
+    --text-muted-light: 209, 213, 219;
+
+    /*
+    * text color used for heading text -> gray-700
+    */
+    --text-sub-heading: 55, 65, 81;
+
+    /*
+    * text color used for heading text -> gray-800
+    */
+    --text-heading: 31, 41, 55;
+
+    /*
+    * text color used for heading text -> gray-900
+    */
+    --text-bolder: 31, 41, 55;
+
+    /*
+    *
+    * border colors
+    *
+    */
+
+    /*
+    * border color 50
+    */
+    --color-border-50: 249, 250, 251;
+
+    /*
+    * border color 100
+    */
+    --color-border-100: 243, 244, 246;
+
+    /*
+    * border color 200
+    */
+    --color-border-200: 229, 231, 235;
+
+    /*
+    * border base color which is 300
+    */
+    --color-border-base: 209, 213, 219;
+
+    /*
+    * border color 400
+    */
+    --color-border-400: 156, 163, 175;
+
+    /*
+    *
+    * Tailwind default gray color override
+    *
+    */
+
+    /*
+    * gray-50
+    */
+    --color-gray-50: 249, 250, 251;
+
+    /*
+    * gray-100
+    */
+    --color-gray-100: 243, 244, 246;
+
+    /*
+    * gray-200
+    */
+    --color-gray-200: 229, 231, 235;
+
+    /*
+    * gray-300
+    */
+    --color-gray-300: 209, 213, 219;
+
+    /*
+    * gray-400
+    */
+    --color-gray-400: 156, 163, 175;
+
+    /*
+    * gray-500
+    */
+    --color-gray-500: 107, 114, 128;
+
+    /*
+    * gray-600
+    */
+    --color-gray-600: 75, 85, 99;
+
+    /*
+    * gray-700
+    */
+    --color-gray-700: 55, 65, 81;
+
+    /*
+    * gray-800
+    */
+    --color-gray-800: 31, 41, 55;
+
+    /*
+    * gray-900
+    */
+    --color-gray-900: 31, 41, 55;
+
+    /*
+    * orange-50
+    */
+    --color-orange-50: 255, 247, 237;
+
+    /*
+    * orange-100
+    */
+    --color-orange-100: 255, 237, 213;
+
+    /*
+    * orange-200
+    */
+    --color-orange-200: 254, 215, 170;
+
+    /*
+    * orange-300
+    */
+    --color-orange-300: 253, 186, 116;
+
+    /*
+    * orange-400
+    */
+    --color-orange-400: 251, 146, 60;
+
+    /*
+    * orange-500
+    */
+    --color-orange-500: 249, 115, 22;
+
+    /*
+    * orange-600
+    */
+    --color-orange-600: 234, 88, 12;
+
+    /*
+    * orange-700
+    */
+    --color-orange-700: 194, 65, 12;
+
+    /*
+    * orange-800
+    */
+    --color-orange-800: 154, 52, 18;
+
+    /*
+    * orange-900
+    */
+    --color-orange-900: 124, 45, 18;
+
+    /*
+    Pending
+    */
+    --color-pending: 201, 161, 22;
+
+    /*
+    Processing
+    */
+    --color-processing: 158, 117, 0;
+
+    /*
+    Complete
+    */
+    --color-complete: 0, 161, 127;
+
+    /*
+    Canceled
+    */
+    --color-canceled: 227, 110, 1;
+
+    /*
+    Failed
+    */
+    --color-failed: 238, 43, 0;
+
+    /*
+    Out for delivery
+    */
+    --color-out-for-delivery: 126, 173, 66;
+
+    /*
+    * dark base text color  -> gray-600
+    */
+    --text-base-dark: 51, 51, 51;
+
+    /*
+    40px base 16px
+    */
+    --h1: 2.5rem;
+
+    /*
+    32px base 16px
+    */
+    --h2: 2rem;
+
+    /*
+    24px base 16px
+    */
+    --h3: 1.5rem;
+
+    /*
+    20px base 16px
+    */
+    --h4: 1.25rem;
+
+    /*
+    18px base 16px
+    */
+    --h5: 1.125rem;
+
+    /*
+    16px base 16px
+    */
+    --h6: 1rem;
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply font-body;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading;
+  }
+
+  a {
+    @apply no-underline;
+  }
+}
+@import './custom-plugins.css';
+@import './rich-text-editor.css';
+
+.list-box .content h3 {
+  display: block;
+  line-height: 22px;
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.list-box .content p {
+  margin-bottom: 0px;
+  opacity: 0.75;
+}
+
+.list-box .list-icon i {
+  display: block;
+  font-size: 24px;
+  margin-right: 15px;
+  color: #c74227;
+  width: 65px;
+  height: 65px;
+  text-align: center;
+  line-height: 60px;
+  border: 2px #c74227 dotted;
+  border-radius: 999px;
+}
+
+.list-section {
+  background-color: #ffffff;
+  overflow-x: hidden;
+}
+
+.list-section {
+  padding: 80px 0;
+}
+
+.features-row {
+  display: flex;
+  flex-wrap: wrap; /* Ensures responsiveness */
+}
+
+.list-box {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centers the content inside the box */
+  flex: 1 1 30%;
+  margin-bottom: 20px;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.list-icon {
+  font-size: 40px;
+  margin-right: 20px;
+}
+
+.content h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.content p {
+  font-size: 1rem;
+  color: #666;
+}
+
+.cart-banner {
+  background-color: #f5f5f5;
+}
+
+.cart-banner .cart-banner-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Creates two equal columns */
+  gap: 20px; /* Space between the columns */
+  align-items: start; /* Align items to the start */
+}
+
+.cart-banner .image-column {
+  position: relative;
+  margin-top: 40px;
+}
+
+.cart-banner .image-column .price-box {
+  position: absolute;
+  left: 15%;
+  top: -30px;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 1px solid #fff;
+  background-color: rgba(242, 129, 35, 0.75);
+}
+
+.cart-banner .image-column .price-box .inner-price {
+  position: relative;
+  width: 94px;
+  height: 94px;
+  margin: 0 auto;
+  margin-top: 8px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #c74227;
+}
+
+.cart-banner .image-column .price-box .inner-price .price {
+  color: #051922;
+  padding-top: 27px;
+  position: relative;
+  display: inline-block;
+  line-height: 18px;
+  font-weight: 400;
+}
+
+.cart-banner .image-column .price-box .inner-price .price strong {
+  color: #051922;
+  font-size: 24px;
+}
+
+.cart-banner .content-column {
+  position: relative;
+  padding-top: 40px;
+}
+
+.cart-banner .content-column h3 {
+  font-size: 40px;
+}
+
+.cart-banner .content-column h4 {
+  position: relative;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+.cart-banner .content-column .text {
+  position: relative;
+  font-weight: 400;
+  line-height: 1.8em;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.time-counter {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.orange-text {
+  color: #c74227;
+}
+
+a.cart-btn {
+  font-family: 'Poppins', sans-serif;
+  display: inline-block;
+  background-color: #c74227;
+  color: #fff;
+  padding: 10px 20px;
+  transition: 0.3s;
+}
+
+a.cart-btn:hover {
+  background-color: #051922;
+  color: #c74227;
+}
+
+a.boxed-btn,
+a.bordered-btn,
+a.cart-btn {
+  border-radius: 50px;
+}
+
+.time-countdown {
+  display: flex;
+  gap: 30px;
+}
+
+.time-counter .time-countdown {
+  position: relative;
+}
+
+.time-countdown .counter-column {
+  position: relative;
+  display: inline-block;
+  margin: 0px 0px 5px;
+  font-size: 13px;
+  line-height: 1em;
+  padding: 8px 20px 14px;
+  text-transform: capitalize;
+  text-align: center;
+  border: 2px solid #c74227;
+}
+
+.time-countdown .counter-column .count {
+  position: relative;
+  display: block;
+  font-size: 30px;
+  line-height: 1.4em;
+  padding: 0px 0px;
+  color: #c74227;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.feature-bg {
+  position: relative;
+  margin: 150px 0;
+}
+
+.feature-bg:after {
+  background-image: url(../../assets/placeholders/feature-bg.jpg);
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 30%;
+  height: 90%;
+  content: '';
+  background-size: cover;
+  background-position: center;
+  border-top-left-radius: 30px;
+  -webkit-box-shadow: 0 0 20px #cacaca;
+  box-shadow: 0 0 20px #cacaca;
+  border-bottom-left-radius: 30px;
+}
+
+.featured-text {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.list-box {
+  overflow: hidden;
+  letter-spacing: 0.5px;
+}
+
+.list-box .content h3 {
+  display: block;
+  line-height: 22px;
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.list-box .content p {
+  margin-bottom: 0px;
+  opacity: 0.75;
+}
+
+.list-box .list-icon i {
+  display: block;
+  font-size: 24px;
+  margin-right: 15px;
+  color: #c74227;
+  width: 65px;
+  height: 65px;
+  text-align: center;
+  line-height: 60px;
+  border: 2px #c74227 dotted;
+  border-radius: 999px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
+  margin-top: 2%;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.get-it-now-btn {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: #c74227;
+  color: white;
+  padding: 10px 15px;
+  border: 3px solid;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 25px;
+  width: 20%;
+  border-color: #edbb1c;
+}
+
+.content-banners {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.banner-slide {
+  position: relative;
+}
+
+.banner-image {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  transition: transform 0.3s ease;
+}
+
+.banner-image:hover {
+  transform: scale(1.05);
+}
+
+.slick-dots {
+  bottom: 10px;
+}
+
+.slick-dots li button:before {
+  font-size: 12px;
+  color: #ff6f61; /* Dot color */
+}
+
+.slick-dots li.slick-active button:before {
+  color: #ff0000; /* Active dot color */
+}
+
+.brands-banners {
+  padding: 20px;
+  margin-top: 5%;
+}
+
+.banner-p {
+  font-family: 'Tahoma', Geneva, Verdana, sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c74227;
+}
+
+.aboutpage {
+  padding: 50px;
+}
+
+.about-1 p {
+  font-size: 30px;
+  font-family: cursive;
+  color: #faa41f;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+}
+
+.about-1 h1 {
+  font-size: 28px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #c74227;
+  font-weight: 800;
+  margin-top: 2%;
+  display: flex;
+  justify-content: center;
+}
+
+.about-4 h1 {
+  font-size: 28px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #c74227;
+  font-weight: 800;
+  margin-top: 2.5%;
+  display: flex;
+  justify-content: center;
+}
+
+.about-5 h1 {
+  font-size: 28px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #c74227;
+  font-weight: 800;
+  margin-top: 2.5%;
+  display: flex;
+  justify-content: center;
+}
+
+.about-6 h1 {
+  font-size: 28px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #faa41f;
+  font-weight: 800;
+  margin-top: 2.5%;
+  display: flex;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #60b45a;
+  font-weight: 800;
+  margin-top: 3%;
+  display: flex;
+  justify-content: center;
+}
+
+.about-2 p {
+  margin-top: 1.5%;
+  padding: 0px 70px 0px 70px;
+}
+
+.aboutimg1 {
+  display: flex;
+  justify-content: center;
+  margin-top: 2%;
+  animation: spinZoomBounce 2.5s ease-in-out forwards;
+}
+
+@keyframes spinZoomBounce {
+  0% {
+    transform: scale(0.5) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(360deg);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(0.9) rotate(0deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.aboutcontent1 {
+  display: flex;
+  overflow-x: hidden;
+  gap: 20px;
+}
+
+/* Initial hidden position for animation */
+.aboutcontent1 .sec1,
+.aboutcontent1 .sec2 {
+  opacity: 0;
+  transition: all 0.6s ease-out;
+}
+
+.aboutcontent1 .sec1 {
+  transform: translateX(-100px); /* sec1 (image) moves from left */
+  width: 900px;
+}
+
+.aboutcontent1 .sec2 {
+  transform: translateX(100px); /* sec2 (content) moves from right */
+}
+
+/* Animation on scroll - when element is in view */
+.aboutcontent1.in-view .sec1,
+.aboutcontent1.in-view .sec2 {
+  opacity: 1;
+  transform: translateX(0); /* Move to original position */
+}
+
+.sec2 p {
+  margin-top: 1.5%;
+}
+
+.aboutcontent2 {
+  padding: 0px 70px 0px 70px;
+}
+
+.aboutcontent2 p {
+  margin-top: 2%;
+}
+
+.para {
+  padding: 0px 70px 0px 70px;
+  margin-top: 1%;
+}
+
+.para p {
+  padding-top: 1%;
+}
+
+.para li {
+  padding-top: 1%;
+}
+
+.para2 p {
+  font-family: cursive;
+  margin-top: 0.5%;
+}
+
+.imagesection {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+}
+
+.imagesection img {
+  max-width: 300px;
+  height: auto;
+}
+
+.about-5 p {
+  padding: 20px 70px 0px 70px;
+  font-size: 20px;
+}
+
+.about-6 {
+  display: flex;
+  padding: 20px 70px 0px 70px;
+  gap: 20px;
+}
+
+.about-6 p {
+  text-align: justify;
+}
+
+.vision,
+.mission {
+  box-shadow: 0 4px 8px rgba(199, 66, 39);
+  padding: 15px;
+  border-radius: 20px;
+}
+
+.about-7 {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 70px 0px 70px;
+}
+
+.ecoimg {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.ecoimg:hover {
+  outline-style: solid;
+  outline-width: 5px;
+  outline-color: #60b45a;
+}
+
+.eco1,
+.eco2,
+.eco3,
+.eco4 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.about-7 p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+  color: #60b45a;
+  margin-top: 10px;
+}
+
+.about-8 {
+  width: 100%;
+  padding: 20px;
+  margin-top: 2%;
+}
+
+.records {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border: 1px solid #ccc;
+  background-color: #faa41f;
+  padding: 20px;
+}
+
+.record-item {
+  text-align: center;
+  padding: 0 20px;
+  position: relative;
+  flex: 1;
+}
+
+.record-item h2 {
+  margin: 0;
+  font-size: 2em;
+  font-weight: 800;
+  color: #c74227;
+}
+
+.record-item p {
+  margin: 5px 0 0;
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.record-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 60%;
+  width: 3px;
+  background-color: #ffffff;
+}
+
+.faqtop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  background-color: #faa41f;
+  padding: 20px;
+}
+
+.topcontent {
+  text-align: center;
+  color: #000000;
+  font-weight: 600;
+}
+
+.bottomcontent {
+  color: #000000;
+  font-weight: 600;
+}
+
+.footer {
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .features-row {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+  }
+
+  .list-section{
+    padding: 0px;
+  }
+
+  .feature-bg {
+    margin: 50px 0;
+  }
+
+  .pb-3 {
+    text-align: center;
+  }
+
+  .feature-bg:after {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    content: '';
+    display: block;
+    margin-bottom: 20px;
+    background-size: cover;
+    background-position: top;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .featured-text .row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .list-box {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .list-box .list-icon {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .list-box .content {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+  }
+
+  .cart-banner .cart-banner-grid {
+    display: block;
+  }
+
+  .content-column {
+    text-align: center;
+  }
+
+  .time-counter .time-countdown {
+    flex-direction: column;
+    gap: 10px;
+    margin: 30px;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(1, 1fr);
+    padding: 10px;
+  }
+
+  .image-container {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .get-it-now-btn {
+    font-size: 12px;
+    padding: 8px 12px;
+    width: auto;
+  }
+
+  .content-banners,
+  .brands-banners {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .banner-image {
+    border-radius: 10px;
+  }
+
+  .banner-p {
+    font-size: 15px;
+  }
+
+  .brands-banners .banner-slide {
+    width: 200px;
+    margin: 0 10px;
+  }
+
+  .aboutpage{
+    padding: 10px;
+  }
+
+  .about-2 p{
+    padding: 0px 10px 0px 10px;
+    /* text-align: justify; */
+  }
+
+  .about-5 p{
+    padding: 0px 10px 0px 10px;
+  }
+
+  .aboutcontent2{
+    padding: 0px 10px 0px 10px;
+  }
+  
+  .imagesection{
+    flex-direction: column;
+    padding: 10px 10px 0px 10px;
+
+  }
+
+  .records{
+    flex-direction: column;
+    padding: 0px 10px 0px 10px;
+  }
+
+  .about-6, .about-7, .aboutcontent1, .para{
+    flex-direction: column;
+    padding: 0px 10px 0px 10px;
+  }
+  
+  .record-item {
+    flex: 1 0 100%;
+    margin-bottom: 20px;
+  }
+
+  .record-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 30%;
+    width: 3px;
+    background-color: #ffffff;
+  }
+}
+
+@media (max-width: 1024px) {
+  .features-row {
+    flex-direction: row;
+  }
+
+  .feature-bg {
+    margin: 50px 0;
+  }
+
+  .pb-3 {
+    text-align: center;
+  }
+
+  .feature-bg:after {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    content: '';
+    display: block;
+    margin-bottom: 20px;
+    background-size: cover;
+    background-position: top;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .featured-text .row {
+    align-items: center;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .get-it-now-btn {
+    font-size: 12px;
+  }
+
+  .image-container {
+    margin-bottom: 10px;
+  }
+
+  .banner-image {
+    border-radius: 15px;
+  }
+
+  .about-7{
+    display: flex;
+    justify-content: space-between;
+    padding: 0px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .banner-image {
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .features-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .content-column {
+    text-align: center;
+  }
+
+  .image-container img {
+    width: 100%;
+  }
+
+  .brands-banners .banner-slide {
+    width: 100%;
+  }
+
+  .get-it-now-btn {
+    width: 90%;
+  }
+}
+
+/* Adjust Swiper for smaller screens */
+@media (max-width: 768px) {
+  .swiper-slide {
+    width: 100%;
+  }
+
+  .banner-image {
+    border-radius: 10px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .swiper-slide {
+    width: 50%;
+  }
+
+  .banner-image {
+    border-radius: 15px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .swiper-slide {
+    width: 20%;
+  }
+
+  .banner-image {
+    border-radius: 20px;
+  }
+}
