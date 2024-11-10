@@ -1,7 +1,15 @@
 import React, { useEffect } from "react";
 import RatingStars from "../../components/RatingStars";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/features/cart/cartSlice";
 
 const SingleProductPopup = ({ product, onClose }) => {
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    dispatch(addToCart(product));
+  };
+
   // Prevent body scroll when modal is open
   useEffect(() => {
     if (product) {
@@ -44,7 +52,8 @@ const SingleProductPopup = ({ product, onClose }) => {
 
               <div>
                 <p>
-                  <strong>Category:</strong> {product.category}
+                  <strong>Category:</strong> {product.category} ,{" "}
+                  {product.subcategory}
                 </p>
                 <p>
                   <strong>Brand:</strong> {product.brand}
@@ -53,7 +62,13 @@ const SingleProductPopup = ({ product, onClose }) => {
                 <RatingStars rating={product.rating} />
               </div>
 
-              <button className="mt-6 px-6 py-3 bg-primary rounded-md text-white">
+              <button
+                onClick={(e)=>{
+                  e.stopPropagation();
+                  handleAddToCart(product)
+                }}
+                className="mt-6 px-6 py-3 bg-primary rounded-md text-white"
+              >
                 Add to Cart
               </button>
             </div>
