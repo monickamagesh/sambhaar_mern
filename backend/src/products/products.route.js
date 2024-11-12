@@ -1,6 +1,5 @@
 const express = require("express");
 const Products = require("./products.model");
-const Reviews = require("../reviews/reviews.model");
 const verifyToken = require("../middleware/verifyToken");
 const verifyAdmin = require("../middleware/verifyAdmin");
 const router = express.Router();
@@ -12,17 +11,6 @@ router.post("/create-product", async (req, res) => {
       ...req.body,
     });
     const savedProduct = await newProduct.save();
-    //calculate review
-    const reviews = await Reviews.find({ productId: savedProduct._id });
-    if (reviews.length > 0) {
-      const totalRating = reviews.reduce(
-        (acc, review) => acc + review.rating,
-        0
-      );
-      const averageRating = totalRating / reviews.length;
-      savedProduct.rating = averageRating;
-      await savedProduct.save();
-    }
     res.status(201).send(savedProduct);
   } catch (error) {
     console.log("Error creating new product", error);
