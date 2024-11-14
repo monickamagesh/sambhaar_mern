@@ -58,7 +58,7 @@ router.post("/create-checkout-session", async (req, res) => {
         })),
         amount: GrandTotal,
         email: user.email,
-        OrderStatus: "Pending",
+        orderStatus: "Pending",
         paymentMethod: "phonepe",
         paymentStatus: "pending",
       });
@@ -87,6 +87,7 @@ router.post("/create-cod-order", async (req, res) => {
     const { user, MUID, GrandTotal, products, selectedItems, transaction } =
       req.body;
 
+
     const newOrder = new Order({
       userId: user._id,
       orderId: transaction,
@@ -96,7 +97,7 @@ router.post("/create-cod-order", async (req, res) => {
       })),
       amount: GrandTotal,
       email: user.email,
-      OrderStatus: "Pending",
+      orderStatus: "Ordered",
       paymentMethod: "cod",
       paymentStatus: "pending", // Will change once the order is delivered
     });
@@ -106,7 +107,7 @@ router.post("/create-cod-order", async (req, res) => {
     // Send a response with the success status and a custom URL for frontend redirection
     return res.json({
       message: "COD Order placed successfully",
-      redirectUrl: "http://localhost:5173/order-success",
+      redirectUrl: `http://localhost:5173/order-success?id=${transaction}`
     });
   } catch (error) {
     console.log(error);
@@ -143,15 +144,41 @@ router.post("/status", async (req, res) => {
     if (isPaymentSuccessful) {
       await Order.findOneAndUpdate(
         { orderId: merchantTransactionId },
-        { OrderStatus: "Ordered", paymentStatus: "success" }
+        { orderStatus: "Ordered", paymentStatus: "success" }
       );
-      return res.redirect("http://localhost:5173/order-success");
+      return res.redirect(`http://localhost:5173/order-success/?id=${merchantTransactionId}`);
     } else {
       await Order.findOneAndUpdate(
         { orderId: merchantTransactionId },
-        { OrderStatus: "Ordered", paymentStatus: "pending" }
+        { orderStatus: "Ordered", paymentStatus: "pending" }
       );
       return res.redirect("http://localhost:5173/failure");
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.get("/ordered-products/:userId", async (req, res) => {
+  try {
+    const orders = await Order.find({ userId: req.params.id });
+    res.json(orders);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Order success endpoint to fetch order by orderId
+router.get("/order-success/:orderId", async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const order = await Order.findOne({ orderId });
+    if (order) {
+      res.json({ order });
+    } else {
+      res.status(404).json({ error: "Order not found" });
     }
   } catch (error) {
     console.log(error);

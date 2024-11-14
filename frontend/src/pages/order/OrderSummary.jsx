@@ -64,9 +64,11 @@ const OrderSummary = () => {
           `${getBaseUrl()}/api/orders/create-cod-order`,
           data
         );
-        if (response.status === 200) {
-          // Redirect to success page after placing the COD order
-          window.location.href = "http://localhost:5173/order-success";
+        const redirectUrl = response.data.redirectUrl;
+        if (redirectUrl) {
+          window.location.href = redirectUrl;
+        } else {
+          console.log("Redirect url not found in response");
         }
       }
     } catch (error) {

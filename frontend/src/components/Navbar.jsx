@@ -46,7 +46,7 @@ function Navbar() {
     {label: "Dashboard", path: "/dashboard"},
     {label: "Profile", path: "/dashboard/profile"},
     {label: "Payments", path: "/dashboard/payments"},
-    {label: "Orders", path: "/order-success"},
+    {label: "Orders", path: "/dashboard/orders"},
   ]
 
   const dropDownMenus = user?.role === 'admin' ? [...adminDropDownMenus] : [...userDropDownMenus]
