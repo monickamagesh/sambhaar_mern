@@ -16,6 +16,9 @@ const OrderSummary = () => {
     (store) => store.cart
   );
 
+  const [paymentMethod, setPaymentMethod] = useState("phonepe"); // Default to PhonePe
+  const [loading, setLoading] = useState(false);
+
   const handleQuantity = (type, id) => {
     dispatch(updateQuantity({ type, id }));
   };
@@ -28,12 +31,8 @@ const OrderSummary = () => {
     dispatch(clearCart());
   };
 
-  //proceed to payment
-  const [loading, setLoading] = useState(false);
-
   const makePayment = async (e) => {
     e.preventDefault();
-    //console.log( products , selectedItems, totalPrice.toFixed(2), tax.toFixed(2), taxRate*100, grandTotal.toFixed(2));
     setLoading(true);
 
     const data = {
@@ -43,23 +42,32 @@ const OrderSummary = () => {
       GrandTotal: grandTotal.toFixed(2),
       MUID: "MUIDW" + Date.now(),
       transaction: "T" + Date.now(),
+      paymentMethod: paymentMethod,
     };
 
     try {
-      const response = await axios.post(`${getBaseUrl()}/api/orders/create-checkout-session`, data);
-  
-      // Log the full response to inspect the structure
-      console.log("Full response data:", response.data);
-  
-      // Use optional chaining to safely access `redirectInfo.url`
-      const redirectUrl = response.data?.data?.instrumentResponse?.redirectInfo?.url;
-  
-      if (redirectUrl) {
-        // If redirect URL is found, proceed to it
-        window.location.href = redirectUrl;
-      } else {
-        // Log an error if redirect URL is not found
-        console.error("Redirect URL not found in response", response.data);
+      if (paymentMethod === "phonepe") {
+        const response = await axios.post(
+          `${getBaseUrl()}/api/orders/create-checkout-session`,
+          data
+        );
+        const redirectUrl =
+          response.data?.data?.instrumentResponse?.redirectInfo?.url;
+        if (redirectUrl) {
+          window.location.href = redirectUrl; // Redirect to PhonePe
+        } else {
+          console.error("Redirect URL not found in response", response.data);
+        }
+      } else if (paymentMethod === "cod") {
+        // For COD, save the order and handle redirection here
+        const response = await axios.post(
+          `${getBaseUrl()}/api/orders/create-cod-order`,
+          data
+        );
+        if (response.status === 200) {
+          // Redirect to success page after placing the COD order
+          window.location.href = "http://localhost:5173/order-success";
+        }
       }
     } catch (error) {
       console.error("Error initiating payment:", error);
@@ -67,6 +75,7 @@ const OrderSummary = () => {
       setLoading(false);
     }
   };
+
   return (
     <div className="mt-5 rounded text-base p-4">
       <h2 className="text-xl text-text-dark mb-4">Order Summary</h2>
@@ -128,6 +137,33 @@ const OrderSummary = () => {
               Tax({taxRate * 100}%) : ${tax.toFixed(2)}
             </p>
             <h3 className="font-bold">Grand Total: ${grandTotal.toFixed(2)}</h3>
+          </div>
+
+          {/* Payment method selection */}
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold mb-2">
+              Choose Payment Method:
+            </h3>
+            <label className="flex items-center mb-2">
+              <input
+                type="radio"
+                value="phonepe"
+                checked={paymentMethod === "phonepe"}
+                onChange={() => setPaymentMethod("phonepe")}
+                className="mr-2"
+              />
+              PhonePe
+            </label>
+            <label className="flex items-center">
+              <input
+                type="radio"
+                value="cod"
+                checked={paymentMethod === "cod"}
+                onChange={() => setPaymentMethod("cod")}
+                className="mr-2"
+              />
+              Cash on Delivery (COD)
+            </label>
           </div>
 
           {/* Clear cart and proceed buttons */}

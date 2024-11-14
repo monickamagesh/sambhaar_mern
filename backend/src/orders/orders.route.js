@@ -7,7 +7,7 @@ const Order = require("./orders.model"); // Ensure you have the updated Order mo
 const merchant_id = process.env.MERCHANT_ID;
 const salt_key = process.env.SALT_KEY;
 
-// Create checkout session
+// Create PhonePe checkout session
 router.post("/create-checkout-session", async (req, res) => {
   try {
     let { user, MUID, GrandTotal, products, selectedItems, transaction } =
@@ -49,7 +49,6 @@ router.post("/create-checkout-session", async (req, res) => {
 
     // Check if payment initiation was successful
     if (phonePeResponse.data.success) {
-      // Save the order only if payment was successfully initiated
       const newOrder = new Order({
         userId: user._id,
         orderId: transaction,
@@ -59,14 +58,13 @@ router.post("/create-checkout-session", async (req, res) => {
         })),
         amount: GrandTotal,
         email: user.email,
-        OrderStatus: "Pending", // Initial order status
+        OrderStatus: "Pending",
         paymentMethod: "phonepe",
-        paymentStatus: "pending", // Initial payment status, will be updated in status route
+        paymentStatus: "pending",
       });
 
       await newOrder.save();
 
-      // Send redirectInfo data specifically
       res.json({
         message: "Payment initiated successfully",
         data: {
@@ -83,6 +81,40 @@ router.post("/create-checkout-session", async (req, res) => {
   }
 });
 
+// Route for Cash on Delivery order
+router.post("/create-cod-order", async (req, res) => {
+  try {
+    const { user, MUID, GrandTotal, products, selectedItems, transaction } =
+      req.body;
+
+    const newOrder = new Order({
+      userId: user._id,
+      orderId: transaction,
+      products: products.map((item) => ({
+        productId: item._id,
+        quantity: item.quantity,
+      })),
+      amount: GrandTotal,
+      email: user.email,
+      OrderStatus: "Pending",
+      paymentMethod: "cod",
+      paymentStatus: "pending", // Will change once the order is delivered
+    });
+
+    await newOrder.save();
+
+    // Send a response with the success status and a custom URL for frontend redirection
+    return res.json({
+      message: "COD Order placed successfully",
+      redirectUrl: "http://localhost:5173/order-success",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Route to handle PhonePe payment status callback
 router.post("/status", async (req, res) => {
   try {
     const merchantTransactionId = req.query.id;
@@ -108,7 +140,6 @@ router.post("/status", async (req, res) => {
     const response = await axios(options);
     const isPaymentSuccessful = response.data.success;
 
-    // Update order status based on payment success
     if (isPaymentSuccessful) {
       await Order.findOneAndUpdate(
         { orderId: merchantTransactionId },
@@ -118,7 +149,7 @@ router.post("/status", async (req, res) => {
     } else {
       await Order.findOneAndUpdate(
         { orderId: merchantTransactionId },
-        { OrderStatus: "Pending", paymentStatus: "pending" }
+        { OrderStatus: "Ordered", paymentStatus: "pending" }
       );
       return res.redirect("http://localhost:5173/failure");
     }
