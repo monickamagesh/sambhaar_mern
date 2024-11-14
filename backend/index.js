@@ -5,9 +5,9 @@ const app = express();
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
-const crypto = require('crypto');
-const axios = require('axios');
-
+const crypto = require("crypto");
+const axios = require("axios");
+const Order = require("./src/orders/orders.model"); // Adjust path as needed
 
 const port = process.env.PORT || 5000;
 const merchant_id = process.env.MERCHANT_ID;
@@ -29,9 +29,11 @@ app.use(
 // all routes
 const authRoutes = require("./src/users/user.route");
 const productRoutes = require("./src/products/products.route");
+const orderRoutes = require("./src/orders/orders.route");
 
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/orders", orderRoutes);
 
 main()
   .then(() => console.log("mongodb is successfully connected."))
@@ -44,12 +46,12 @@ async function main() {
     res.send("Sambhaar Server is running!");
   });
 
-  app.post("/order", async (req, res) => {
+  {
+    /*
+    app.post("/order", async (req, res) => {
     try {
-      let { user, MUID, GrandTotal, products, selectedItems, transaction } =
-        req.body;
-      console.log(MUID, transaction, GrandTotal, selectedItems, products,  user )
-
+      let { user, MUID, GrandTotal, products, selectedItems, transaction } = req.body;
+  
       const data = {
         merchantId: merchant_id,
         merchantTransactionId: transaction,
@@ -63,44 +65,59 @@ async function main() {
           type: "PAY_PAGE",
         },
       };
-
-      const keyIndex = 1
-
+  
       const payload = JSON.stringify(data);
-      const payloadMain = Buffer.from(payload).toString('base64');
-
+      const payloadMain = Buffer.from(payload).toString("base64");
+  
       const string = payloadMain + "/pg/v1/pay" + salt_key;
-
-      const sha256 = crypto.createHash('sha256').update(string).digest('hex');
-      const checksum = sha256 + '###' + 1 ;
-
-      const prod_URL = "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay"
-
+      const sha256 = crypto.createHash("sha256").update(string).digest("hex");
+      const checksum = sha256 + "###" + 1;
+  
       const options = {
         method: "POST",
-        url: prod_URL,
+        url: "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay",
         headers: {
-          'accept': "application/json",
-          "content-type": "application/json" ,
-          "X-VERIFY": checksum
+          accept: "application/json",
+          "content-type": "application/json",
+          "X-VERIFY": checksum,
         },
-        data: {
-          request: payloadMain
-        }
-      }
-      
-      await axios(options).then(response => {
-        res.json(response.data)
-      }).catch(error => {
-        console.log(error.message);
-        res.status(500).json({error: error.message})
-      })
-
+        data: { request: payloadMain },
+      };
+  
+      const phonePeResponse = await axios(options);
+  
+      // Save the order to MongoDB
+      const newOrder = new Order({
+        orderId: transaction,
+        products: products.map((item) => ({
+          productId: item._id,
+          quantity: item.quantity,
+        })),
+        amount: GrandTotal,
+        email: user.email,
+        status: "pending",
+        payment: "phonepe",
+      });
+  
+      await newOrder.save();
+  
+      res.json(phonePeResponse.data);
     } catch (error) {
       console.log(error);
+      res.status(500).json({ error: error.message });
     }
   });
 
+  app.get("/api/orders/:userId", async (req, res) => {
+    try {
+      const orders = await Order.find({ userId: req.params.id });
+      res.json(orders);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+  
   app.post("/status", async (req, res) => {
     try {
       const merchantTransactionId = req.query.id;
@@ -123,19 +140,22 @@ async function main() {
         },
       };
 
-      await axios(options).then(response => {
-        if(response.data.success == true){
-          const url = 'http://localhost:5173'
-          return res.redirect(url)
-        } else{
-          const url = 'http://localhost:5173/failure'
-          return res.redirect(url)
+      await axios(options).then((response) => {
+        if (response.data.success == true) {
+          const url = "http://localhost:5173/order-success";
+          return res.redirect(url);
+        } else {
+          const url = "http://localhost:5173/failure";
+          return res.redirect(url);
         }
-      })
+      });
     } catch (error) {
       console.log(error);
     }
   });
+  
+  */
+  }
 }
 
 app.listen(port, () => {

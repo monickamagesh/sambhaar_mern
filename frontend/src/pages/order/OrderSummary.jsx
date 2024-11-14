@@ -6,6 +6,7 @@ import {
   removeFromCart,
   updateQuantity,
 } from "../../redux/features/cart/cartSlice";
+import { getBaseUrl } from "../../util/baseURL";
 
 const OrderSummary = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const OrderSummary = () => {
   //proceed to payment
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const makePayment = async (e) => {
     e.preventDefault();
     //console.log( products , selectedItems, totalPrice.toFixed(2), tax.toFixed(2), taxRate*100, grandTotal.toFixed(2));
     setLoading(true);
@@ -44,17 +45,27 @@ const OrderSummary = () => {
       transaction: "T" + Date.now(),
     };
 
-    await axios
-      .post("http://localhost:5000/order", data )
-      .then((response) => {
-        //console.log(response.data);
-        if(response.data && response.data.data.instrumentResponse.redirectInfo.url){
-          window.location.href = response.data.data.instrumentResponse.redirectInfo.url
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const response = await axios.post(`${getBaseUrl()}/api/orders/create-checkout-session`, data);
+  
+      // Log the full response to inspect the structure
+      console.log("Full response data:", response.data);
+  
+      // Use optional chaining to safely access `redirectInfo.url`
+      const redirectUrl = response.data?.data?.instrumentResponse?.redirectInfo?.url;
+  
+      if (redirectUrl) {
+        // If redirect URL is found, proceed to it
+        window.location.href = redirectUrl;
+      } else {
+        // Log an error if redirect URL is not found
+        console.error("Redirect URL not found in response", response.data);
+      }
+    } catch (error) {
+      console.error("Error initiating payment:", error);
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <div className="mt-5 rounded text-base p-4">
@@ -127,7 +138,7 @@ const OrderSummary = () => {
             Clear Cart
           </button>
           <button
-            onClick={handleSubmit}
+            onClick={makePayment}
             disabled={loading}
             className="bg-green-500 px-3 py-1.5 text-white mt-2 rounded-md"
           >

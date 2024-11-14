@@ -46,7 +46,7 @@ function Navbar() {
     {label: "Dashboard", path: "/dashboard"},
     {label: "Profile", path: "/dashboard/profile"},
     {label: "Payments", path: "/dashboard/payments"},
-    {label: "Orders", path: "/dashboard/orders"},
+    {label: "Orders", path: "/order-success"},
   ]
 
   const dropDownMenus = user?.role === 'admin' ? [...adminDropDownMenus] : [...userDropDownMenus]
@@ -201,7 +201,7 @@ function Navbar() {
           {isMobileMenuOpen && (
             <div className="absolute top-16 left-0 w-full bg-white shadow-md flex flex-col items-center py-4 space-y-4 md:hidden transition-all duration-300 ease-in-out z-50 transform scale-95 opacity-0 animate-fadeIn">
               <Link
-                to="/products"
+                to="/shop"
                 className="text-gray-700 hover:text-[#C74227] transition duration-200 hover:font-medium"
               >
                 Products
