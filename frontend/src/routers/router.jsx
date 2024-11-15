@@ -1,6 +1,4 @@
-import {
-    createBrowserRouter,
-  } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Home from "../pages/home/home";
 import Category from "../pages/category/Category";
@@ -10,31 +8,70 @@ import OrderSummary from "../pages/order/OrderSummary";
 import Login from "../components/Login";
 import Register from "../components/Register";
 import OrderSuccess from "../pages/order/OrderSuccess";
-import OrderList from "../pages/order/OrderList";
+import DashboardLayout from "../pages/dashboard/DashboardLayout";
+import PrivateRoute from "./PrivateRoute";
+import UserDMain from "../pages/dashboard/user/dashboard/UserDMain";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-        {path: '/', element: <Home />},
-        {path: '/category/:categoryName', element: <Category />},
-        {path: '/search', element: <Search />},
-        {path: '/shop', element: <Shop />},
-        {path: "/order-summary", element: <OrderSummary /> },
-        {path: "/order-success", element: <OrderSuccess />},
-        {path: "/dashboard/orders", element: <OrderList />}
-
-    ]
+      { path: "/", element: <Home /> },
+      { path: "/category/:categoryName", element: <Category /> },
+      { path: "/search", element: <Search /> },
+      { path: "/shop", element: <Shop /> },
+      { path: "/order-summary", element: <OrderSummary /> },
+      { path: "/order-success", element: <OrderSuccess /> },
+    ],
   },
   {
     path: "/login",
-    element: <Login />
+    element: <Login />,
   },
   {
-    path: '/register',
-    element: <Register />
-  }
+    path: "/register",
+    element: <Register />,
+  },
+  //dashboard routes start here
+  {
+    path: "/dashboard",
+    element:  <PrivateRoute><DashboardLayout /></PrivateRoute>,
+    children: [
+      // user routes
+      { path: "", element: <UserDMain />},
+      { path: "orders", element: <div>dashboard</div> },
+      { path: "payments", element: <div>dashboard</div> },
+      { path: "profile", element: <div>dashboard</div> },
+      { path: "reviews", element: <div>dashboard</div> },
+
+      //admin routes (only for admins)
+      {
+        path: "admin",
+        element: <PrivateRoute role="admin"><div>admin main dashboard</div></PrivateRoute>
+    },
+    {
+        path: "add-product",
+
+        element: <PrivateRoute role="admin"><div> admin product dashboard</div></PrivateRoute>
+    },
+    {
+        path: "manage-products",
+        element: <PrivateRoute role="admin"><div>manage admin dashboard</div></PrivateRoute>
+
+    },
+    {
+        path: "update-product/:id",
+        element: <PrivateRoute role="admin"><div>update admin dashboard</div></PrivateRoute>
+    },
+    { path: "users", element: <PrivateRoute role="admin"><div>user admin dashboard</div></PrivateRoute> },
+    { path: "manage-orders", 
+    element: <PrivateRoute role="admin">
+        <div>admin order dashboard</div>
+        </PrivateRoute> 
+    },
+    ],
+  },
 ]);
 
 export default router;

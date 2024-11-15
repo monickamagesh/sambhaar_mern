@@ -33,27 +33,29 @@ function Navbar() {
     SetIsDropDownOpen(!isDropDownOpen)
   };
 
-  //admin dropdown menus
+  // admin dropdown menus
   const adminDropDownMenus = [
-    {label: "Dashboard", path: "/dashboard/admin"},
-    {label: "Manage Items", path: "/dashboard/manage-products"},
-    {label: "All Orders", path: "/dashboard/manage-orders"},
-    {label: "Add New Update", path: "/dashboard/add-new-update"},
-  ]
-   
-  //user dropdown menus
-  const userDropDownMenus = [
-    {label: "Dashboard", path: "/dashboard"},
-    {label: "Profile", path: "/dashboard/profile"},
-    {label: "Payments", path: "/dashboard/payments"},
-    {label: "Orders", path: "/dashboard/orders"},
-  ]
+    { path: "/dashboard/admin", label: "Dashboard" },
+    { path: "/dashboard/add-product", label: "Add Product" },
+    { path: "/dashboard/manage-products", label: "Manage Products" },
+    { path: "/dashboard/users", label: "Users" },
+    { path: "/dashboard/manage-orders", label: "Manage Orders" },
+]
+
+// user dropdown menus
+const userDropDownMenus = [
+  { path: "/dashboard", label: "Dashboard" },
+  { path: "/dashboard/orders", label: "Order" },
+  { path: "/dashboard/payments", label: "Payments" },
+  { path: "/dashboard/profile", label: "Profile" },
+  { path: "/dashboard/reviews", label: "Reviews" },
+]
 
   const dropDownMenus = user?.role === 'admin' ? [...adminDropDownMenus] : [...userDropDownMenus]
 
   
   //logout
-  const hnadleLogout = async () => {
+  const handleLogout = async () => {
     try {
       await logoutUser().unwrap();
       dispatch(logout())
@@ -69,7 +71,7 @@ function Navbar() {
         {/* Left Section */}
         <div className="flex items-center">
           <Link to="/">
-            <img src="/sambhaar.png" alt="Logo" className="h-8 md:h-12" />
+            <img src="/sambhaar.png" alt="Logo" className="h-8 md:h-12 " />
           </Link>
         </div>
 
@@ -155,7 +157,7 @@ function Navbar() {
                               ))
                             }
                             <li>
-                              <Link onClick={hnadleLogout}
+                              <Link onClick={handleLogout}
                               className="dropdown-items text-gray-700 hover:text-primary">Logout</Link>
                             </li>
                           </ul>
