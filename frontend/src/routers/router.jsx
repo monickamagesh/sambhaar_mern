@@ -11,6 +11,7 @@ import OrderSuccess from "../pages/order/OrderSuccess";
 import DashboardLayout from "../pages/dashboard/DashboardLayout";
 import PrivateRoute from "./PrivateRoute";
 import UserDMain from "../pages/dashboard/user/dashboard/UserDMain";
+import UserOrders from "../pages/dashboard/user/UserOrders";
 
 const router = createBrowserRouter([
   {
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
     children: [
       // user routes
       { path: "", element: <UserDMain />},
-      { path: "orders", element: <div>dashboard</div> },
+      { path: "orders", element: <UserOrders /> },
       { path: "payments", element: <div>dashboard</div> },
       { path: "profile", element: <div>dashboard</div> },
       { path: "reviews", element: <div>dashboard</div> },

@@ -24,35 +24,51 @@ const OrderSuccess = () => {
 
   const isCompleted = (status) => {
     const statuses = ["Ordered", "Processing", "Shipped", "Completed"];
-    return statuses.indexOf(status) < statuses.indexOf(order.orderStatus);
+    return statuses.indexOf(status) <= statuses.indexOf(order.orderStatus);
   };
 
   const isCurrent = (status) => order.orderStatus === status;
 
   const steps = [
     {
-      status: 'Ordered',
-      label: 'Ordered',
-      description: 'Your order has been created and is awaiting processing.',
-      icon: { iconName: 'time-line', bgColor: 'primary', textColor: 'gray-800' },
+      status: "Ordered",
+      label: "Ordered",
+      description: "Your order has been created and is awaiting processing.",
+      icon: {
+        iconName: "time-line",
+        bgColor: "primary",
+        textColor: "gray-800",
+      },
     },
     {
-      status: 'processing',
-      label: 'Processing',
-      description: 'Your order is currently being processed.',
-      icon: { iconName: 'loader-line', bgColor: 'yellow-800', textColor: 'yellow-800' },
+      status: "Processing",
+      label: "Processing",
+      description: "Your order is currently being processed.",
+      icon: {
+        iconName: "loader-line",
+        bgColor: "yellow-800",
+        textColor: "yellow-800",
+      },
     },
     {
-      status: 'shipped',
-      label: 'Shipped',
-      description: 'Your order has been shipped and will reach you shortly.',
-      icon: { iconName: 'truck-line', bgColor: 'blue-800', textColor: 'blue-800' },
+      status: "Shipped",
+      label: "Shipped",
+      description: "Your order has been shipped and will reach you shortly.",
+      icon: {
+        iconName: "truck-line",
+        bgColor: "blue-800",
+        textColor: "blue-800",
+      },
     },
     {
-      status: 'completed',
-      label: 'Completed',
-      description: 'Your order has been successfully completed.',
-      icon: { iconName: 'check-line', bgColor: 'green-800', textColor: 'green-900' },
+      status: "Completed",
+      label: "Completed",
+      description: "Your order has been successfully completed.",
+      icon: {
+        iconName: "check-line",
+        bgColor: "green-800",
+        textColor: "green-900",
+      },
     },
   ];
 
@@ -61,12 +77,14 @@ const OrderSuccess = () => {
   }
 
   return (
-    <section className="section__container rounded p-6">
-      <h2 className="text-2xl font-semibold mb-4">
-        Payment {order.paymentStatus}
-      </h2>
-      <p className="mb-4">Order Id: {order?.orderId}</p>
-      <p className="mb-8">Status: {order?.orderStatus}</p>
+    <section className=" rounded p-6  section__container">
+      <div className="mt-10 ml-14">
+        <h2 className="text-2xl font-semibold mb-4">
+          Payment {order.paymentStatus}
+        </h2>
+        <p className="mb-4">Order Id: {order?.orderId}</p>
+        <p className="mb-8">Status: {order?.orderStatus}</p>
+      </div>
 
       <ol className="sm:flex items-center relative justify-center">
         {steps.map((step, index) => (

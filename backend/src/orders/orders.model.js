@@ -18,8 +18,7 @@ const orderSchema = new mongoose.Schema(
     email: { type: String, required: true },
     orderStatus: {
       type: String,
-      enum: ["Pending", "Ordered", "Processing", "Shipped", "Completed"],
-      default: "Pending",
+      enum: [ "Ordered", "Processing", "Shipped", "Completed"],
     },
     paymentMethod: {
       type: String,
@@ -28,8 +27,8 @@ const orderSchema = new mongoose.Schema(
     },
     paymentStatus: {
       type: String,
-      enum: ["pending", "success", "failed"],
-      default: "pending",
+      enum: ["Pending", "Success", "Failed"],
+      default: "Pending",
     },
   },
   { timestamps: true }

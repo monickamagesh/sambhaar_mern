@@ -58,9 +58,9 @@ router.post("/create-checkout-session", async (req, res) => {
         })),
         amount: GrandTotal,
         email: user.email,
-        orderStatus: "Pending",
+        orderStatus: "Ordered",
         paymentMethod: "phonepe",
-        paymentStatus: "pending",
+        paymentStatus: "Pending",
       });
 
       await newOrder.save();
@@ -99,7 +99,7 @@ router.post("/create-cod-order", async (req, res) => {
       email: user.email,
       orderStatus: "Ordered",
       paymentMethod: "cod",
-      paymentStatus: "pending", // Will change once the order is delivered
+      paymentStatus: "Pending", // Will change once the order is delivered
     });
 
     await newOrder.save();
@@ -144,13 +144,13 @@ router.post("/status", async (req, res) => {
     if (isPaymentSuccessful) {
       await Order.findOneAndUpdate(
         { orderId: merchantTransactionId },
-        { orderStatus: "Ordered", paymentStatus: "success" }
+        { orderStatus: "Ordered", paymentStatus: "Success" }
       );
       return res.redirect(`http://localhost:5173/order-success/?id=${merchantTransactionId}`);
     } else {
       await Order.findOneAndUpdate(
         { orderId: merchantTransactionId },
-        { orderStatus: "Ordered", paymentStatus: "pending" }
+        { orderStatus: "Ordered", paymentStatus: "Pending" }
       );
       return res.redirect("http://localhost:5173/failure");
     }

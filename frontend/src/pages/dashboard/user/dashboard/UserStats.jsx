@@ -5,18 +5,18 @@ const UserStats = ({ stats }) => {
     <div className="my-2 space-y-2">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 grid-cols-1">
         <div className="bg-white shadow-md rounded-lg p-6 border border-gray-200 hover:border-primary cursor-pointer hover:scale-105 transition-all duration-200">
-          <h2 className="text-xl font-semibold mb-2">Total Payments</h2>
-          <p className="text-2xl text-primary font-bold">₹ {stats?.totalPayments}</p>
+          <h2 className="text-lg font-semibold mb-2">Total Payments</h2>
+          <p className="text-xl  font-bold">₹ {stats?.totalPayments}</p>
         </div>
         <div className="bg-white shadow-md rounded-lg p-6 border border-gray-200 hover:border-primary cursor-pointer hover:scale-105 transition-all duration-200">
-          <h2 className="text-xl font-semibold mb-2">Total Reviews</h2>
-          <p className="text-2xl text-primary  font-bold">{stats?.totalReviews}</p>
+          <h2 className="text-lg font-semibold mb-2">Total Reviews</h2>
+          <p className="text-xl   font-bold">{stats?.totalReviews}</p>
         </div>
         <div className="bg-white shadow-md rounded-lg p-6 border border-gray-200 hover:border-primary cursor-pointer hover:scale-105 transition-all duration-200">
-          <h2 className="text-xl font-semibold mb-2">
+          <h2 className="text-lg font-semibold mb-2">
             Total Purchased Products
           </h2>
-          <p className="text-2xl font-bold text-primary ">{stats?.totalPurchasedProducts}</p>
+          <p className="text-xl  font-bold ">{stats?.totalPurchasedProducts}</p>
         </div>
       </div>
     </div>
