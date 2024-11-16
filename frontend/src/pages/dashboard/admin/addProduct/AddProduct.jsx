@@ -261,7 +261,8 @@ const AddProduct = () => {
     price: "",
     oldPrice: "",
     description: "",
-    gst: ""
+    gst: "",
+    quantity: "",
   });
   const [image, setImage] = useState("");
 
@@ -294,7 +295,8 @@ const AddProduct = () => {
       !product.price ||
       !product.description ||
       !product.brand ||
-      !product.gst
+      !product.gst ||
+      !product.quantity
     ) {
       alert("Please fill all the required fields");
       return;
@@ -311,7 +313,8 @@ const AddProduct = () => {
         price: "",
         description: "",
         oldPrice: "",
-        gst: ""
+        gst: "",
+        quantity: ""
       });
       setImage("");
       navigate("/shop");
@@ -330,19 +333,26 @@ const AddProduct = () => {
     <div className="container mx-auto mt-8">
       <h2 className="text-2xl font-bold mb-6">Add New Product</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-      <UploadImage
+        <UploadImage
           name="image"
           id="image"
           value={(e) => setImage(e.target.value)}
           placeholder="Image"
           setImage={setImage}
         />
-        
+
         <TextInput
           label="Product Name"
           name="name"
           placeholder="Ex: Rice"
           value={product.name}
+          onChange={handleChange}
+        />
+        <TextInput
+          label="Quantity"
+          name="quantity"
+          placeholder="Ex: 1kg or 200g"
+          value={product.quantity}
           onChange={handleChange}
         />
         <SelectInput
@@ -410,6 +420,20 @@ const AddProduct = () => {
             placeholder="Write a product description"
             onChange={handleChange}
           ></textarea>
+        </div>
+
+        {/* submit button */}
+        <div>
+        <button
+            type="submit"
+            className={`mt-4 w-full bg-orange-600 text-white py-3 px-4 rounded-md shadow-lg transition-all duration-300 ${
+              isLoading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            disabled={isLoading}
+
+          >
+            {isLoading ? "Adding..." : "Add product"}
+          </button>
         </div>
       </form>
     </div>

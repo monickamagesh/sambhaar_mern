@@ -33,6 +33,10 @@ const ProductSchema = new mongoose.Schema(
     oldPrice: {
       type: Number,
     },
+    quantity: {
+      type: String,
+      required: true,
+    },
     image: {
       type: String,
       required: true,
