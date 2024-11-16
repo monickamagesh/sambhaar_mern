@@ -261,6 +261,7 @@ const AddProduct = () => {
     price: "",
     oldPrice: "",
     description: "",
+    gst: ""
   });
   const [image, setImage] = useState("");
 
@@ -292,7 +293,8 @@ const AddProduct = () => {
       !product.category ||
       !product.price ||
       !product.description ||
-      !product.brand
+      !product.brand ||
+      !product.gst
     ) {
       alert("Please fill all the required fields");
       return;
@@ -309,6 +311,7 @@ const AddProduct = () => {
         price: "",
         description: "",
         oldPrice: "",
+        gst: ""
       });
       setImage("");
       navigate("/shop");
@@ -379,7 +382,16 @@ const AddProduct = () => {
           name="oldPrice"
           type="number"
           placeholder="Ex: 200"
-          value={product.price}
+          value={product.oldPrice}
+          onChange={handleChange}
+        />
+
+        <TextInput
+          label="GST"
+          name="gst"
+          type="gst"
+          placeholder="Ex: 10%"
+          value={product.gst}
           onChange={handleChange}
         />
 
@@ -393,7 +405,7 @@ const AddProduct = () => {
           <textarea
             name="description"
             id="description"
-            className="add-product-InputCSS h-40"
+            className="mt-2 p-3 w-full border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-orange-500 h-40"
             value={product.description}
             placeholder="Write a product description"
             onChange={handleChange}

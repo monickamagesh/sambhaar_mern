@@ -7,7 +7,7 @@ const TextInput = ({label, name, value, onChange, type="text", placeholder}) => 
         <input type={type} name={name} id={name} placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className='add-product-InputCSS'
+        className=' mt-2 p-3 w-full border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-orange-500'
         />
         
     </div>

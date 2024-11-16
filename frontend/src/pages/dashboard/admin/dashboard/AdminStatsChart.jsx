@@ -14,8 +14,8 @@ const AdminStatsChart = ({ stats }) => {
           stats?.totalReviews,
           stats?.totalUsers,
         ],
-        backgroundColor: ["#E4003A", "#EB5B00", "#ffc233", " #ffff99"],
-        hoverBackgroundColor: ["#ff3366", "#ff8133", "#ffd980", "#ffffcc"],
+        backgroundColor: ["#FF4C4C", "#FFB22C", "#FFDE4D", " #F3FEB8"],
+        hoverBackgroundColor: ["#ff1a1a", "#ffa200", "#ffd51a", "#effd9b"],
       },
     ],
   };

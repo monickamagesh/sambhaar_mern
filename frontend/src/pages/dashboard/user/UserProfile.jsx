@@ -138,7 +138,7 @@ const UserProfile = () => {
               name="username"
               value={formData?.username}
               onChange={handleChange}
-              className="mt-2 p-4 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-2 p-3 w-full border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
               required
             />
           </div>
@@ -152,7 +152,7 @@ const UserProfile = () => {
               name="phoneNumber"
               value={formData?.phoneNumber}
               onChange={handleChange}
-              className="mt-2 p-4 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-2 p-3 w-full border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
             />
           </div>
 
@@ -167,7 +167,7 @@ const UserProfile = () => {
                 name="address.street"
                 value={formData?.address.street}
                 onChange={handleChange}
-                className="mt-2 p-4 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="mt-2 p-3 w-full border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
               />
             </div>
             <div className="mb-6">
@@ -179,7 +179,7 @@ const UserProfile = () => {
                 name="address.city"
                 value={formData?.address.city}
                 onChange={handleChange}
-                className="mt-2 p-4 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="mt-2 p-3 w-full border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
               />
             </div>
             <div className="mb-6">
@@ -191,7 +191,7 @@ const UserProfile = () => {
                 name="address.state"
                 value={formData?.address.state}
                 onChange={handleChange}
-                className="mt-2 p-4 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="mt-2 p-3 w-full border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
               />
             </div>
             <div className="mb-6">
@@ -203,7 +203,7 @@ const UserProfile = () => {
                 name="address.postalCode"
                 value={formData?.address.postalCode}
                 onChange={handleChange}
-                className="mt-2 p-4 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="mt-2 p-3 w-full border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
               />
             </div>
           </div>
@@ -216,12 +216,12 @@ const UserProfile = () => {
               name="address.country"
               value={formData?.address.country}
               onChange={handleChange}
-              className="mt-2 p-4 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-2 p-3 w-full border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
             />
           </div>
           <button
             type="submit"
-            className={`mt-4 w-full bg-primary text-white py-3 px-4 rounded-md shadow-lg transition-all duration-300 ${
+            className={`mt-4 w-full bg-orange-600 text-white py-3 px-4 rounded-md shadow-lg transition-all duration-300 ${
               isLoading ? "opacity-50 cursor-not-allowed" : ""
             }`}
             disabled={isLoading}
