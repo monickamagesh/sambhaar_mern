@@ -49,14 +49,14 @@ const UserProfile = () => {
     const { name, value } = e.target;
 
     if (name.includes("address.")) {
-        const addressField = name.split(".")[1];
-        setFormData({
-          ...formData,
-          address: { ...formData.address, [addressField]: value },
-        });
-      } else {
-        setFormData({ ...formData, [name]: value });
-      }
+      const addressField = name.split(".")[1];
+      setFormData({
+        ...formData,
+        address: { ...formData.address, [addressField]: value },
+      });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -99,12 +99,18 @@ const UserProfile = () => {
         <h2 className="text-2xl font-semibold mb-2">
           {formData?.username || "Username"}
         </h2>
-        <p className="text-sm"><i className="ri-phone-fill mr-2 ri-lg">Contact:</i>{formData?.phoneNumber || "N/A"}</p>
-        <p className="text-gray-600">Contact: </p>
-        <p className="text-gray-600">
-          Address:{" "}
+        <div className="w-4/6 mx-auto">
+        <p className="text-sm pt-2 text-gray-600">
+          <i className="ri-phone-fill text-primary mr-2 ri-lg"></i>
+          {formData?.phoneNumber || "N/A"}
+        </p>
+        <p className="text-gray-600 text-sm ">
+          <i class="ri-home-9-fill text-primary mr-2 ri-lg"> </i>
           {Object.values(formData.address).filter(Boolean).join(", ") || "N/A"}
         </p>
+        </div>
+        
+        
       </div>
 
       {/* Edit Profile Form */}
