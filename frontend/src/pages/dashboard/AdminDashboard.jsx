@@ -27,21 +27,15 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="space-y-5 bg-white p-8 md:h-screen flex flex-col justify-between">
+    <div className=" space-y-5  bg-white p-8 flex flex-col justify-between h-[88%]">
       <div>
-        <div className="nav__logo">
-          <Link to="/">
-            <img src="/sambhaar.png" alt="Logo" className="h-12 w-40" />
-          </Link>
-          
-        </div>
-        <hr className="mt-5" />
-        <ul className="space-y-5 pt-5">
+        
+        <ul className="space-y-5 pt-5 ">
           {navItems.map((item) => (
-            <li key={item.path}>
+            <li key={item.path} >
               <NavLink
                 className={({ isActive }) =>
-                  isActive ? "text-primary font-bold" : "text-black"
+                  isActive ? "text-primary font-bold" : "text-black hover:text-primary"
                 }
                 end
                 to={item.path}
@@ -57,7 +51,7 @@ const AdminDashboard = () => {
         <hr className="mb-3" />
         <button
           onClick={handleLogout}
-          className="text-white bg-primary font-medium px-5 py-1 rounded-sm"
+          className="text-black hover:text-primary"
         >
           Logout
         </button>

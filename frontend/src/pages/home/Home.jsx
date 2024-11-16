@@ -6,6 +6,7 @@ import Trending from '../../components/shop/Trending'
 import DealsSection from '../../components/home/DealsSection'
 import PromoBanner from '../../components/home/PromoBanner'
 import Blogs from '../../components/blogs/blogs'
+import Footer from '../../components/Footer'
 
 const Home = () => {
 
@@ -23,6 +24,7 @@ const Home = () => {
         <DealsSection />
         <PromoBanner />
         <Blogs />
+        <Footer />
     </div>
   )
 }

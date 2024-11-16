@@ -23,11 +23,11 @@ const DashboardLayout = () => {
   };
 
   return (
-    <div className=" container mx-auto flex flex-col md:flex-row gap-4 items-start justify-start">
-      <header className="fixed top-0 z-50 lg:w-1/5 sm:w-2/5 w-full border ">
+    <div className="  mx-auto mt-20 flex flex-col md:flex-row gap-4 items-start justify-start">
+      <header className="fixed top-20 p-8  z-40  w-[20%] h-screen ">
         {renderDashboard()}
       </header>
-      <section className="lg:w-1/5 sm:w-2/5 w-full"></section>
+      <section className="lg:w-1/5 sm:w-2/5 h-screen w-full"></section>
       <main className="p-8 bg-white w-3/4 border mt-5">
         <Outlet />
       </main>

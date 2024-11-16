@@ -45,9 +45,9 @@ function Navbar() {
 // user dropdown menus
 const userDropDownMenus = [
   { path: "/dashboard", label: "Dashboard" },
-  { path: "/dashboard/orders", label: "Order" },
-  { path: "/dashboard/payments", label: "Payments" },
+  { path: "/dashboard/orders", label: "My orders" },
   { path: "/dashboard/profile", label: "Profile" },
+  { path: "/order-summary", label:"Checkout"},
   { path: "/dashboard/reviews", label: "Reviews" },
 ]
 

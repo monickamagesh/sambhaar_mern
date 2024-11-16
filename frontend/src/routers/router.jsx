@@ -12,6 +12,8 @@ import DashboardLayout from "../pages/dashboard/DashboardLayout";
 import PrivateRoute from "./PrivateRoute";
 import UserDMain from "../pages/dashboard/user/dashboard/UserDMain";
 import UserOrders from "../pages/dashboard/user/UserOrders";
+import UserReviews from "../pages/dashboard/user/userReviews";
+import UserProfile from "../pages/dashboard/user/UserProfile";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +26,72 @@ const router = createBrowserRouter([
       { path: "/shop", element: <Shop /> },
       { path: "/order-summary", element: <OrderSummary /> },
       { path: "/order-success", element: <OrderSuccess /> },
+      {
+        path: "/dashboard",
+        element: (
+          <PrivateRoute>
+            <DashboardLayout />
+          </PrivateRoute>
+        ),
+        children: [
+          // user routes
+          { path: "", element: <UserDMain /> },
+          { path: "orders", element: <UserOrders /> },
+          { path: "profile", element: <UserProfile /> },
+          { path: "reviews", element: <UserReviews /> },
+
+          //admin routes (only for admins)
+          {
+            path: "admin",
+            element: (
+              <PrivateRoute role="admin">
+                <div>admin main dashboard</div>
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "add-product",
+
+            element: (
+              <PrivateRoute role="admin">
+                <div> admin product dashboard</div>
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "manage-products",
+            element: (
+              <PrivateRoute role="admin">
+                <div>manage admin dashboard</div>
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "update-product/:id",
+            element: (
+              <PrivateRoute role="admin">
+                <div>update admin dashboard</div>
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "users",
+            element: (
+              <PrivateRoute role="admin">
+                <div>user admin dashboard</div>
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "manage-orders",
+            element: (
+              <PrivateRoute role="admin">
+                <div>admin order dashboard</div>
+              </PrivateRoute>
+            ),
+          },
+        ],
+      },
     ],
   },
   {
@@ -35,44 +103,6 @@ const router = createBrowserRouter([
     element: <Register />,
   },
   //dashboard routes start here
-  {
-    path: "/dashboard",
-    element:  <PrivateRoute><DashboardLayout /></PrivateRoute>,
-    children: [
-      // user routes
-      { path: "", element: <UserDMain />},
-      { path: "orders", element: <UserOrders /> },
-      { path: "payments", element: <div>dashboard</div> },
-      { path: "profile", element: <div>dashboard</div> },
-      { path: "reviews", element: <div>dashboard</div> },
-
-      //admin routes (only for admins)
-      {
-        path: "admin",
-        element: <PrivateRoute role="admin"><div>admin main dashboard</div></PrivateRoute>
-    },
-    {
-        path: "add-product",
-
-        element: <PrivateRoute role="admin"><div> admin product dashboard</div></PrivateRoute>
-    },
-    {
-        path: "manage-products",
-        element: <PrivateRoute role="admin"><div>manage admin dashboard</div></PrivateRoute>
-
-    },
-    {
-        path: "update-product/:id",
-        element: <PrivateRoute role="admin"><div>update admin dashboard</div></PrivateRoute>
-    },
-    { path: "users", element: <PrivateRoute role="admin"><div>user admin dashboard</div></PrivateRoute> },
-    { path: "manage-orders", 
-    element: <PrivateRoute role="admin">
-        <div>admin order dashboard</div>
-        </PrivateRoute> 
-    },
-    ],
-  },
 ]);
 
 export default router;

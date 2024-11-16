@@ -7,6 +7,7 @@ import {
   updateQuantity,
 } from "../../redux/features/cart/cartSlice";
 import { getBaseUrl } from "../../util/baseURL";
+import Footer from "../../components/Footer";
 
 const OrderSummary = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,8 @@ const OrderSummary = () => {
   const handleClearCart = () => {
     dispatch(clearCart());
   };
+
+  
 
   const makePayment = async (e) => {
     e.preventDefault();
@@ -79,7 +82,7 @@ const OrderSummary = () => {
   };
 
   return (
-    <div className="mt-5 rounded text-base p-4">
+    <div className="mt-5 rounded text-base p-4 h-screen">
       <h2 className="text-xl text-text-dark mb-4">Order Summary</h2>
 
       {products.length === 0 ? (
@@ -184,6 +187,7 @@ const OrderSummary = () => {
           </button>
         </div>
       )}
+      <Footer />
     </div>
   );
 };

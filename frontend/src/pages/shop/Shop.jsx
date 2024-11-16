@@ -1,8 +1,10 @@
 import React from "react";
 import Products from "../../components/shop/Products";
+import Footer from "../../components/Footer";
 
 const Shop = () => {
 
+  
   return (
     <>
       <section className="section__container bg-primary-light py-12 text-center">
@@ -14,6 +16,7 @@ const Shop = () => {
         
         <Products />
 
+        <Footer />
     </>
   );
 };

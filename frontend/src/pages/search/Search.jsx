@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import products from "../../data/products.json";
 import ProductCards from "../../components/shop/ProductCards";
+import Footer from "../../components/Footer";
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -43,6 +44,7 @@ const Search = () => {
         </div>
 
         <ProductCards products={fiteredProducts} />
+        <Footer />
       </section>
     </>
   );
