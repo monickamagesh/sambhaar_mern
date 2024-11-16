@@ -2,7 +2,16 @@ const express = require("express");
 const User = require("./user.model");
 const generateToken = require("../middleware/generateToken");
 const verifyToken = require("../middleware/verifyToken");
+const fileUpload = require("express-fileupload");
 const router = express.Router();
+
+// File upload setup
+router.use(
+  fileUpload({
+    limits: { fileSize: 50 * 1024 * 1024 }, // 50MB file size limit
+    createParentPath: true,
+  })
+);
 
 //Register endpoint
 router.post("/register", async (req, res) => {
@@ -112,45 +121,40 @@ router.put("/users/:id", async (req, res) => {
   }
 });
 
+
 //Update Profile
 router.patch('/edit-profile', async (req, res) => {
   try {
-    const {userId, username, profileImage, address, phoneNumber} = req.body;
-    if (!userId) {
-      return res.status(400).send({ message: "User not found" });
+    const { userId, username, phoneNumber, address } = req.body;
+    let profileImage = "";
+    
+    if (req.files && req.files.profileImage) {
+      const profileImageFile = req.files.profileImage;
+      profileImage = `/uploads/${Date.now()}_${profileImageFile.name}`;
+      profileImageFile.mv(path.join(__dirname, "..", "public", profileImage), (err) => {
+        if (err) return res.status(500).send({ message: "Error uploading image" });
+      });
     }
-    const user = await User.findById(userId);
-    if(!user){
-      return res.status(400).send({ message: "User not found" });
+
+    const updatedUser = await User.findByIdAndUpdate(userId, { 
+      username, 
+      phoneNumber, 
+      address, 
+      profileImage 
+    }, { new: true });
+
+    if (!updatedUser) {
+      return res.status(404).send({ message: "User not found" });
     }
 
-    //update profile
-    if(username !== undefined) user.username = username;
-    if(profileImage !== undefined) user.profileImage = profileImage;
-    if(phoneNumber !== undefined) user.phoneNumber = phoneNumber;
-    if(address !== undefined) user.address = address;
-
-    await user.save();
-    res.status(200).send({message: "profile updated successfully!", user: {
-      _id: user._id,
-      email: user.email,
-      username: user.username,
-      role: user.role,
-      profileImage: user.profileImage,
-      address: {
-        street: user.address?.street,
-        city: user.address?.city,
-        state: user.address?.state,
-        postalCode: user.address?.postalCode,
-        country: user.address?.country,
-      },
-      phoneNumber: user.phoneNumber,
-    },})
-
+    res.status(200).send({
+      message: "Profile updated successfully",
+      user: updatedUser,
+    });
   } catch (error) {
-    console.log("Error updating user profile", error);
-    res.status(500).send({ message: "Error updating user profile" });
+    console.error("Error updating profile", error);
+    res.status(500).send({ message: "Error updating profile" });
   }
-})
+});
 
 module.exports = router;
