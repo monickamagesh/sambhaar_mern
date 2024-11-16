@@ -26,6 +26,9 @@ app.use(
   })
 );
 
+// image upload
+const uploadImage = require("./src/utils/uploadImage"); 
+
 // all routes
 const authRoutes = require("./src/users/user.route");
 const productRoutes = require("./src/products/products.route");
@@ -164,6 +167,19 @@ async function main() {
   */
   }
 }
+
+// Routes
+app.post("/uploadImage", (req, res) => {
+  const { image } = req.body;  // Get the base64 image from the frontend
+  uploadImage(image)
+      .then((url) => {
+          res.send(url);  // Send back the image URL
+      })
+      .catch((err) => {
+          console.error(err);
+          res.status(500).send({ error: "Failed to upload image" });
+      });
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

@@ -8,8 +8,11 @@ const navItems = [
   { path: "/dashboard/admin", label: "Dashboard" },
   { path: "/dashboard/add-product", label: "Add Product" },
   { path: "/dashboard/manage-products", label: "Manage Products" },
-  { path: "/dashboard/users", label: "Users" },
+  { path: "/dashboard/users", label: "Manage Users" },
   { path: "/dashboard/manage-orders", label: "Manage Orders" },
+  { path: "/dashboard/profile", label: "Profile" },
+  { path: "/dashboard/orders", label: "My orders" },
+  
 ];
 const AdminDashboard = () => {
   const [logoutUser] = useLogoutUserMutation();

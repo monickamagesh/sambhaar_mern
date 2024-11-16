@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import avatarImg from "../../../assets/avatar.png";
-import { FiUpload } from "react-icons/fi"; // Importing an upload icon
 import { useEditProfileMutation } from "../../../redux/features/auth/authApi";
 import { setUser } from "../../../redux/features/auth/authSlice";
+import UploadImage from "../admin/addProduct/UploadImage";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
@@ -25,8 +25,6 @@ const UserProfile = () => {
     userId: "",
   });
 
-  const [imagePreview, setImagePreview] = useState(null);
-
   useEffect(() => {
     if (user) {
       setFormData({
@@ -42,25 +40,23 @@ const UserProfile = () => {
         },
         userId: user._id,
       });
-      setImagePreview(user?.profileImage || avatarImg);
     }
   }, [user]);
 
+  const [profileImage, setProfileImage] = useState(formData.profileImage);
+
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (name === "profileImage" && files.length > 0) {
-      const file = files[0];
-      setFormData({ ...formData, profileImage: file });
-      setImagePreview(URL.createObjectURL(file));
-    } else if (name.includes("address.")) {
-      const addressField = name.split(".")[1];
-      setFormData({
-        ...formData,
-        address: { ...formData.address, [addressField]: value },
-      });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
+    const { name, value } = e.target;
+
+    if (name.includes("address.")) {
+        const addressField = name.split(".")[1];
+        setFormData({
+          ...formData,
+          address: { ...formData.address, [addressField]: value },
+        });
+      } else {
+        setFormData({ ...formData, [name]: value });
+      }
   };
 
   const handleSubmit = async (e) => {
@@ -68,7 +64,7 @@ const UserProfile = () => {
     const updatedUser = {
       userId: user._id,
       username: formData.username,
-      profileImage: formData.profileImage,
+      profileImage: profileImage, // Use the state for profileImage here
       phoneNumber: formData.phoneNumber,
       address: {
         street: formData.address.street,
@@ -80,31 +76,31 @@ const UserProfile = () => {
     };
     try {
       const response = await editProfile(updatedUser).unwrap();
-      console.log(response)
+      console.log(response);
       dispatch(setUser(response.user));
       localStorage.setItem("user", JSON.stringify(response.user));
       alert("Profile updated successfully!");
     } catch (error) {
       alert("Failed to update profile. Please try again");
     }
-    
   };
 
   return (
     <div className="flex flex-col items-center p-6 min-h-screen w-full">
       {/* Profile Card */}
-      <div className="bg-white shadow-lg rounded-lg p-6 w-full text-center mb-8">
+      <div className="bg-white shadow-lg rounded-lg p-6 w-full text-center mb-4">
         <div className="relative">
           <img
-            src={imagePreview || avatarImg}
+            src={formData?.profileImage || avatarImg} // Use the state profileImage here
             alt="Profile"
-            className="w-24 h-24 object-cover rounded-full mx-auto mb-4"
+            className="w-32 h-32 object-cover rounded-full mx-auto mb-4"
           />
         </div>
         <h2 className="text-2xl font-semibold mb-2">
           {formData?.username || "Username"}
         </h2>
-        <p className="text-gray-600">Phone: {formData?.phoneNumber || "N/A"}</p>
+        <p className="text-sm"><i className="ri-phone-fill mr-2 ri-lg">Contact:</i>{formData?.phoneNumber || "N/A"}</p>
+        <p className="text-gray-600">Contact: </p>
         <p className="text-gray-600">
           Address:{" "}
           {Object.values(formData.address).filter(Boolean).join(", ") || "N/A"}
@@ -113,33 +109,19 @@ const UserProfile = () => {
 
       {/* Edit Profile Form */}
       <div className="bg-white p-8 rounded-lg shadow-xl w-full border border-gray-200">
-        <form onSubmit={handleSubmit} className="space-y-6" encType="multipart/form-data">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-6"
+          encType="multipart/form-data"
+        >
           <div className="mb-6">
-            <div
-              onChange={handleChange}
-              className="mt-2 w-full border-2 border-dashed border-green-600  flex justify-center items-center py-16 px-4 rounded-md shadow-sm  hover:bg-gray-100 cursor-pointer"
-            >
-              <label
-                htmlFor="profileImage"
-                className="w-full h-full text-center cursor-pointer"
-              >
-                <input
-                  type="file"
-                  id="profileImage"
-                  name="profileImage"
-                  className="hidden"
-                  accept="image/png, image/jpeg"
-                />
-                <div className="text-center">
-                  <FiUpload className="mx-auto text-gray-500 text-4xl" />
-                  <p className="mt-2 text-gray-600">
-                    <span className="text-green-600">Upload an image</span> or
-                    drag and drop
-                  </p>
-                  <p className="text-xs text-gray-400">PNG, JPG</p>
-                </div>
-              </label>
-            </div>
+            <UploadImage
+              name="profileImage"
+              id="profileImage"
+              value={(e) => setProfileImage(e.target.value)} // Set profile image URL to state here
+              placeholder="Image"
+              setImage={setProfileImage}
+            />
           </div>
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700">

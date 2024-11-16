@@ -4,7 +4,20 @@ import ShopFiltering from "./ShopFiltering";
 import { useFetchAllProductsQuery } from "../../redux/features/products/productsApi";
 
 const filters = {
-  categories: ["all", "accessories", "dress", "jewellery", "cosmetics"],
+  categories: [
+    "all",
+    "Fresh Vegetables & Fruits",
+    "Indian Grocery",
+    "Puja Needs & Idols",
+    "Evergreen",
+    "South Cookware",
+    "Handlooms",
+    "Personal Care",
+    "Cleaning & Household",
+    "South Special Grocery",
+    "Specials"
+  ],
+  
   subcategories: [
     "bags",
     "belts",
