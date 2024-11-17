@@ -105,7 +105,7 @@ const UserProfile = () => {
           {formData?.phoneNumber || "N/A"}
         </p>
         <p className="text-gray-600 text-sm ">
-          <i class="ri-home-9-fill text-primary mr-2 ri-lg"> </i>
+          <i className="ri-home-9-fill text-primary mr-2 ri-lg"> </i>
           {Object.values(formData.address).filter(Boolean).join(", ") || "N/A"}
         </p>
         </div>

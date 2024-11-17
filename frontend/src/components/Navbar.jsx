@@ -17,7 +17,7 @@ function Navbar() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   //console.log(user)
-  const [logoutUser] = useLogoutUserMutation()
+  const [logoutUser] = useLogoutUserMutation();
   const navigate = useNavigate();
 
   //mobile Toggle
@@ -29,44 +29,44 @@ function Navbar() {
 
   //dropdown menu
   const [isDropDownOpen, SetIsDropDownOpen] = useState(false);
-  const handleDropDownToggle = ()=>{
-    SetIsDropDownOpen(!isDropDownOpen)
+  const handleDropDownToggle = () => {
+    SetIsDropDownOpen(!isDropDownOpen);
   };
 
   // admin dropdown menus
   const adminDropDownMenus = [
     { path: "/dashboard/admin", label: "Dashboard" },
-  { path: "/dashboard/add-product", label: "Add Product" },
-  { path: "/dashboard/manage-products", label: "Manage Products" },
-  { path: "/dashboard/users", label: "Manage Users" },
-  { path: "/dashboard/manage-orders", label: "Manage Orders" },
-  { path: "/dashboard/profile", label: "Profile" },
-  { path: "/order-summary", label:"Checkout"},
-  { path: "/dashboard/orders", label: "My orders" },
-]
+    { path: "/dashboard/users", label: "All Users" },
+    { path: "/dashboard/add-product", label: "Add Product" },
+    { path: "/dashboard/manage-products", label: "Manage Products" },
+    { path: "/dashboard/manage-orders", label: "Manage Orders" },
+    { path: "/dashboard/profile", label: "Profile" },
+    { path: "/order-summary", label: "Checkout" },
+    { path: "/dashboard/orders", label: "My orders" },
+  ];
 
-// user dropdown menus
-const userDropDownMenus = [
-  { path: "/dashboard", label: "Dashboard" },
-  { path: "/dashboard/orders", label: "My orders" },
-  { path: "/dashboard/profile", label: "Profile" },
-  { path: "/order-summary", label:"Checkout"},
-  { path: "/dashboard/reviews", label: "Reviews" },
-]
+  // user dropdown menus
+  const userDropDownMenus = [
+    { path: "/dashboard", label: "Dashboard" },
+    { path: "/dashboard/orders", label: "My orders" },
+    { path: "/dashboard/profile", label: "Profile" },
+    { path: "/order-summary", label: "Checkout" },
+    { path: "/dashboard/reviews", label: "Reviews" },
+  ];
 
-  const dropDownMenus = user?.role === 'admin' ? [...adminDropDownMenus] : [...userDropDownMenus]
+  const dropDownMenus =
+    user?.role === "admin" ? [...adminDropDownMenus] : [...userDropDownMenus];
 
-  
   //logout
   const handleLogout = async () => {
     try {
       await logoutUser().unwrap();
-      dispatch(logout())
-      navigate('/')
+      dispatch(logout());
+      navigate("/");
     } catch (error) {
-      console.error("Failed to log out", error)
+      console.error("Failed to log out", error);
     }
-  }
+  };
 
   return (
     <header className="fixed-nav-bar bg-gradient-to-br from-gray-50 to-gray-100">
@@ -132,44 +132,51 @@ const userDropDownMenus = [
                   <>
                     {user.profileImage ? (
                       <img
-                      onClick={handleDropDownToggle}
+                        onClick={handleDropDownToggle}
                         src={user.profileImage}
                         alt="User Avatar"
                         className="size-7 rounded-full cursor-pointer"
                       />
                     ) : (
                       <Link
-                      onClick={handleDropDownToggle}
+                        onClick={handleDropDownToggle}
                         className="bg-gray-200 text-primary hover:text-primary-dark hover:bg-gray-300 p-2 rounded-full"
                       >
                         <i className="ri-user-line ri-lg"></i>
                       </Link>
                     )}
 
-                    {
-                      isDropDownOpen && (
-                        <div className="absolute right-0 mt-3 p-4 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
-                          <ul className="font-medium space-y-4 p-2">
-                            {
-                              dropDownMenus.map((menu, index) => (
-                                <li key={index}>
-                                  <Link onClick={() => SetIsDropDownOpen(false)}
-                                  className="dropdown-items text-gray-700 hover:text-primary"
-                                  to={menu.path}>{menu.label}</Link>
-                                </li>
-                              ))
-                            }
-                            <li>
-                              <Link onClick={handleLogout}
-                              className="dropdown-items text-gray-700 hover:text-primary">Logout</Link>
+                    {isDropDownOpen && (
+                      <div className="absolute right-0 mt-3 p-4 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                        <ul className="font-medium space-y-4 p-2">
+                          {dropDownMenus.map((menu, index) => (
+                            <li key={index}>
+                              <Link
+                                onClick={() => SetIsDropDownOpen(false)}
+                                className="dropdown-items text-gray-700 hover:text-primary"
+                                to={menu.path}
+                              >
+                                {menu.label}
+                              </Link>
                             </li>
-                          </ul>
-                        </div>
-                      )
-                    }
+                          ))}
+                          <li>
+                            <Link
+                              onClick={handleLogout}
+                              className="dropdown-items text-gray-700 hover:text-primary"
+                            >
+                              Logout
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </>
                 ) : (
-                  <a href="/login" className="bg-primary hover:bg-primary-dark rounded-md px-4 py-2 text-primary-light hover:text-white font-normal">
+                  <a
+                    href="/login"
+                    className="bg-primary hover:bg-primary-dark rounded-md px-4 py-2 text-primary-light hover:text-white font-normal"
+                  >
                     Join
                   </a>
                 )}
@@ -244,27 +251,28 @@ const userDropDownMenus = [
                   </button>
                 </span>
                 <span>
-                {user && user ? (
-                  <>
-                    {user.profileImage ? (
-                      <img
-                        src={user.profileImage}
-                        alt="User Avatar"
-                        className="size-7 rounded-full cursor-pointer"
-                      />
-                    ) : (
-                      <Link
-                        className="bg-gray-200 text-primary hover:text-primary-dark hover:bg-gray-300 p-2 rounded-full"
-                      >
-                        <i className="ri-user-line ri-lg"></i>
-                      </Link>
-                    )}
-                  </>
-                ) : (
-                  <a href="/login" className="bg-primary hover:bg-primary-dark rounded-md px-4 py-2 text-primary-light hover:text-white font-normal">
-                    Join
-                  </a>
-                )}
+                  {user && user ? (
+                    <>
+                      {user.profileImage ? (
+                        <img
+                          src={user.profileImage}
+                          alt="User Avatar"
+                          className="size-7 rounded-full cursor-pointer"
+                        />
+                      ) : (
+                        <Link className="bg-gray-200 text-primary hover:text-primary-dark hover:bg-gray-300 p-2 rounded-full">
+                          <i className="ri-user-line ri-lg"></i>
+                        </Link>
+                      )}
+                    </>
+                  ) : (
+                    <a
+                      href="/login"
+                      className="bg-primary hover:bg-primary-dark rounded-md px-4 py-2 text-primary-light hover:text-white font-normal"
+                    >
+                      Join
+                    </a>
+                  )}
                 </span>
               </div>
             </div>

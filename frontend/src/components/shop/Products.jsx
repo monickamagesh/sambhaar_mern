@@ -202,7 +202,7 @@ const Products = () => {
             onClick={() => handlePageChange(currentPage - 1)}
             className="py-1 px-2 rounded-md text-gray-400 ring-1 ring-gray-400 m-2"
           >
-            <i class="ri-arrow-left-s-line"></i>
+            <i className="ri-arrow-left-s-line"></i>
           </button>
           {[...Array(totalPages)].map((_, index) => (
             <button
@@ -221,7 +221,7 @@ const Products = () => {
             onClick={() => handlePageChange(currentPage + 1)}
             className="py-1 px-2 rounded-md text-gray-400 ring-1 ring-gray-400 m-2"
           >
-            <i class="ri-arrow-right-s-line"></i>
+            <i className="ri-arrow-right-s-line"></i>
           </button>
         </div>
           </div>

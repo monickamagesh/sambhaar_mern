@@ -34,10 +34,10 @@ const orderApi = createApi({
             providesTags: ['Order']
         }),
         updateOrderStatus: builder.mutation({
-            query: ({id, status}) => ({
+            query: ({id, orderStatus}) => ({
                 url: `/update-order-status/${id}`,
                 method: 'PATCH',
-                body: { status },
+                body: { orderStatus },
             }),
             invalidatesTags: ['Order']
         }),

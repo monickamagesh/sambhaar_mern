@@ -118,7 +118,7 @@ const UserOrders = () => {
                             to={`/order-success?id=${order?.orderId}`}
                             className=" hover:text-primary-dark text-primary"
                           >
-                            <i class="ri-eye-line ri-lg"></i>
+                            <i className="ri-eye-line ri-lg"></i>
                           </Link>
                         </div>
                       </td>

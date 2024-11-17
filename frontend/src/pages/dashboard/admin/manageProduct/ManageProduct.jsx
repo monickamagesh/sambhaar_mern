@@ -123,14 +123,14 @@ const ManageProduct = () => {
                             to={`/dashboard/update-product/${product._id}`}
                             className="text-gray-700 hover:text-gray-900"
                           >
-                            <i class="ri-edit-box-line ri-lg"></i>
+                            <i className="ri-edit-box-line ri-lg"></i>
                           </Link>
 
                           <button
                             onClick={() => handleDeleteProduct(product._id)}
                             className="hover:text-primary-dark text-primary"
                           >
-                            <i class="ri-delete-bin-line ri-lg"></i>
+                            <i className="ri-delete-bin-line ri-lg"></i>
                           </button>
                         </td>
                       </tr>
@@ -148,7 +148,7 @@ const ManageProduct = () => {
             onClick={() => handlePageChange(currentPage - 1)}
             className="py-1 px-2 rounded-md text-gray-400 ring-1 ring-gray-400 m-2"
           >
-            <i class="ri-arrow-left-s-line"></i>
+            <i className="ri-arrow-left-s-line"></i>
           </button>
           {[...Array(totalPages)].map((_, index) => (
             <button
@@ -167,7 +167,7 @@ const ManageProduct = () => {
             onClick={() => handlePageChange(currentPage + 1)}
             className="py-1 px-2 rounded-md text-gray-400 ring-1 ring-gray-400 m-2"
           >
-            <i class="ri-arrow-right-s-line"></i>
+            <i className="ri-arrow-right-s-line"></i>
           </button>
         </div>
       </section>

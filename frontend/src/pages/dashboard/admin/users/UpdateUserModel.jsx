@@ -17,7 +17,7 @@ const UpdateUserModel = ({ user, onClose, onRoleUpdate }) => {
     }
   };
   return (
-    <div className="inset-0 z-50 fixed flex items-center justify-center  bg-opacity-20 bg-black ">
+    <div className="inset-0 z-50 fixed flex items-center justify-center  bg-opacity-20 bg-black">
       <div className="bg-white p-10 rounded-lg shadow-xl  w-1/3">
         <h2 className="text-xl font-bold mb-4 mt-4">Edit User Role</h2>
         
