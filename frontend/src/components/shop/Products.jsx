@@ -195,36 +195,35 @@ const Products = () => {
             </h3>
             <ProductCards products={products} />
 
-            {/* Pagination controls */}
-            <div className="mt-6 flex justify-center">
-              <button
-                disabled={currentPage === 1}
-                onClick={() => handlePageChange(currentPage - 1)}
-                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md mr-2"
-              >
-                Previous
-              </button>
-              {[...Array(totalPages)].map((_, index) => (
-                <button
-                  onClick={() => handlePageChange(index + 1)}
-                  key={index}
-                  className={`px-4 py-2 ${
-                    currentPage === index + 1
-                      ? "bg-primary text-white"
-                      : "bg-gray-300 text-gray-700"
-                  } rounded-md mx-1 `}
-                >
-                  {index + 1}
-                </button>
-              ))}
-              <button
-                disabled={totalPages === currentPage}
-                onClick={() => handlePageChange(currentPage + 1)}
-                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md mr-2"
-              >
-                Next
-              </button>
-            </div>
+            {/* Pagination */}
+        <div className="mt-6 mr-4 flex items-center justify-end">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+            className="py-1 px-2 rounded-md text-gray-400 ring-1 ring-gray-400 m-2"
+          >
+            <i class="ri-arrow-left-s-line"></i>
+          </button>
+          {[...Array(totalPages)].map((_, index) => (
+            <button
+              onClick={() => handlePageChange(index + 1)}
+              className={`px-[14px] py-1 ${
+                currentPage === index + 1
+                  ? "bg-primary text-white"
+                  : "bg-gray-300 text-gray-700"
+              } rounded-md mx-1`}
+            >
+              {index + 1}
+            </button>
+          ))}
+          <button
+            disabled={currentPage === totalPages}
+            onClick={() => handlePageChange(currentPage + 1)}
+            className="py-1 px-2 rounded-md text-gray-400 ring-1 ring-gray-400 m-2"
+          >
+            <i class="ri-arrow-right-s-line"></i>
+          </button>
+        </div>
           </div>
         </div>
       </section>

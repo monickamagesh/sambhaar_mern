@@ -292,6 +292,7 @@ const AddProduct = () => {
     if (
       !product.name ||
       !product.category ||
+      !product.subcategory ||
       !product.price ||
       !product.description ||
       !product.brand ||

@@ -75,11 +75,8 @@ router.get("/:id", async (req, res) => {
     if (!product) {
       return res.status(404).send({ message: "Product not found" });
     }
-    const reviews = await Reviews.find({ productId }).populate(
-      "userId",
-      "username email"
-    );
-    res.status(200).send({ product, reviews });
+    
+    res.status(200).send({ product });
   } catch (error) {
     console.log("Error fetching single product", error);
     res.status(500).send({ message: "Error fetching single product" });

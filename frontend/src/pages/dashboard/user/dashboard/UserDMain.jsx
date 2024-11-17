@@ -74,16 +74,18 @@ const UserDMain = () => {
   };
 
   return (
-    <div className=" px-6">
+    <div className="  ">
       <div>
         <h1 className="text-2xl font-bold mb-2">User Dashboard</h1>
         <p className="text-gray-500">
           Hi, {user?.username}! Welcome to your user dashboard
         </p>
       </div>
-      <UserStats stats={stats} />
-      <div className="mb-6">
-        <Bar data={data} options={options} />
+      <div className="p-6 mt-6 bg-white w-full  shadow-xl rounded-md">
+        <UserStats stats={stats} />
+        <div className="mb-6">
+          <Bar data={data} options={options} />
+        </div>
       </div>
     </div>
   );
