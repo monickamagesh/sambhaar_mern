@@ -120,9 +120,6 @@ router.delete("/:id", async (req, res) => {
       return res.status(404).send({ message: "Product not found" });
     }
 
-    //delete reviews related to the product
-    await Reviews.deleteMany({ productId: productId });
-
     res.status(200).send({
       message: "Product deleted successfully",
     });

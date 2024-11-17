@@ -1,103 +1,89 @@
-import React from "react";
+import React, { useState } from "react";
 
-const ShopFiltering = ({
-  filters,
-  filtersState,
-  setFiltersState,
-  clearFilters,
-}) => {
+const ShopFiltering = ({ filtersState, setFiltersState, clearFilters, filters }) => {
+  const [expandedCategory, setExpandedCategory] = useState(null);
+
+  const handleCategorySelect = (category) => {
+    setFiltersState({ ...filtersState, category, subcategory: "" });
+    setExpandedCategory(expandedCategory === category ? null : category);
+  };
+
+  const handleSubcategorySelect = (subcategory) => {
+    setFiltersState({ ...filtersState, subcategory });
+  };
+
+  const handlePriceRangeSelect = (range) => {
+    setFiltersState({ ...filtersState, priceRange: range.label });
+  };
+
   return (
     <div className="space-y-5 flex-shrink-0">
       <div>Filters</div>
 
-      {/* category */}
+      {/* Category Accordion */}
       <div className="flex flex-col space-y-2">
         <h4 className="font-medium text-lg">Category</h4>
-
         <hr />
         {filters.categories.map((category) => (
-          <label key={category}>
-            <input
-              type="radio"
-              name="category"
-              value={category}
-              checked={filtersState.category === category}
-              onChange={(e) =>
-                setFiltersState({ ...filtersState, category: e.target.value })
-              }
-            />
-            <span className="ml-1">{category}</span>
-          </label>
+          <div key={category.value} className="mb-2">
+            <div
+              className="flex justify-between items-center cursor-pointer"
+              onClick={() => handleCategorySelect(category.value)}
+            >
+              <span>{category.label}</span>
+              {category.subcategories?.length > 0 && (
+                <button>
+                  {expandedCategory === category.value ? "-" : "+"}
+                </button>
+              )}
+            </div>
+
+            {/* Subcategories Accordion */}
+            {expandedCategory === category.value && category.subcategories?.length > 0 && (
+              <div className="ml-4 mt-2">
+                {category.subcategories.map((subcategory) => (
+                  <label key={subcategory.value} className="block">
+                    <input
+                      type="radio"
+                      name="subcategory"
+                      value={subcategory.value}
+                      checked={filtersState.subcategory === subcategory.value}
+                      onChange={() => handleSubcategorySelect(subcategory.value)}
+                    />
+                    <span className="ml-1">{subcategory.label}</span>
+                  </label>
+                ))}
+              </div>
+            )}
+          </div>
         ))}
       </div>
 
-      {/* subcategory */}
-      <div className="flex flex-col space-y-2">
-        <h4 className="font-medium text-lg">Subcategory</h4>
-
-        <hr />
-        {filters.subcategories.map((subcategory) => (
-          <label key={subcategory}>
-            <input
-              type="radio"
-              name="subcategory"
-              value={subcategory}
-              checked={filtersState.subcategory === subcategory}
-              onChange={(e) =>
-                setFiltersState({ ...filtersState, subcategory: e.target.value })
-              }
-            />
-            <span className="ml-1">{subcategory}</span>
-          </label>
-        ))}
-      </div>
-
-      {/* brands */}
-      <div className="flex flex-col space-y-2">
-        <h4 className="font-medium text-lg">Brands</h4>
-
-        <hr />
-        {filters.brands.map((brand) => (
-          <label key={brand}>
-            <input
-              type="radio"
-              name="brand"
-              value={brand}
-              checked={filtersState.brand === brand}
-              onChange={(e) =>
-                setFiltersState({ ...filtersState, brand: e.target.value })
-              }
-            />
-            <span className="ml-1">{brand}</span>
-          </label>
-        ))}
-      </div>
-
-      {/* pricing */}
-      <div className="flex flex-col space-y-2">
+      {/* Price Range Filter */}
+      <div>
         <h4 className="font-medium text-lg">Price Range</h4>
-
         <hr />
         {filters.priceRanges.map((range) => (
-          <label key={range.label}>
+          <label key={range.label} className="block">
             <input
               type="radio"
               name="priceRange"
-              value={`${range.min}-${range.max}`}
-              checked={filtersState.priceRange === `${range.min}-${range.max}`}
-              onChange={(e) =>
-                setFiltersState({ ...filtersState, priceRange: e.target.value })
-              }
+              value={range.label}
+              checked={filtersState.priceRange === range.label}
+              onChange={() => handlePriceRangeSelect(range)}
             />
             <span className="ml-1">{range.label}</span>
           </label>
         ))}
       </div>
 
-      {/* clear filter */}
-        <button onClick={clearFilters} className="bg-primary py-1 px-4 text-white rounded">
-            Clear All Filters
-        </button>
+      {/* Clear Filters */}
+      <button
+        onClick={clearFilters}
+        className="text-primary text-sm mt-3"
+      >
+        Clear Filters
+      </button>
     </div>
   );
 };

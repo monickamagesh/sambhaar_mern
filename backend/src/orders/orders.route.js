@@ -59,7 +59,7 @@ router.post("/create-checkout-session", async (req, res) => {
         amount: GrandTotal,
         email: user.email,
         orderStatus: "Ordered",
-        paymentMethod: "phonepe",
+        paymentMethod: "Phonepe",
         paymentStatus: "Pending",
       });
 
@@ -98,7 +98,7 @@ router.post("/create-cod-order", async (req, res) => {
       amount: GrandTotal,
       email: user.email,
       orderStatus: "Ordered",
-      paymentMethod: "cod",
+      paymentMethod: "Cash",
       paymentStatus: "Pending", // Will change once the order is delivered
     });
 
