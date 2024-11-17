@@ -18,6 +18,7 @@ import AdminDMain from "../pages/dashboard/admin/dashboard/AdminDMain";
 import AddProduct from "../pages/dashboard/admin/addProduct/AddProduct";
 import ManageProduct from "../pages/dashboard/admin/manageProduct/ManageProduct";
 import UpdateProduct from "../pages/dashboard/admin/manageProduct/UpdateProduct";
+import ManageUser from "../pages/dashboard/admin/users/ManageUser";
 
 const router = createBrowserRouter([
   {
@@ -82,7 +83,7 @@ const router = createBrowserRouter([
             path: "users",
             element: (
               <PrivateRoute role="admin">
-                <div>user admin dashboard</div>
+                <ManageUser />
               </PrivateRoute>
             ),
           },

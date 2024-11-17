@@ -11,118 +11,118 @@ import UploadImage from "../addProduct/UploadImage";
 
 //categories with subcategories
 const categories = [
-    {
-      label: "Select Category",
-      value: "",
-      subcategories: [{ label: "Select Category", value: "" }],
-    },
-    {
-      label: "Fresh Vegetables & Fruits",
-      value: "Fresh Vegetables & Fruits",
-      subcategories: [
-        { label: "Fresh Vegetables", value: "Fresh Vegetables" },
-        { label: "Fresh Fruits", value: "Fresh Fruits" },
-      ],
-    },
-    {
-      label: "Indian Grocery",
-      value: "Indian Grocery",
-      subcategories: [
-        { label: "Appalam | Vathal | Vadam", value: "Appalam | Vathal | Vadam" },
-        { label: "Bakery | Bread | Cakes", value: "Bakery | Bread | Cakes" },
-        {
-          label: "Cookies | Biscuits | Rusk",
-          value: "Cookies | Biscuits | Rusk",
-        },
-        { label: "Atta | Flours | Sooji", value: "Atta | Flours | Sooji" },
-        { label: "Dairy | Beverages", value: "Dairy | Beverages" },
-        { label: "Cooking Oil | Ghee", value: "Cooking Oil | Ghee" },
-        { label: "Dals | Pulses | Grains", value: "Dals | Pulses | Grains" },
-        { label: "Fruit Mix", value: "Fruit Mix" },
-        { label: "Dry Fruits | Nuts", value: "Dry Fruits | Nuts" },
-        {
-          label: "Indian Masala | Spices | Salt",
-          value: "Indian Masala | Spices | Salt",
-        },
-        { label: "Rice | Rice Products", value: "Rice | Rice Products" },
-        {
-          label: "Sugar | Sweeteners | Jaggery",
-          value: "Sugar | Sweeteners | Jaggery",
-        },
-        { label: "Snacks | Packaged Food", value: "Snacks | Packaged Food" },
-      ],
-    },
-    {
-      label: "Puja Needs & Idols",
-      value: "Puja Needs & Idols",
-      subcategories: [
-        { label: "Idols", value: "Idols" },
-        { label: "Puja Needs", value: "Puja Needs" },
-      ],
-    },
-    {
-      label: "Evergreen",
-      value: "Evergreen",
-      subcategories: [
-        { label: "South Vegies & Fruits", value: "South Vegies & Fruits" },
-        { label: "Indian Sweets", value: "Indian Sweets" },
-        { label: "South Snacks", value: "South Snacks" },
-      ],
-    },
-    {
-      label: "South Cookware",
-      value: "South Cookware",
-      subcategories: [
-        { label: "Cookware", value: "Cookware" },
-        { label: "Clay Cookware", value: "Clay Cookware" },
-      ],
-    },
-    {
-      label: "Handlooms",
-      value: "Handlooms",
-      subcategories: [
-        { label: "For Women", value: "For Women" },
-        { label: "For Men", value: "For Men" },
-        { label: "Accessories", value: "Accessories" },
-      ],
-    },
-    {
-      label: "Personal Care",
-      value: "Personal Care",
-      subcategories: [
-        { label: "Bath & Hand wash", value: "Bath & Hand wash" },
-        { label: "Hair Care", value: "Hair Care" },
-        { label: "Oral Care", value: "Oral Care" },
-      ],
-    },
-    {
-      label: "Cleaning & Household",
-      value: "Cleaning & Household",
-      subcategories: [
-        { label: "Cleaners", value: "Cleaners" },
-        { label: "Detergents | Dish wash", value: "Detergents | Dish wash" },
-      ],
-    },
-    { label: "South Special Grocery", value: "South Special Grocery" },
-    {
-      label: "Specials",
-      value: "Specials",
-      subcategories: [
-        {
-          label: "Dals, Pulses & Millets, Gbappa Grocery",
-          value: "Dals, Pulses & Millets, Gbappa Grocery",
-        },
-        {
-          label: "Grains & Flours, Grocery, Meela",
-          value: "Grains & Flours, Grocery, Meela",
-        },
-        {
-          label: "Monthly Essentials, Specials",
-          value: "Monthly Essentials, Specials",
-        },
-      ],
-    },
-  ];
+  {
+    label: "Select Category",
+    value: "",
+    subcategories: [{ label: "Select Category", value: "" }],
+  },
+  {
+    label: "Fresh Vegetables & Fruits",
+    value: "Fresh Vegetables & Fruits",
+    subcategories: [
+      { label: "Fresh Vegetables", value: "Fresh Vegetables" },
+      { label: "Fresh Fruits", value: "Fresh Fruits" },
+    ],
+  },
+  {
+    label: "Indian Grocery",
+    value: "Indian Grocery",
+    subcategories: [
+      { label: "Appalam | Vathal | Vadam", value: "Appalam | Vathal | Vadam" },
+      { label: "Bakery | Bread | Cakes", value: "Bakery | Bread | Cakes" },
+      {
+        label: "Cookies | Biscuits | Rusk",
+        value: "Cookies | Biscuits | Rusk",
+      },
+      { label: "Atta | Flours | Sooji", value: "Atta | Flours | Sooji" },
+      { label: "Dairy | Beverages", value: "Dairy | Beverages" },
+      { label: "Cooking Oil | Ghee", value: "Cooking Oil | Ghee" },
+      { label: "Dals | Pulses | Grains", value: "Dals | Pulses | Grains" },
+      { label: "Fruit Mix", value: "Fruit Mix" },
+      { label: "Dry Fruits | Nuts", value: "Dry Fruits | Nuts" },
+      {
+        label: "Indian Masala | Spices | Salt",
+        value: "Indian Masala | Spices | Salt",
+      },
+      { label: "Rice | Rice Products", value: "Rice | Rice Products" },
+      {
+        label: "Sugar | Sweeteners | Jaggery",
+        value: "Sugar | Sweeteners | Jaggery",
+      },
+      { label: "Snacks | Packaged Food", value: "Snacks | Packaged Food" },
+    ],
+  },
+  {
+    label: "Puja Needs & Idols",
+    value: "Puja Needs & Idols",
+    subcategories: [
+      { label: "Idols", value: "Idols" },
+      { label: "Puja Needs", value: "Puja Needs" },
+    ],
+  },
+  {
+    label: "Evergreen",
+    value: "Evergreen",
+    subcategories: [
+      { label: "South Vegies & Fruits", value: "South Vegies & Fruits" },
+      { label: "Indian Sweets", value: "Indian Sweets" },
+      { label: "South Snacks", value: "South Snacks" },
+    ],
+  },
+  {
+    label: "South Cookware",
+    value: "South Cookware",
+    subcategories: [
+      { label: "Cookware", value: "Cookware" },
+      { label: "Clay Cookware", value: "Clay Cookware" },
+    ],
+  },
+  {
+    label: "Handlooms",
+    value: "Handlooms",
+    subcategories: [
+      { label: "For Women", value: "For Women" },
+      { label: "For Men", value: "For Men" },
+      { label: "Accessories", value: "Accessories" },
+    ],
+  },
+  {
+    label: "Personal Care",
+    value: "Personal Care",
+    subcategories: [
+      { label: "Bath & Hand wash", value: "Bath & Hand wash" },
+      { label: "Hair Care", value: "Hair Care" },
+      { label: "Oral Care", value: "Oral Care" },
+    ],
+  },
+  {
+    label: "Cleaning & Household",
+    value: "Cleaning & Household",
+    subcategories: [
+      { label: "Cleaners", value: "Cleaners" },
+      { label: "Detergents | Dish wash", value: "Detergents | Dish wash" },
+    ],
+  },
+  { label: "South Special Grocery", value: "South Special Grocery" },
+  {
+    label: "Specials",
+    value: "Specials",
+    subcategories: [
+      {
+        label: "Dals, Pulses & Millets, Gbappa Grocery",
+        value: "Dals, Pulses & Millets, Gbappa Grocery",
+      },
+      {
+        label: "Grains & Flours, Grocery, Meela",
+        value: "Grains & Flours, Grocery, Meela",
+      },
+      {
+        label: "Monthly Essentials, Specials",
+        value: "Monthly Essentials, Specials",
+      },
+    ],
+  },
+];
 
 const UpdateProduct = () => {
   const { id } = useParams();
@@ -211,8 +211,6 @@ const UpdateProduct = () => {
       image: newImage ? newImage : product.image,
       author: user?._id,
     };
-
-
 
     try {
       await updateProduct({ id: id, ...updatedProduct }).unwrap();
@@ -327,11 +325,15 @@ const UpdateProduct = () => {
         </div>
 
         <div>
-                    <button type='submit'
-                    className='add-product-btn'
-                   
-                    >{isUpdating ? 'Updating...' : 'Update Product'}</button>
-                </div>
+          <button
+            type="submit"
+            className={`mt-4 w-full bg-orange-600 text-white py-3 px-4 rounded-md shadow-lg transition-all duration-300 ${
+              isUpdating ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          >
+            {isUpdating ? "Updating..." : "Update Product"}
+          </button>
+        </div>
       </form>
     </div>
   );

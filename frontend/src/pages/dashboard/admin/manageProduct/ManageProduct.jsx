@@ -8,7 +8,7 @@ import { formatDate } from "../../../../util/formatDate";
 
 const ManageProduct = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(30);
+  const [productsPerPage] = useState(12);
 
   const {
     data: { products = [], totalPages, totalProducts } = {},

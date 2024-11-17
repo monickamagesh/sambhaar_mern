@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useGetOrdersByEmailQuery } from "../../../redux/features/orders/orderApi";
 
+
 const UserOrders = () => {
   const { user } = useSelector((state) => state.auth);
   const {
@@ -17,11 +18,11 @@ const UserOrders = () => {
   if (error) return <div>No order found!</div>;
   return (
     <section className="py-1 bg-blueGray-50">
-      <div className="w-full mb-12 xl:mb-0 px-4 mx-auto">
-        <div className="rounded-t mb-0 px-4 py-3 border-0">
+      <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-md rounded">
+        <div className=" mb-0 px-4 py-3 border-0">
           <div className="flex flex-wrap items-center">
             <div className="relative w-full px-4 max-w-full flex-grow flex-1">
-            <h2 className="text-2xl font-bold mb-6">Your Orders</h2>
+              <h2 className="text-2xl font-bold mb-2">Your Orders</h2>
             </div>
             <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
               <button
@@ -33,7 +34,7 @@ const UserOrders = () => {
             </div>
           </div>
         </div>
-        <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5">
+        <div className="overflow-hidden rounded-md border border-gray-200 ">
           <table className="w-full border-collapse bg-white text-left text-sm text-gray-500">
             <thead className="bg-gray-50">
               <tr>
@@ -81,7 +82,7 @@ const UserOrders = () => {
                       </td>
                       <td className="px-6 py-4">
                         <span
-                          className={`inline-flex items-center gap-1 rounded-full ${
+                          className={`inline-flex items-center gap-1 rounded-lg ${
                             order?.orderStatus === "Completed"
                               ? "bg-green-50 text-green-600"
                               : order?.orderStatus === "Ordered"
@@ -93,25 +94,12 @@ const UserOrders = () => {
                               : "bg-indigo-50 text-indigo-600"
                           } px-2 py-1 text-xs font-semibold`}
                         >
-                          <span
-                            className={`h-1.5 w-1.5 rounded-full ${
-                              order?.orderStatus === "Completed"
-                                ? "bg-green-600"
-                                : order?.orderStatus === "Ordered"
-                                ? "bg-red-600"
-                                : order?.orderStatus === "Processing"
-                                ? "bg-yellow-600"
-                                : order?.orderStatus === "Shipped"
-                                ? "bg-blue-600"
-                                : "bg-indigo-600"
-                            }`}
-                          ></span>
                           {order?.orderStatus}
                         </span>
                       </td>
                       <td className="px-6 py-4">
                         <span
-                          className={`inline-flex items-center gap-1 rounded-full ${
+                          className={`inline-flex items-center gap-1 rounded-lg ${
                             order?.paymentStatus === "Success"
                               ? "bg-green-50 text-green-600"
                               : order?.paymentStatus === "Pending"
@@ -119,15 +107,6 @@ const UserOrders = () => {
                               : "bg-red-50 text-red-600"
                           } px-2 py-1 text-xs font-semibold`}
                         >
-                          <span
-                            className={`h-1.5 w-1.5 rounded-full ${
-                              order?.paymentStatus === "Success"
-                                ? "bg-green-600"
-                                : order?.paymentStatus === "Pending"
-                                ? "bg-indigo-600"
-                                : "bg-red-600"
-                            }`}
-                          ></span>
                           {order?.paymentStatus}
                         </span>
                       </td>
@@ -149,6 +128,7 @@ const UserOrders = () => {
           </table>
         </div>
       </div>
+      
     </section>
   );
 };

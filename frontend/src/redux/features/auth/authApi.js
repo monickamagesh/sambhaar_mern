@@ -7,7 +7,7 @@ const authApi = createApi({
     baseUrl: `${getBaseUrl()}/api/auth`,
     credentials: "include",
   }),
-  tagTypes: ['users'],
+  tagTypes: ["users"],
   endpoints: (builder) => ({
     registerUser: builder.mutation({
       query: (newUser) => ({
@@ -39,19 +39,19 @@ const authApi = createApi({
     }),
     deleteUser: builder.mutation({
       query: (userId) => ({
-        url: `/user/${userId}`,
+        url: `/users/${userId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["user"],
+      invalidatesTags: ["User"],
     }),
     updateUserRole: builder.mutation({
-      query: (userId, role) => ({
-        url: `/user/${userId}`,
+      query: ({ userId, role }) => ({
+        url: `/users/${userId}`,
         method: "PUT",
         body: { role },
       }),
       refetchOnMount: true,
-      invalidatesTags: ["users"],
+      invalidatesTags: ["User"],
     }),
     editProfile: builder.mutation({
       query: (profileData) => ({
@@ -71,6 +71,5 @@ export const {
   useDeleteUserMutation,
   useUpdateUserRoleMutation,
   useEditProfileMutation,
-  
 } = authApi;
 export default authApi;
