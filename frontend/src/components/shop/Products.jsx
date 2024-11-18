@@ -179,7 +179,7 @@ const Products = () => {
   return (
     <>
       <section className="section__container py-12">
-        <div className="flex flex-col md:flex-row gap-8">
+        <div className="flex flex-col md:flex-row gap-4">
           {/* Left side - Filter options */}
           <ShopFiltering
             filters={filters}
@@ -189,7 +189,7 @@ const Products = () => {
           />
 
           {/* Right side - Products */}
-          <div className="section__container">
+          <div className="">
             <h3 className="font-medium mb-4">
               Showing {startProduct} to {endProduct} of {totalProducts} products
             </h3>
