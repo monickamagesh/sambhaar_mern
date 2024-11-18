@@ -1,20 +1,20 @@
 import React from 'react'
-import dealsImg from "../../assets/deals.png"
+import dealsImg from "../../assets/milk-bottle.png"
 
 const DealsSection = () => {
   return (
     <section className='section__container deals__container'>
-        <div  className='deals__image'>
-            <img src={dealsImg} alt="" />
+        <div  className='deals__image '>
+            <img src={dealsImg}  alt="" />
         </div>
         <div className='deals__content'>
-            <h5>Get Up tp 20% Discount</h5>
-            <h4>Deals of this Month</h4>
+            <h5>Get Milk at you door</h5>
+            <h4>Monthly Subscription</h4>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, illo iusto nemo ut saepe accusantium corporis pariatur fugit magni, odit debitis nobis? Tempore possimus voluptatem laborum consequatur, ex beatae deserunt?a
             </p>
             <div className='deals__countdown flex-wrap'>
                 <div className='deals__countdown__card'>
-                    <h4>14</h4>
+                    <h4>20</h4>
                     <p>Days</p>
                 </div>
                 <div className='deals__countdown__card'>

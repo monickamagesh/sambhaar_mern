@@ -17,7 +17,7 @@ const OrderSummary = () => {
     (store) => store.cart
   );
 
-  const [paymentMethod, setPaymentMethod] = useState("phonepe"); // Default to PhonePe
+  const [paymentMethod, setPaymentMethod] = useState("phonepe");
   const [loading, setLoading] = useState(false);
 
   const handleQuantity = (type, id) => {
@@ -31,8 +31,6 @@ const OrderSummary = () => {
   const handleClearCart = () => {
     dispatch(clearCart());
   };
-
-  
 
   const makePayment = async (e) => {
     e.preventDefault();
@@ -57,12 +55,11 @@ const OrderSummary = () => {
         const redirectUrl =
           response.data?.data?.instrumentResponse?.redirectInfo?.url;
         if (redirectUrl) {
-          window.location.href = redirectUrl; // Redirect to PhonePe
+          window.location.href = redirectUrl;
         } else {
           console.error("Redirect URL not found in response", response.data);
         }
       } else if (paymentMethod === "cod") {
-        // For COD, save the order and handle redirection here
         const response = await axios.post(
           `${getBaseUrl()}/api/orders/create-cod-order`,
           data
@@ -82,70 +79,156 @@ const OrderSummary = () => {
   };
 
   return (
-    <div className="mt-5 rounded text-base p-4 h-screen">
-      <h2 className="text-xl text-text-dark mb-4">Order Summary</h2>
-
-      {products.length === 0 ? (
-        <div>Your cart is empty</div>
-      ) : (
-        <div className="space-y-5">
-          {products.map((item, index) => (
-            <div
-              key={index}
-              className="flex flex-col md:flex-row md:items-center md:justify-between shadow-md md:p-5 p-2 mb-4"
-            >
-              <span className="mr-4 px-1 bg-primary text-white rounded-full">
-                0{index + 1}
-              </span>
-              <img
-                src={item.image}
-                alt={item.name}
-                className="size-12 object-cover mr-4"
-              />
-              <div>
-                <h5 className="text-lg font-medium">{item.name}</h5>
-                <p className="text-gray-600 text-sm">
-                  ${Number(item.price).toFixed(2)}
-                </p>
+    <div className="min-h-screen mt-20 bg-gray-100 p-6">
+      <div className=" mx-auto bg-white shadow-lg rounded-lg p-6">
+        {products.length === 0 ? (
+          <div className="text-center text-lg font-bold">
+            Your cart is empty.
+          </div>
+        ) : (
+          <div className="space-y-6 justify-center ">
+            {products.map((item, index) => (
+              <div
+                key={index}
+                className="flex items-center gap-8 bg-gray-50 shadow-md rounded-md p-4 px-10"
+              >
+                <span className="text-sm font-medium text-white bg-primary  px-2 py-1 rounded-full">
+                  0{index + 1}
+                </span>
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-16 h-16 rounded-md object-cover mx-4"
+                />
+                <div className="flex-1">
+                  <h5 className="text-lg font-semibold">{item.name}</h5>
+                  <p className="text-primary font-semibold text-sm">
+                    ₹{item.price.toFixed(2)}
+                  </p>
+                  <p className="text-gray-600 text-xs">
+                    {item.quantity} x 1 lb
+                  </p>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <p className=" font-semibold text-lg">
+                    ₹{item.price.toFixed(2) * item.quantity}
+                  </p>
+                  <button
+                    onClick={() => handleQuantity("decrement", item._id)}
+                    className="px-2 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+                  >
+                    -
+                  </button>
+                  <span>{item.quantity}</span>
+                  <button
+                    onClick={() => handleQuantity("increment", item._id)}
+                    className="px-2 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+                  >
+                    +
+                  </button>
+                  <button
+                    onClick={() => handleRemove(item._id)}
+                    className="text-red-500 hover:text-red-600"
+                  >
+                    <i className="ri-close-fill ri-lg"></i>
+                  </button>
+                </div>
               </div>
-              <div className="flex flex-row md:justify-start justify-end items-center mt-2">
-                <button
-                  onClick={() => handleQuantity("decrement", item._id)}
-                  className="size-6 flex items-center justify-center px-1.5 rounded-full bg-gray-200 text-gray-700 hover:bg-primary hover:text-white ml-8"
-                >
-                  -
-                </button>
-                <span className="px-2 text-center mx-1">{item.quantity}</span>
-                <button
-                  onClick={() => handleQuantity("increment", item._id)}
-                  className="size-6 flex items-center justify-center px-1.5 rounded-full bg-gray-200 text-gray-700 hover:bg-primary hover:text-white"
-                >
-                  +
-                </button>
-                <button
-                  onClick={() => handleRemove(item._id)}
-                  className="ml-5 text-gray-600 hover:text-red-600"
-                >
-                  <i className="ri-close-fill ri-sm"></i>
-                </button>
+            ))}
+
+            <div className="p-6 mt-6 bg-white w-full  shadow-xl rounded-md">
+              <h2 className="text-xl font-semibold mb-4 mt-4">
+                Choose Payement Method:
+              </h2>
+              <div className="my-5 space-y-4 grid grid-cols-2">
+                <div className="grid gap-4  grid-cols-3">
+                  <div
+                    value="phonepe"
+                    
+                    className="bg-white shadow-md w-56 rounded-lg p-4 border-b-4 border-primary items-center justify-center flex flex-col hover:scale-105 transition-all duration-200 cursor-pointer"
+                  >
+                    <p className="text-xl font-bold ">PhonePe</p>
+                    <h2 className="text-lg font-semibold mb-2">
+                      Online Payement
+                    </h2>
+                  </div>
+                  <div
+                    value="cash"
+                    className="bg-white shadow-md w-56 rounded-lg p-4 border-b-4 border-primary items-center justify-center flex flex-col hover:scale-105 transition-all duration-200 cursor-pointer"
+                  >
+                    <h2 className="text-lg font-semibold mb-2">
+                      Cash on Delivery
+                    </h2>
+                    <p className="text-xl font-bold"> Cash </p>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 justify-end">
+                  <div className="bg-white shadow-md rounded-lg p-6 border border-[#ff1a1a] ">
+                    <div className="text-gray-700 flex justify-between">
+                      <span className="font-semibold  text-medium">
+                        Selected Items
+                      </span>
+                      <span className="font-semibold text-lg text-primary">
+                        {selectedItems}
+                      </span>
+                    </div>
+                    <div className="text-gray-700 flex justify-between">
+                      <span className="font-semibold  text-medium">
+                        Total Price
+                      </span>
+                      <span className="font-semibold text-lg text-primary">
+                        ₹ {totalPrice.toFixed(2)}
+                      </span>
+                    </div>
+                    <div className="text-gray-700 flex justify-between">
+                      <span className="font-semibold  text-medium">
+                        Tax ({taxRate * 100}%)
+                      </span>
+                      <span className="font-semibold text-lg text-primary">
+                        ₹ {tax.toFixed(2)}
+                      </span>
+                    </div>
+                    <div className="text-gray-700 flex justify-between">
+                      <span className="font-semibold  text-medium">
+                        Grand Total
+                      </span>
+                      <span className="font-semibold text-lg text-primary">
+                        ₹ {grandTotal.toFixed(2)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          ))}
 
-          {/* Display totals */}
-          <div className="px-4 mb-6">
-            <p className="text-text-dark mt-2">
-              Selected Items: {selectedItems}
-            </p>
-            <p>Total Price: ${totalPrice.toFixed(2)}</p>
-            <p className="font-bold">
-              Tax({taxRate * 100}%) : ${tax.toFixed(2)}
-            </p>
-            <h3 className="font-bold">Grand Total: ${grandTotal.toFixed(2)}</h3>
+            <div className="flex justify-center  items-center gap-8">
+              <button
+                
+                className="border-primary text-sm font-semibold px-4 py-3.5  border rounded-full text-primary"
+              >
+                Clear Cart
+              </button>
+              {products.length > 0 && (
+                <div className="">
+                  <div
+                    
+                    
+                    className=" flex justify-between w-[240px] items-center bg-primary hover:bg-primary-dark text-sm font-semibold text-white py-1 px-1 pl-8 rounded-full  transition"
+                  >
+                    {loading ? "Processing..." : "Proceed to Pay"}
+                    <p className="bg-white  text-sm font-semibold px-4 py-3.5  flex justify-center rounded-full  text-primary">
+                      ₹ {grandTotal.toFixed(2)}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
+        )}
+      </div>
 
-          {/* Payment method selection */}
-          <div className="mb-6">
+      {/* Payment method selection */}
+      <div className="mb-6">
             <h3 className="text-lg font-semibold mb-2">
               Choose Payment Method:
             </h3>
@@ -185,8 +268,6 @@ const OrderSummary = () => {
           >
             Proceed to Payment
           </button>
-        </div>
-      )}
       <Footer />
     </div>
   );

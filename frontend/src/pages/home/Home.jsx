@@ -20,12 +20,12 @@ const Home = () => {
     <div>
         <HeroSection />
         <Categories />
-        <HomeCards />
+        
         <Trending />
         <Products />
         <DealsSection />
         <PromoBanner />
-        <Blogs />
+        
         <Footer />
     </div>
   )

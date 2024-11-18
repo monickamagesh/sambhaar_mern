@@ -9,7 +9,7 @@ const Trending = () => {
     }
   return (
     <section className="section__container product__container">
-      <h2 className="section__header">Trending Products</h2>
+      <h2 className="section__header">Top Selling Products</h2>
       <p className=" section__subheader mb-12">
         Discover the best selling products: Lorem ipsum dolor sit amet
         consectetur adipisicing elit!

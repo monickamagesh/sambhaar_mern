@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { getBaseUrl } from "../../util/baseURL";
 import TimelineStep from "../../components/orders/TimelineSteps";
 import Footer from "../../components/Footer";
+import Products from "../../components/shop/Products";
 
 const OrderSuccess = () => {
   const [order, setOrder] = useState(null);
@@ -79,9 +80,10 @@ const OrderSuccess = () => {
 
   
   return (
-    <section className=" rounded p-6 h-screen section__container">
+    <section className=" ">
+      <div className="rounded p-6 section__container">
       <div className="mt-10 ml-14">
-        <h2 className="text-2xl font-semibold mb-4">
+        <h2 className="text-2xl font-bold mb-4">
           Payment {order.paymentStatus}
         </h2>
         <p className="mb-4">Order Id: {order?.orderId}</p>
@@ -102,6 +104,10 @@ const OrderSuccess = () => {
           />
         ))}
       </ol>
+      </div>
+      
+      <div className="mt-20 text-xl font-bold ml-10">Continue Shopping</div>
+      <Products />
       <Footer />
     </section>
   );
