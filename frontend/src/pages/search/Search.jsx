@@ -1,50 +1,81 @@
 import React, { useEffect, useState } from "react";
-
-import products from "../../data/products.json";
+import { Link } from "react-router-dom";
+import axios from "axios";
 import ProductCards from "../../components/shop/ProductCards";
 import Footer from "../../components/Footer";
+import { getBaseUrl } from "../../util/baseURL";
+import Products from "../../components/shop/Products";
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [fiteredProducts, setFilteredProducts] = useState(products);
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
-  const handleSearch = () => {
-    const query = searchQuery.toLowerCase();
-
-    const filtered = products.filter(
-      (product) =>
-        product.name.toLowerCase().includes(query) ||
-        product.description.toLowerCase().includes(query)
-    );
-
-    setFilteredProducts(filtered);
+  // Fetch products from the database
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(`${getBaseUrl()}/api/products/search`);
+      setProducts(response.data);
+      setFilteredProducts(response.data); // Set initial products to display
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
   };
 
   useEffect(() => {
+    fetchProducts();
     window.scrollTo(0, 0);
-  }, []); 
+  }, []);
+
+  const handleSearch = () => {
+    const query = searchQuery.toLowerCase();
+    const filtered = products.filter(
+      (product) =>
+        product.name.toLowerCase().includes(query) ||
+        product.description.toLowerCase().includes(query) ||
+        product.category.toLowerCase().includes(query) ||
+        product.subcategory.toLowerCase().includes(query) ||
+        product.quantity.toLowerCase().includes(query) ||
+        product.brand.toLowerCase().includes(query)
+    );
+    setFilteredProducts(filtered);
+  };
 
   return (
     <>
       <section className="section__container">
-        <div className="w-full mb-12 flex flex-col md:flex-row items-center justify-center gap-4">
+        <div className="w-full mb-12 flex fixed top-0 left-0 z-50 py-5 bg-opacity-50 backdrop-blur-md flex-col border border-b-0.5  border-primary md:flex-row items-center justify-center gap-4">
+        <span className="search-bar w-[50%] p-2 border border-primary active:border-o.5 rounded outline-none ">
+        <button
+            onClick={handleSearch}
+            className="pr-4"
+          >
+            <i className="ri-search-line  font-bold text-primary"></i>
+          </button>
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="search-bar w-full max-w-full p-2 border rounded"
+            className="w-5/6 outline-none"
             placeholder="Search for products.."
           />
-          <button
-            onClick={handleSearch}
-            className="search-button w-full md:w-auto py-2 px-8 bg-primary text-white rounded"
-          >
-            Search
-          </button>
-        </div>
+        </span>
+        
+          
+          <Link to="/shop" className="border border-primary active:border-o.5 p-2 px-3 rounded outline-none">
+            <i className="ri-close-large-fill text-primary font-bold"></i>
+          </Link>
 
-        <ProductCards products={fiteredProducts} />
+        </div>
+        <div className="">
+          <div className="section__container">
+          <ProductCards products={filteredProducts} className="lg:grid-cols-5"  />
+          </div>
+        
+        <Products />
         <Footer />
+        </div>
+        
       </section>
     </>
   );

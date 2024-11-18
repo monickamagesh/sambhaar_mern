@@ -64,6 +64,18 @@ router.get("/", async (req, res) => {
   }
 });
 
+//get all products for search
+// Get all products
+router.get("/search", async (req, res) => {
+  try {
+    const products = await Products.find();
+    res.status(200).send(products);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).send({ message: "Failed to fetch products" });
+  }
+});
+
 //get single product
 router.get("/:id", async (req, res) => {
   try {

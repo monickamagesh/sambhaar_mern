@@ -60,6 +60,8 @@ function Navbar() {
     { path: "/dashboard/reviews", label: "Reviews" },
   ];
 
+
+
   const dropDownMenus =
     user?.role === "admin" ? [...adminDropDownMenus] : [...userDropDownMenus];
 
@@ -95,16 +97,10 @@ function Navbar() {
               Products
             </Link>
             <Link
-              to="/offers"
+              to="/about"
               className="hover:text-[#C74227] transition duration-200 hover:font-medium"
             >
-              Offers
-            </Link>
-            <Link
-              to="/Pages"
-              className="hover:text-[#C74227] transition duration-200 hover:font-medium"
-            >
-              Pages
+              About Us
             </Link>
             <Link
               to="/contact"

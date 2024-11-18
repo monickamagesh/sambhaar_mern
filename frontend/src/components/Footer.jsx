@@ -53,7 +53,7 @@ const Footer = () => {
         {/* App Download Section */}
         <div className="text-center sm:text-left">
           <h4 className="text-lg md:text-xl font-bold mb-2 md:mb-4">Download Our App</h4>
-          <div className="flex jflex-col gap-3 justify-center sm:justify-start">
+          <div className="flex flex-col gap-3 justify-center sm:justify-start">
             <a href="#"><img src={GooglePlay} alt="Google Play" className="w-28 md:w-32" /></a>
             <a href="#"><img src={ApplePlay} alt="App Store" className="w-28 md:w-32" /></a>
           </div>
