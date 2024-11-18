@@ -6,11 +6,13 @@ import { useFetchAllProductsQuery } from "../../redux/features/products/products
 const filters = {
   categories: [
     {
-      label: "All",
+      label: "Category",
+      icon: "",
       value: "",
     },
     {
       label: "Fresh Vegetables & Fruits",
+      icon:" ",
       value: "Fresh Vegetables & Fruits",
       subcategories: [
         { label: "Fresh Vegetables", value: "Fresh Vegetables" },
@@ -19,6 +21,7 @@ const filters = {
     },
     {
       label: "Indian Grocery",
+      icon:" ",
       value: "Indian Grocery",
       subcategories: [
         { label: "Appalam | Vathal | Vadam", value: "Appalam | Vathal | Vadam" },
@@ -48,6 +51,7 @@ const filters = {
     {
       label: "Puja Needs & Idols",
       value: "Puja Needs & Idols",
+      icon:" ",
       subcategories: [
         { label: "Idols", value: "Idols" },
         { label: "Puja Needs", value: "Puja Needs" },
@@ -56,6 +60,7 @@ const filters = {
     {
       label: "Evergreen",
       value: "Evergreen",
+      icon:" ",
       subcategories: [
         { label: "South Vegies & Fruits", value: "South Vegies & Fruits" },
         { label: "Indian Sweets", value: "Indian Sweets" },
@@ -65,6 +70,7 @@ const filters = {
     {
       label: "South Cookware",
       value: "South Cookware",
+      icon:" ",
       subcategories: [
         { label: "Cookware", value: "Cookware" },
         { label: "Clay Cookware", value: "Clay Cookware" },
@@ -72,6 +78,7 @@ const filters = {
     },
     {
       label: "Handlooms",
+      icon:" ",
       value: "Handlooms",
       subcategories: [
         { label: "For Women", value: "For Women" },
@@ -82,6 +89,7 @@ const filters = {
     {
       label: "Personal Care",
       value: "Personal Care",
+      icon:" ",
       subcategories: [
         { label: "Bath & Hand wash", value: "Bath & Hand wash" },
         { label: "Hair Care", value: "Hair Care" },
@@ -91,15 +99,17 @@ const filters = {
     {
       label: "Cleaning & Household",
       value: "Cleaning & Household",
+      icon:" ",
       subcategories: [
         { label: "Cleaners", value: "Cleaners" },
         { label: "Detergents | Dish wash", value: "Detergents | Dish wash" },
       ],
     },
-    { label: "South Special Grocery", value: "South Special Grocery" },
+    { label: "South Special Grocery", icon:" ", value: "South Special Grocery" },
     {
       label: "Specials",
       value: "Specials",
+      icon: "",
       subcategories: [
         {
           label: "Dals, Pulses & Millets, Gbappa Grocery",
@@ -178,7 +188,7 @@ const Products = () => {
 
   return (
     <>
-      <section className="section__container py-12">
+      <section className="py-12">
         <div className="flex flex-col md:flex-row gap-4">
           {/* Left side - Filter options */}
           <ShopFiltering
@@ -189,7 +199,7 @@ const Products = () => {
           />
 
           {/* Right side - Products */}
-          <div className="">
+          <div className="p-8">
             <h3 className="font-medium mb-4">
               Showing {startProduct} to {endProduct} of {totalProducts} products
             </h3>

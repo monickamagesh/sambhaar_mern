@@ -7,6 +7,7 @@ import DealsSection from '../../components/home/DealsSection'
 import PromoBanner from '../../components/home/PromoBanner'
 import Blogs from '../../components/blogs/blogs'
 import Footer from '../../components/Footer'
+import Products from '../../components/shop/Products'
 
 const Home = () => {
 
@@ -21,6 +22,7 @@ const Home = () => {
         <Categories />
         <HomeCards />
         <Trending />
+        <Products />
         <DealsSection />
         <PromoBanner />
         <Blogs />

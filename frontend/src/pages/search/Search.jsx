@@ -43,9 +43,9 @@ const Search = () => {
 
   return (
     <>
-      <section className="section__container">
-        <div className="w-full mb-12 flex fixed top-0 left-0 z-50 py-5 bg-opacity-50 backdrop-blur-md flex-col border border-b-0.5  border-primary md:flex-row items-center justify-center gap-4">
-        <span className="search-bar w-[50%] p-2 border border-primary active:border-o.5 rounded outline-none ">
+      <section className=" ">
+        <div className="w-full mb-12 flex fixed top-0 left-0 z-50 py-5 bg-opacity-50 backdrop-blur-xl  flex-col border border-b-1  border-primary md:flex-row items-center justify-center gap-4">
+        <span className="search-bar w-[50%] p-2 border border-primary active:border-1 rounded-lg outline-none ">
         <button
             onClick={handleSearch}
             className="pr-4"
@@ -62,14 +62,14 @@ const Search = () => {
         </span>
         
           
-          <Link to="/shop" className="border border-primary active:border-o.5 p-2 px-3 rounded outline-none">
+          <Link to="/shop" className="border border-primary active:border-1 p-2 px-3 rounded-lg outline-none">
             <i className="ri-close-large-fill text-primary font-bold"></i>
           </Link>
 
         </div>
         <div className="">
-          <div className="section__container">
-          <ProductCards products={filteredProducts} className="lg:grid-cols-5"  />
+          <div className="pt-36 mx-20">
+          <ProductCards products={filteredProducts}   />
           </div>
         
         <Products />

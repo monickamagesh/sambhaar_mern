@@ -129,7 +129,7 @@ function Navbar() {
                         onClick={handleDropDownToggle}
                         src={user.profileImage}
                         alt="User Avatar"
-                        className="size-7 rounded-full cursor-pointer"
+                        className="size-10 rounded-full cursor-pointer"
                       />
                     ) : (
                       <Link
@@ -278,15 +278,15 @@ function Navbar() {
 
 
       {/* Add to card */}
-      <div className="top-[40%] -right-1 z-50 fixed flex items-center justify-end ">
-        <span className="hover:text-primary bg-primary px-3 py-4 rounded-md gap-2 flex flex-col">
-          <button onClick={handleCartToggle} className="">
-            <i className="ri-shopping-cart-fill ri-lg text-white hover:text-[#C74227]"></i>
+      <div onClick={handleCartToggle}  className="top-[40%] -right-1 z-50 fixed flex items-center justify-end cursor-pointer">
+        <span className=" bg-primary hover:bg-primary-dark px-3 py-4 rounded-md gap-2 flex flex-col">
+          <div  className="">
+            <i className="ri-shopping-cart-fill ri-lg text-white"></i>
             <span className="inline-block text-sm pl-0.5 font-semibold text-white">
               {products.length} {(products.length > 1) ? "Items" : "Item"}
             </span>
-          </button>
-          <p className="bg-white text-sm font-medium px-1 py-2 flex justify-center rounded-sm  text-primary">₹{totalPrice}</p>
+          </div>
+          <p className="bg-white  text-sm font-medium px-1 py-2 flex justify-center rounded-sm  text-primary">₹{totalPrice}</p>
         </span>
       </div>
 
