@@ -5,13 +5,19 @@ import CartModel from "./cart/CartModel";
 import { useLogoutUserMutation } from "../redux/features/auth/authApi";
 import { logout } from "../redux/features/auth/authSlice";
 
+
 function Navbar() {
-  //cart
+
+  const {  totalPrice  } = useSelector(
+    (store) => store.cart
+  );
   const products = useSelector((state) => state.cart.products);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const handleCartToggle = () => {
     setIsCartOpen(!isCartOpen);
   };
+
+  
 
   //show user if logged in
   const dispatch = useDispatch();
@@ -81,6 +87,7 @@ function Navbar() {
         <div className="flex items-center justify-between space-x-6">
           {/* Center Links - Hidden on small screens */}
           <div className="hidden md:flex space-x-6 text-gray-700">
+          
             <Link
               to="/shop"
               className="hover:text-[#C74227] transition duration-200 hover:font-medium"
@@ -111,22 +118,13 @@ function Navbar() {
           <div className="flex items-center space-x-6">
             {/* Icons Section - Hidden on small screens */}
             <div className="hidden md:flex space-x-4 items-center">
-              <span>
-                <Link to="/search" className="hover:text-primary">
-                  <i className="ri-search-line ri-lg text-gray-700"></i>
-                </Link>
+            <span>
+            <Link className="hover:text-primary" to="/search">
+            <i className="ri-search-line ri-lg text-gray-700"></i>
+            </Link>
+                
               </span>
-              <span>
-                <button
-                  onClick={handleCartToggle}
-                  className="hover:text-primary"
-                >
-                  <i className="ri-shopping-cart-line ri-lg text-gray-700 hover:text-[#C74227]"></i>
-                  <sup className="inline-block text-xs px-1.5 text-white bg-primary rounded-full">
-                    {products.length}
-                  </sup>
-                </button>
-              </span>
+
               <span>
                 {user && user ? (
                   <>
@@ -219,12 +217,6 @@ function Navbar() {
                 Products
               </Link>
               <Link
-                to="/offers"
-                className="text-gray-700 hover:text-[#C74227] transition duration-200 hover:font-medium"
-              >
-                Offers
-              </Link>
-              <Link
                 to="/contact"
                 className="text-gray-700 hover:text-[#C74227] transition duration-200 hover:font-medium"
               >
@@ -287,6 +279,22 @@ function Navbar() {
           onClose={handleCartToggle}
         />
       )}
+
+
+      {/* Add to card */}
+      <div className="top-[40%] -right-1 z-50 fixed flex items-center justify-end ">
+        <span className="hover:text-primary bg-primary px-3 py-4 rounded-md gap-2 flex flex-col">
+          <button onClick={handleCartToggle} className="">
+            <i className="ri-shopping-cart-fill ri-lg text-white hover:text-[#C74227]"></i>
+            <span className="inline-block text-sm pl-0.5 font-semibold text-white">
+              {products.length} {(products.length > 1) ? "Items" : "Item"}
+            </span>
+          </button>
+          <p className="bg-white text-sm font-medium px-1 py-2 flex justify-center rounded-sm  text-primary">₹{totalPrice}</p>
+        </span>
+      </div>
+
+      
     </header>
   );
 }
