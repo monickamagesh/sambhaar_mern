@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import RatingStars from "../RatingStars";
 import SingleProductPopup from "./SingleProduct";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, updateQuantity, removeFromCart } from "../../redux/features/cart/cartSlice";
+import {
+  addToCart,
+  updateQuantity,
+  removeFromCart,
+} from "../../redux/features/cart/cartSlice";
 
 const ProductCards = ({ products }) => {
   // Redux
@@ -32,7 +36,7 @@ const ProductCards = ({ products }) => {
 
   // Get products in the cart from the Redux store
   const productIn = useSelector((state) => state.cart.products);
-  
+
   // Find product in cart helper function
   const findProductInCart = (id) => {
     return productIn.find((product) => product._id === id) || null;
@@ -62,11 +66,11 @@ const ProductCards = ({ products }) => {
               onClick={() => openModal(product)}
             >
               {/* Product Image */}
-              <div className="relative flex h-48 w-auto sm:px-10 items-center justify-center sm:h-56 lg:h-64">
+              <div className="relative flex h-48 w-auto sm:px-10 items-center justify-center sm:h-56 lg:h-64 group overflow-hidden">
                 <img
                   src={product.image}
                   alt="product"
-                  className="block object-contain product-image"
+                  className="block object-contain product-image transform transition-transform duration-300 group-hover:scale-110"
                 />
                 {product.discount && (
                   <div className="absolute top-3 rounded-full bg-yellow-500 px-2 text-xs font-semibold leading-6 text-light">
@@ -80,13 +84,17 @@ const ProductCards = ({ products }) => {
                 <h3 className="mb-2 truncate text-sm font-semibold text-heading">
                   {product.name}
                 </h3>
-                <h4 className="text-xs text-gray-500 mb-4">{product.quantity}</h4>
+                <h4 className="text-xs text-gray-500 mb-4">
+                  {product.weight}
+                </h4>
 
                 <div className="flex items-center justify-between">
                   {/* Pricing */}
                   <div className="flex flex-col">
                     {product.oldPrice && (
-                      <del className="text-xs text-gray-500">₹{product.oldPrice}</del>
+                      <del className="text-xs text-gray-500">
+                        ₹{product.oldPrice}
+                      </del>
                     )}
                     <span className="text-sm font-semibold text-primary">
                       ₹{product.price}

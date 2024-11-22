@@ -86,7 +86,7 @@ function Navbar() {
   return (
     <header
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white shadow-md text-gray-700 " : "bg-blend-saturation text-white"
+        isScrolled ? "bg-white shadow-md text-gray-700 " : "bg-blend-saturation text-gray-700 "
       }`}
     >
       <nav className="flex items-center justify-between px-10 py-4 max-w-full">

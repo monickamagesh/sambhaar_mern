@@ -33,7 +33,7 @@ const ProductSchema = new mongoose.Schema(
     oldPrice: {
       type: Number,
     },
-    quantity: {
+    weight: {
       type: String,
       required: true,
     },
