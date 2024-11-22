@@ -1,27 +1,138 @@
-import React from 'react'
+import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import brandbanner1 from "../../assets/brandsbanner/Aachi_logo-e1683180461895.png";
+import brandbanner2 from "../../assets/brandsbanner/Ajmi_logo-e1683180758599.png";
+import brandbanner3 from "../../assets/brandsbanner/Aroma_logo-e1683180967195.png";
+import brandbanner4 from "../../assets/brandsbanner/Brahmins_logo.png";
+import brandbanner5 from "../../assets/brandsbanner/Elite_logo-e1683181130287.png";
+import brandbanner6 from "../../assets/brandsbanner/Gbappa_logo-e1683180815457.png";
+import brandbanner7 from "../../assets/brandsbanner/Idhayam_logo-e1683184686488.png";
+import brandbanner8 from "../../assets/brandsbanner/Iyers_logo-e1683190056482.png";
+import brandbanner9 from "../../assets/brandsbanner/Kerala-Pickle_logo-e1683181092912.png";
+import brandbanner10 from "../../assets/brandsbanner/Meelas_logo.png";
+import brandbanner11 from "../../assets/brandsbanner/Nambisans_logo-e1683180253644.png";
+import brandbanner12 from "../../assets/brandsbanner/Periya_logo-e1683180926918.png";
+import brandbanner13 from "../../assets/brandsbanner/Udhaiyam_logo-e1683180136639.png";
+import brandbanner14 from "../../assets/brandsbanner/Veettamma_logo.png";
+import contbanner1 from "../../assets/contentbanner/Cleaning.png";
+import contbanner2 from "../../assets/contentbanner/Detergent.png";
+import contbanner3 from "../../assets/contentbanner/Dish-wash.png";
+import contbanner4 from "../../assets/contentbanner/Haircare.png";
+import contbanner5 from "../../assets/contentbanner/Bath_Handwash.png";
+import contbanner6 from "../../assets/contentbanner/Oral-care.png";
+import contbanner7 from "../../assets/contentbanner/Subscription.png";
 
 const PromoBanner = () => {
+  const features = [
+    {
+      icon: "fas fa-shipping-fast",
+      title: "Free Shipping",
+      description: "When order over $75",
+    },
+    {
+      icon: "fas fa-phone-volume",
+      title: "24/7 Support",
+      description: "Get support all day",
+    },
+    {
+      icon: "fas fa-sync",
+      title: "Refund",
+      description: "Get refund within 3 days!",
+    },
+  ];
+
+  const brandImages = [
+    { src: brandbanner1, alt: "brandbanner1" },
+    { src: brandbanner2, alt: "brandbanner2" },
+    { src: brandbanner3, alt: "brandbanner3" },
+    { src: brandbanner4, alt: "brandbanner4" },
+    { src: brandbanner5, alt: "brandbanner5" },
+    { src: brandbanner6, alt: "brandbanner6" },
+    { src: brandbanner7, alt: "brandbanner7" },
+    { src: brandbanner8, alt: "brandbanner8" },
+    { src: brandbanner9, alt: "brandbanner9" },
+    { src: brandbanner10, alt: "brandbanner10" },
+    { src: brandbanner11, alt: "brandbanner11" },
+    { src: brandbanner12, alt: "brandbanner12" },
+    { src: brandbanner13, alt: "brandbanner13" },
+    { src: brandbanner14, alt: "brandbanner14" },
+  ];
+
+  const contentImages = [
+    { src: contbanner1, alt: "contbanner1" },
+    { src: contbanner2, alt: "contbanner2" },
+    { src: contbanner3, alt: "contbanner3" },
+    { src: contbanner4, alt: "contbanner4" },
+    { src: contbanner5, alt: "contbanner5" },
+    { src: contbanner6, alt: "contbanner6" },
+    { src: contbanner7, alt: "contbanner7" },
+  ];
+
   return (
-    <section className='section__container banner__container'>
-        <div className='banner__card'>
-        <span><i className="ri-truck-fill"></i></span>
-        <h4>Free Delivery</h4>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+    // <section className="section__container banner__container">
+    <>
+      <div className="list-section">
+        <div className="container">
+          <div className="features-row">
+            {features.map((feature, index) => (
+              <div key={index} className="list-box d-flex align-items-center">
+                <div className="list-icon">
+                  <i className={feature.icon}></i>
+                </div>
+                <div className="content">
+                  <h3>{feature.title}</h3>
+                  <p>{feature.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
+      </div>
+      <div className="content-banners">
+        <Swiper
+          spaceBetween={20}
+          slidesPerView={5}
+          pagination={{
+            clickable: true,
+          }}
+          modules={[Pagination]}
+          className="mySwiper"
+        >
+          {contentImages.map((image, index) => (
+            <SwiperSlide key={index} className="banner-slide">
+              <img src={image.src} alt={image.alt} className="banner-image" />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+      <div className="brands-banners">
+        <p className="banner-p">South Special, Favourite Brands</p>
+        <Swiper
+          spaceBetween={30}
+          slidesPerView={7}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
+          modules={[Autoplay]}
+          className="mySwiper"
+          style={{ marginTop: "50px" }}
+        >
+          {brandImages.map((image, index) => (
+            <SwiperSlide key={index} className="banner-slide">
+              <img src={image.src} alt={image.alt} className="banner-image" />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+      <div className="architect"></div>
+    </>
+    // </section>
+  );
+};
 
-        <div className='banner__card'>
-        <span><i className="ri-money-rupee-circle-fill"></i></span>
-        <h4>100% Money Back Guaranty</h4>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
-        </div>
-
-        <div className='banner__card'>
-        <span><i className="ri-user-voice-fill"></i></span>
-        <h4>Strong Support</h4>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
-        </div>
-    </section>
-  )
-}
-
-export default PromoBanner
+export default PromoBanner;

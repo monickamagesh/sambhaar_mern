@@ -5,9 +5,10 @@ const initialState = {
     selectedItems: 0,
     totalPrice: 0,
     tax: 0,
-    taxRate: 0.05,
+    taxRate: 0,
     grandTotal: 0,
 };
+
 
 const cartSlice = createSlice({
     name:'cart',
@@ -25,6 +26,7 @@ const cartSlice = createSlice({
             state.selectedItems = setSelectedItems(state);
             state.totalPrice = setTotalPrice(state);
             state.tax = setTax(state);
+            state.taxRate = setTaxRate(state);
             state.grandTotal = setGrandTotal(state);
         },
         updateQuantity: (state, action) => {
@@ -38,11 +40,12 @@ const cartSlice = createSlice({
                         }
                     }
                 }
-                return product;
-            });
+                return product ;
+            }) ;
             state.selectedItems = setSelectedItems(state);
             state.totalPrice = setTotalPrice(state);
             state.tax = setTax(state);
+            state.taxRate = setTaxRate(state);
             state.grandTotal = setGrandTotal(state);
         },
         removeFromCart: (state, action) =>{
@@ -50,6 +53,7 @@ const cartSlice = createSlice({
             state.selectedItems = setSelectedItems(state);
             state.totalPrice = setTotalPrice(state);
             state.tax = setTax(state);
+            state.taxRate = setTaxRate(state);
             state.grandTotal = setGrandTotal(state);
         },
         clearCart: (state) => {
@@ -57,6 +61,7 @@ const cartSlice = createSlice({
             state.selectedItems = 0;
             state.totalPrice = 0;
             state.tax = 0;
+            state.taxRate = 0;
             state.grandTotal = 0;
         }
     },
@@ -70,11 +75,20 @@ export const setTotalPrice = (state) => state.products.reduce((total, product)=>
     return Number(total + product.quantity * product.price);
 },0)
 
-export const setTax = (state) => setTotalPrice(state) * state.taxRate;
+export const setTaxRate = (state) => state.products.reduce((total, product) => {
+    return (product.quantity * (product.gst ));
+}, 0);
+
+
+
+export const setTax = (state) => state.products.reduce((total, product) => {
+    return total + (product.price * product.quantity * (product.gst / 100));
+}, 0);
 
 export const setGrandTotal = (state) => {
-    return setTotalPrice(state) + setTotalPrice(state) * state.taxRate
-}
+    return setTotalPrice(state) + setTax(state);
+};
+
 
 export const {addToCart, updateQuantity, removeFromCart, clearCart} = cartSlice.actions;
-export default cartSlice.reducer; 
+export default cartSlice.reducer;

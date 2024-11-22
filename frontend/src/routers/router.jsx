@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
-import Home from "../pages/home/home";
+import Home from "../pages/home/Home";
 import Category from "../pages/category/Category";
 import Search from "../pages/search/Search";
 import Shop from "../pages/shop/Shop";
@@ -20,6 +20,12 @@ import ManageProduct from "../pages/dashboard/admin/manageProduct/ManageProduct"
 import UpdateProduct from "../pages/dashboard/admin/manageProduct/UpdateProduct";
 import ManageUser from "../pages/dashboard/admin/users/ManageUser";
 import ManageOrders from "../pages/dashboard/admin/manageOrder/ManageOrders";
+import AboutContent from "../pages/about/about";
+import Privacypolicy from "../components/Informations/privacypolicy";
+import TermsandConditions from "../components/Informations/termsandconditions";
+import ReturnandRefund from "../components/Informations/returnrefund";
+import FAQ from "../components/Informations/faq";
+import Contactpage from "../components/Contact";
 
 const router = createBrowserRouter([
   {
@@ -28,8 +34,14 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/category/:categoryName", element: <Category /> },
+      { path: "/about", element: <AboutContent /> },
       { path: "/search", element: <Search /> },
       { path: "/shop", element: <Shop /> },
+      { path: "/privacy", element: <Privacypolicy /> },
+      { path: "/termsandconditions", element: <TermsandConditions /> },
+      { path: "/returnandrefund", element: <ReturnandRefund /> },
+      { path: "/faq", element: <FAQ /> },
+      { path: "/contact", element: <Contactpage /> },
       { path: "/order-summary", element: <OrderSummary /> },
       { path: "/order-success", element: <OrderSuccess /> },
       {

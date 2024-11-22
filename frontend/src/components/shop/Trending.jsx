@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ProductCards from "./ProductCards";
 import products from "../../data/products.json"
 
 const Trending = () => {

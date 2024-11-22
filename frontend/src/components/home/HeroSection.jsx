@@ -1,40 +1,64 @@
 import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import banner1 from "./../../assets/banners/Banner_1.png";
+import banner2 from "./../../assets/banners/Banner_2.png";
+import banner3 from "./../../assets/banners/Banner_3.png";
+import banner4 from "./../../assets/banners/Banner_4.png";
 
 const HeroSection = () => {
-
+  const slides = [
+    {
+      id: 1,
+      image: banner1,
+      title: "Authentic Indian Spices",
+      description: "Experience the true taste of India.",
+    },
+    {
+      id: 2,
+      image: banner2,
+      title: "Groceries Delivered Fast",
+      description: "Quality groceries at your convenience.",
+    },
+    {
+      id: 3,
+      image: banner3,
+      title: "Snacks You'll Love",
+      description: "Delicious treats for every occasion.",
+    },
+    {
+      id: 4,
+      image: banner4,
+      title: "Fresh Ingredients",
+      description: "Straight from the source.",
+    },
+  ];
 
   return (
-    <section className="hero bg-cover bg-center relative flex items-center justify-center bg-primary-white header__container section__container">
-      <div className="overlay absolute inset-0 opacity-100"></div>
-      <div className=" container text-center  text-black relative z-10 px-6">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">
-          Bringing Authentic India to Your Doorstep
-        </h1>
-        <p className="text-lg md:text-xl mb-6">
-          Groceries, Spices, and Snacks Full of Culture & Flavour
-        </p>
-        <div className="flex justify-center space-x-4 mb-8">
-          <a href="#shop" className="cta-primary">
-            Shop Now
-          </a>
-          <a href="#explore" className="cta-secondary">
-            Explore Our Range
-          </a>
-          
-        </div>
-        <div className="flex justify-center space-x-8 text-sm md:text-base">
-          <div>
-            <i className="icon-delivery"></i> Free Delivery
-          </div>
-          <div>
-            <i className="icon-quality"></i> 100% Quality Guarantee
-          </div>
-          <div>
-            <i className="icon-authentic"></i> Authentic Ingredients
-          </div>
-        </div>
-        
-      </div>
+    <section className="relative -mt-16">
+      <Swiper
+        modules={[Navigation, Pagination, Autoplay]}
+        pagination={{ clickable: true }}
+        autoplay={{ delay: 3000, disableOnInteraction: false }}
+        loop
+        className="w-full h-[calc(100vh+4rem)]"
+      >
+        {slides.map((slide) => (
+          <SwiperSlide key={slide.id}>
+            <div className="relative h-full">
+              <img
+                style={{ objectFit: "fill" }}
+                src={slide.image}
+                alt={slide.title}
+                className="h-full min-h-140 w-full"
+              />
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </section>
   );
 };

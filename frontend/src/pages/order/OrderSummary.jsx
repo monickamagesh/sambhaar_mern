@@ -20,8 +20,21 @@ const OrderSummary = () => {
   const [paymentMethod, setPaymentMethod] = useState("phonepe");
   const [loading, setLoading] = useState(false);
 
+  // Handle Quantity Update (Increment / Decrement)
   const handleQuantity = (type, id) => {
-    dispatch(updateQuantity({ type, id }));
+    const itemInCart = findProductInCart(id); // Find the product in the cart
+
+    if (type === "increment") {
+      dispatch(updateQuantity({ type, id }));
+    } else if (type === "decrement") {
+      if (itemInCart && itemInCart.quantity === 1) {
+        // If quantity is 1, remove the item from the cart
+        dispatch(removeFromCart({ id }));
+      } else {
+        // Otherwise, decrement the quantity
+        dispatch(updateQuantity({ type, id }));
+      }
+    }
   };
 
   const handleRemove = (id) => {
@@ -182,7 +195,7 @@ const OrderSummary = () => {
                     </div>
                     <div className="text-gray-700 flex justify-between">
                       <span className="font-semibold  text-medium">
-                        Tax ({taxRate * 100}%)
+                        Tax 
                       </span>
                       <span className="font-semibold text-lg text-primary">
                         ₹ {tax.toFixed(2)}

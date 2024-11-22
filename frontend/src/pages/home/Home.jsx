@@ -8,6 +8,7 @@ import PromoBanner from '../../components/home/PromoBanner'
 import Blogs from '../../components/blogs/blogs'
 import Footer from '../../components/Footer'
 import Products from '../../components/shop/Products'
+import PromotionSlider from '../../components/home/PromotionalBanner'
 
 const Home = () => {
 
@@ -19,13 +20,12 @@ const Home = () => {
   return (
     <div>
         <HeroSection />
-        <Categories />
-        
-        <Trending />
+        <PromotionSlider />
+        {/* <Categories /> */}
+        {/* <Trending /> */}
         <Products />
         <DealsSection />
         <PromoBanner />
-        
         <Footer />
     </div>
   )

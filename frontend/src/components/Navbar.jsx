@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import CartModel from "./cart/CartModel";
@@ -13,11 +13,18 @@ function Navbar() {
   );
   const products = useSelector((state) => state.cart.products);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const handleCartToggle = () => {
     setIsCartOpen(!isCartOpen);
   };
 
-  
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   //show user if logged in
   const dispatch = useDispatch();
@@ -77,8 +84,12 @@ function Navbar() {
   };
 
   return (
-    <header className="fixed-nav-bar bg-gradient-to-br from-gray-50 to-gray-100">
-      <nav className=" fixed top-0 z-50 w-full items-center justify-between px-10 py-4 bg-white shadow-md max-w-full">
+    <header
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        isScrolled ? "bg-white shadow-md text-gray-700 " : "bg-blend-saturation text-white"
+      }`}
+    >
+      <nav className="flex items-center justify-between px-10 py-4 max-w-full">
         {/* Left Section */}
         <div className="flex items-center">
           <Link to="/">
@@ -88,23 +99,23 @@ function Navbar() {
 
         <div className="flex items-center justify-between space-x-6">
           {/* Center Links - Hidden on small screens */}
-          <div className="hidden md:flex space-x-6 text-gray-700">
+          <div className="hidden md:flex space-x-6">
           
             <Link
               to="/shop"
-              className="hover:text-[#C74227] transition duration-200 hover:font-medium"
+              className="hover:text-primary  hover:font-medium"
             >
               Products
             </Link>
             <Link
               to="/about"
-              className="hover:text-[#C74227] transition duration-200 hover:font-medium"
+              className="hover:text-primary  hover:font-medium"
             >
               About Us
             </Link>
             <Link
               to="/contact"
-              className="hover:text-[#C74227] transition duration-200 hover:font-medium"
+              className="hover:text-primary  hover:font-medium"
             >
               Contact
             </Link>
@@ -116,7 +127,7 @@ function Navbar() {
             <div className="hidden md:flex space-x-4 items-center">
             <span>
             <Link className="hover:text-primary" to="/search">
-            <i className="ri-search-line ri-lg text-gray-700"></i>
+            <i className="ri-search-line ri-lg "></i>
             </Link>
                 
               </span>
