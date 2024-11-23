@@ -96,7 +96,7 @@ router.post("/create-cod-order", async (req, res) => {
 
 
     const newOrder = new Order({
-      userId: user._id,
+      userId: user._id ,
       orderId: transaction,
       products: products.map((item) => ({
         productId: item._id,

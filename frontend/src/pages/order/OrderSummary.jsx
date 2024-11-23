@@ -7,8 +7,8 @@ import {
   removeFromCart,
   updateQuantity,
 } from "../../redux/features/cart/cartSlice";
-import { getBaseUrl } from "../../util/baseURL";
 import Footer from "../../components/Footer";
+import { getBaseUrl } from "../../util/baseURL";
 
 const OrderSummary = () => {
   const dispatch = useDispatch();
@@ -20,6 +20,8 @@ const OrderSummary = () => {
 
   const [paymentMethod, setPaymentMethod] = useState("");
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  
 
   const handleClearCart = () => {
     dispatch(clearCart());
@@ -29,16 +31,22 @@ const OrderSummary = () => {
     e.preventDefault();
 
     
+    if (!user && !email) {
+      alert("Please provide your email to proceed with the payment.");
+      return;
+    }
 
     setLoading(true);
 
+    const _id = Date.now();
+
     const data = {
-      user: user,
+      user: user || { email , _id},
       products: products,
       selectedItems: selectedItems,
       GrandTotal: grandTotal.toFixed(2),
       MUID: "MUIDW" + Date.now(),
-      transaction: "T" + Date.now(),
+      transaction: "SKU" + Date.now(),
       paymentMethod: paymentMethod,
     };
 
@@ -84,33 +92,7 @@ const OrderSummary = () => {
         ) : (
           <div className="space-y-6 flex mx-10 justify-center ">
             <div className="flex w-2/3 ">
-              <div className="w-full">
-                <h2 className="text-xl font-semibold mb-4 mt-4">
-                  Choose Payement Method:
-                </h2>
-                <div className="my-5 space-y-4  flex flex-col">
-                  <div className="grid gap-4  grid-cols-3">
-                    <div
-                      value="phonepe"
-                      className="bg-white shadow-md w-56 rounded-lg p-4 border-b-4 border-primary items-center justify-center flex flex-col hover:scale-105 transition-all duration-200 cursor-pointer"
-                    >
-                      <p className="text-xl font-bold ">PhonePe</p>
-                      <h2 className="text-lg font-semibold mb-2">
-                        Online Payement
-                      </h2>
-                    </div>
-                    <div
-                      value="cash"
-                      className="bg-white shadow-md w-56 rounded-lg p-4 border-b-4 border-primary items-center justify-center flex flex-col hover:scale-105 transition-all duration-200 cursor-pointer"
-                    >
-                      <h2 className="text-lg font-semibold mb-2">
-                        Cash on Delivery
-                      </h2>
-                      <p className="text-xl font-bold"> Cash </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <div className="w-full"></div>
             </div>
 
             <div className="w-1/4">
@@ -156,6 +138,27 @@ const OrderSummary = () => {
                   </div>
                 </div>
               </div>
+
+              {/* Email input for non-logged-in users */}
+              {!user && (
+                <div className="pt-4">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Enter Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
+                    placeholder="Your email"
+                    required
+                  />
+                </div>
+              )}
 
               <div className="flex justify-center flex-col pt-4 items-center gap-8">
                 <div className="bg-white rounded-sm w-full p-6">
