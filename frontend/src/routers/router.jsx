@@ -26,6 +26,7 @@ import TermsandConditions from "../components/Informations/termsandconditions";
 import ReturnandRefund from "../components/Informations/returnrefund";
 import FAQ from "../components/Informations/faq";
 import Contactpage from "../components/Contact";
+import ManageCategories from "../pages/dashboard/admin/categories/ManageCategories";
 
 const router = createBrowserRouter([
   {
@@ -81,6 +82,14 @@ const router = createBrowserRouter([
             element: (
               <PrivateRoute role="admin">
                 <ManageProduct />
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "manage-categories",
+            element: (
+              <PrivateRoute role="admin">
+                <ManageCategories />
               </PrivateRoute>
             ),
           },

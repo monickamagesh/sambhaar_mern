@@ -77,20 +77,14 @@ router.patch("/update-category/:id", async (req, res) => {
 
 // Delete a category
 router.delete("/delete-category/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const deletedCategory = await Categories.findByIdAndDelete(id);
-
-    if (!deletedCategory) {
-      return res.status(404).send({ message: "Category not found" });
+    try {
+      const { id } = req.params;
+      await Categories.findByIdAndDelete(id);
+      res.status(200).send({ message: "Category deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting category:", error);
+      res.status(500).send({ message: "Error deleting category" });
     }
-
-    res.status(200).send({ message: "Category deleted successfully" });
-  } catch (error) {
-    console.error("Error deleting category:", error);
-    res.status(500).send({ message: "Failed to delete category" });
-  }
-});
+  });
 
 module.exports = router;

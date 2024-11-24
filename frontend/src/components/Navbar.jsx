@@ -50,6 +50,7 @@ function Navbar() {
   const adminDropDownMenus = [
     { path: "/dashboard/admin", label: "Dashboard" },
     { path: "/dashboard/users", label: "All Users" },
+    { path: "/dashboard/manage-categories", label: "All Categories"},
     { path: "/dashboard/add-product", label: "Add Product" },
     { path: "/dashboard/manage-products", label: "Manage Products" },
     { path: "/dashboard/manage-orders", label: "Manage Orders" },

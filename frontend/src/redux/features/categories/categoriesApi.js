@@ -42,7 +42,7 @@ const categoriesApi = createApi({
 
     deleteCategory: builder.mutation({
       query: (id) => ({
-        url: `/${id}`,
+        url: `/delete-category/${id}`,
         method: "DELETE",
         credentials: "include",
       }),

@@ -36,9 +36,14 @@ const ManageProduct = () => {
   const [deleteProduct] = useDeleteProductMutation();
   const handleDeleteProduct = async (id) => {
     try {
-      const response = await deleteProduct(id).unwrap();
-      alert("Product deleted successfully");
-      await refetch();
+      const confirmDelete = window.confirm(
+        "Are you sure you want to delete this product?"
+      );
+      if (confirmDelete) {
+        const response = await deleteProduct(id).unwrap();
+        alert("Product deleted successfully");
+        await refetch();
+      }
     } catch (error) {
       console.error("Error deleting product", error);
     }
@@ -113,10 +118,18 @@ const ManageProduct = () => {
                           </div>
                           <div>{product.name}</div>
                         </td>
-                        <td className="px-6 py-4 items-center">{product.category || "-"}</td>
-                        <td className="px-6 py-4 items-center ">{product.brand || "-"}</td>
-                        <td className="px-6 py-4 text-center">{product.quantity || "-"}</td>
-                        <td className="px-6 py-4 text-center">₹{product.price || "-"}</td>
+                        <td className="px-6 py-4 items-center">
+                          {product.category || "-"}
+                        </td>
+                        <td className="px-6 py-4 items-center ">
+                          {product.brand || "-"}
+                        </td>
+                        <td className="px-6 py-4 text-center">
+                          {product.quantity || "-"}
+                        </td>
+                        <td className="px-6 py-4 text-center">
+                          ₹{product.price || "-"}
+                        </td>
 
                         <td className="px-6 py-4 space-x-2 cursor-pointer hover:text-primary">
                           <Link

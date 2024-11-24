@@ -26,19 +26,24 @@ const ManageOrders = () => {
 
   const handleDeleteOder = async (orderId) => {
     try {
-      await deleteOrder(orderId).unwrap();
-      alert("Order deleted successfully");
-      refetch();
+      const confirmDelete = window.confirm(
+        "Are you sure you want to delete this order?"
+      );
+      if (confirmDelete) {
+        await deleteOrder(orderId).unwrap();
+        alert("Order deleted successfully");
+        await refetch();
+      }
     } catch (error) {
       console.error("Failed to delete order:", err);
     }
   };
 
   const truncateText = (text, maxLength) => {
-  if (text.length <= maxLength) return text;
-  const truncated = text.substring(0, maxLength) + "...";
-  return truncated;
-};
+    if (text.length <= maxLength) return text;
+    const truncated = text.substring(0, maxLength) + "...";
+    return truncated;
+  };
 
   if (isLoading) return <div>Loading....</div>;
   if (error) return <div>Something went wrong!</div>;
@@ -95,12 +100,10 @@ const ManageOrders = () => {
                           {order?.orderId}
                         </td>
                         <td className="px-6 py-4 font-normal">
-                        {truncateText(order?.email, 15)}
-
+                          {truncateText(order?.email, 15)}
                         </td>
 
                         <td className="px-6 py-4">
-                        
                           <span
                             className={`inline-flex items-center gap-1 rounded-lg ${
                               order?.orderStatus === "Completed"
@@ -122,7 +125,6 @@ const ManageOrders = () => {
                           >
                             <i class="ri-edit-box-line "></i>
                           </button>
-                          
                         </td>
                         <td className="px-6 py-4">
                           <span
@@ -150,7 +152,7 @@ const ManageOrders = () => {
                           >
                             <i class="ri-eye-line ri-lg"></i>
                           </Link>
-                          
+
                           <button
                             className="hover:text-primary-dark text-primary"
                             onClick={() => handleDeleteOder(order?._id)}
@@ -167,15 +169,13 @@ const ManageOrders = () => {
         </div>
       </section>
       {/* update order modal */}
-      {
-                selectedOrder && (
-                    <UpdateOrderModal
-                    order={selectedOrder}
-                    isOpen={isModalOpen}
-                    onClose={handleCloseModal}
-                    />
-                )
-            }
+      {selectedOrder && (
+        <UpdateOrderModal
+          order={selectedOrder}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+        />
+      )}
     </>
   );
 };

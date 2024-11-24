@@ -17,9 +17,14 @@ const ManageUser = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await deleteUser(id).unwrap();
-      alert("User deleted successfully!");
-      refetch();
+      const confirmDelete = window.confirm(
+        "Are you sure you want to delete this user?"
+      );
+      if (confirmDelete) {
+        const response = await deleteUser(id).unwrap();
+        alert("User deleted successfully!");
+        refetch();
+      }
     } catch (error) {
       console.error("Failed to delete user", error);
     }
@@ -147,11 +152,11 @@ const ManageUser = () => {
       </section>
 
       {isModalOpen && (
-        <UpdateUserModel 
-        user={selectedUser}
+        <UpdateUserModel
+          user={selectedUser}
           onClose={handleCloseModal}
           onRoleUpdate={refetch}
-          />
+        />
       )}
     </>
   );
