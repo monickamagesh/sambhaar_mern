@@ -116,7 +116,7 @@ const Footer = () => {
               ))}
             </div>
             <p className="text-sm text-gray-600">
-              &copy; 2023 Sambhaar.com. All Rights Reserved. | Powered by Maverico.com
+              &copy; 2024 Sambhaar.com. All Rights Reserved. | Powered by Maverico.com
             </p>
           </div>
         </div>

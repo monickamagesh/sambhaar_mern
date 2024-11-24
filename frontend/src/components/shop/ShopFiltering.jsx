@@ -19,7 +19,7 @@ const ShopFiltering = ({ filtersState, setFiltersState, clearFilters, filters })
   };
 
   return (
-    <div className="space-y-6 flex-shrink-0 py-8 right-0 bg-white rounded-lg shadow-md w-64">
+    <div className="space-y-6 flex-shrink-0 py-8 right-0 h-screen bg-white rounded-lg shadow-md w-64">
       {/* Category Accordion */}
       <div className="flex flex-col space-y-6 px-8  ">
         {filters.categories.map((category) => (
