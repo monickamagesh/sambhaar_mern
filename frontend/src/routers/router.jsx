@@ -27,6 +27,9 @@ import ReturnandRefund from "../components/Informations/returnrefund";
 import FAQ from "../components/Informations/faq";
 import Contactpage from "../components/Contact";
 import ManageCategories from "../pages/dashboard/admin/categories/ManageCategories";
+import ManageMilk from "../pages/dashboard/admin/manageMilk/ManageMilk";
+import AddMilk from "../pages/dashboard/admin/manageMilk/addMilk";
+import UpdateMilk from "../pages/dashboard/admin/manageMilk/UpdateMilk";
 
 const router = createBrowserRouter([
   {
@@ -114,6 +117,30 @@ const router = createBrowserRouter([
             element: (
               <PrivateRoute role="admin">
                 <ManageOrders />
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "manage-milks",
+            element: (
+              <PrivateRoute role="admin">
+                <ManageMilk />
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "add-milk",
+            element: (
+              <PrivateRoute role="admin">
+                <AddMilk />
+              </PrivateRoute>
+            ),
+          },
+          {
+            path: "update-milk/:id",
+            element: (
+              <PrivateRoute role="admin">
+                <UpdateMilk />
               </PrivateRoute>
             ),
           },

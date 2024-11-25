@@ -8,126 +8,36 @@ import {
 import SelectInput from "../addProduct/SelectInput";
 import TextInput from "../addProduct/TextInput";
 import UploadImage from "../addProduct/UploadImage";
-
-//categories with subcategories
-const categories = [
-  {
-    label: "Select Category",
-    value: "",
-    subcategories: [{ label: "Select Category", value: "" }],
-  },
-  {
-    label: "Fresh Vegetables & Fruits",
-    value: "Fresh Vegetables & Fruits",
-    subcategories: [
-      { label: "Fresh Vegetables", value: "Fresh Vegetables" },
-      { label: "Fresh Fruits", value: "Fresh Fruits" },
-    ],
-  },
-  {
-    label: "Indian Grocery",
-    value: "Indian Grocery",
-    subcategories: [
-      { label: "Appalam | Vathal | Vadam", value: "Appalam | Vathal | Vadam" },
-      { label: "Bakery | Bread | Cakes", value: "Bakery | Bread | Cakes" },
-      {
-        label: "Cookies | Biscuits | Rusk",
-        value: "Cookies | Biscuits | Rusk",
-      },
-      { label: "Atta | Flours | Sooji", value: "Atta | Flours | Sooji" },
-      { label: "Dairy | Beverages", value: "Dairy | Beverages" },
-      { label: "Cooking Oil | Ghee", value: "Cooking Oil | Ghee" },
-      { label: "Dals | Pulses | Grains", value: "Dals | Pulses | Grains" },
-      { label: "Fruit Mix", value: "Fruit Mix" },
-      { label: "Dry Fruits | Nuts", value: "Dry Fruits | Nuts" },
-      {
-        label: "Indian Masala | Spices | Salt",
-        value: "Indian Masala | Spices | Salt",
-      },
-      { label: "Rice | Rice Products", value: "Rice | Rice Products" },
-      {
-        label: "Sugar | Sweeteners | Jaggery",
-        value: "Sugar | Sweeteners | Jaggery",
-      },
-      { label: "Snacks | Packaged Food", value: "Snacks | Packaged Food" },
-    ],
-  },
-  {
-    label: "Puja Needs & Idols",
-    value: "Puja Needs & Idols",
-    subcategories: [
-      { label: "Idols", value: "Idols" },
-      { label: "Puja Needs", value: "Puja Needs" },
-    ],
-  },
-  {
-    label: "Evergreen",
-    value: "Evergreen",
-    subcategories: [
-      { label: "South Vegies & Fruits", value: "South Vegies & Fruits" },
-      { label: "Indian Sweets", value: "Indian Sweets" },
-      { label: "South Snacks", value: "South Snacks" },
-    ],
-  },
-  {
-    label: "South Cookware",
-    value: "South Cookware",
-    subcategories: [
-      { label: "Cookware", value: "Cookware" },
-      { label: "Clay Cookware", value: "Clay Cookware" },
-    ],
-  },
-  {
-    label: "Handlooms",
-    value: "Handlooms",
-    subcategories: [
-      { label: "For Women", value: "For Women" },
-      { label: "For Men", value: "For Men" },
-      { label: "Accessories", value: "Accessories" },
-    ],
-  },
-  {
-    label: "Personal Care",
-    value: "Personal Care",
-    subcategories: [
-      { label: "Bath & Hand wash", value: "Bath & Hand wash" },
-      { label: "Hair Care", value: "Hair Care" },
-      { label: "Oral Care", value: "Oral Care" },
-    ],
-  },
-  {
-    label: "Cleaning & Household",
-    value: "Cleaning & Household",
-    subcategories: [
-      { label: "Cleaners", value: "Cleaners" },
-      { label: "Detergents | Dish wash", value: "Detergents | Dish wash" },
-    ],
-  },
-  { label: "South Special Grocery", value: "South Special Grocery" },
-  {
-    label: "Specials",
-    value: "Specials",
-    subcategories: [
-      {
-        label: "Dals, Pulses & Millets, Gbappa Grocery",
-        value: "Dals, Pulses & Millets, Gbappa Grocery",
-      },
-      {
-        label: "Grains & Flours, Grocery, Meela",
-        value: "Grains & Flours, Grocery, Meela",
-      },
-      {
-        label: "Monthly Essentials, Specials",
-        value: "Monthly Essentials, Specials",
-      },
-    ],
-  },
-];
+import { useFetchAllCategoriesQuery } from "../../../../redux/features/categories/categoriesApi";
 
 const UpdateProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
+
+  const [fetchCategory, setFetchCategory] = useState([]);
+  const { data } = useFetchAllCategoriesQuery();
+
+  useEffect(() => {
+    if (data) {
+      // Format the data to match the required structure
+      const formattedCategories = data.map((category) => ({
+        label: category.name,
+        value: category.name,
+        subcategories: category.subcategories.map((subcategory) => ({
+          label: subcategory.name,
+          value: subcategory.name,
+        })),
+      }));
+
+      console.log(formattedCategories);
+
+      setFetchCategory(formattedCategories); // Store the formatted categories in state
+    }
+  }, [data]);
+
+  const categories = fetchCategory;
+
   const [product, setProduct] = useState({
     name: "",
     category: "",
@@ -137,7 +47,7 @@ const UpdateProduct = () => {
     oldPrice: "",
     description: "",
     gst: "",
-    quantity: "",
+    weight: "",
   });
 
   const {
@@ -156,7 +66,7 @@ const UpdateProduct = () => {
     subcategory,
     oldPrice,
     gst,
-    quantity,
+    weight,
     description,
     image: imageURL,
     price,
@@ -177,7 +87,7 @@ const UpdateProduct = () => {
         subcategory: subcategory || "",
         oldPrice: oldPrice || "",
         gst: gst || "",
-        quantity: quantity || "",
+        weight: weight || "",
       });
     }
   }, [productData]);
@@ -251,10 +161,10 @@ const UpdateProduct = () => {
           onChange={handleChange}
         />
         <TextInput
-          label="Quantity"
-          name="quantity"
+          label="Weight"
+          name="weight"
           placeholder="Ex: 1kg or 200g"
-          value={product.quantity}
+          value={product.weight}
           onChange={handleChange}
         />
         <SelectInput
@@ -262,14 +172,17 @@ const UpdateProduct = () => {
           name="category"
           value={product.category}
           onChange={handleCategoryChange}
-          options={categories}
+          options={[{ label: "Select Category", value: "" }, ...categories]}
         />
         <SelectInput
           label="Subcategory"
           name="subcategory"
           value={product.subcategory}
           onChange={handleChange}
-          options={subcategories}
+          options={[
+            { label: "Select Subcategory", value: "" },
+            ...subcategories,
+          ]}
         />
 
         <TextInput

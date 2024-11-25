@@ -163,7 +163,7 @@ const ManageCategories = () => {
                 {category.subcategories.map((sub, index) => (
                   <span
                     key={index}
-                    className="bg-primary bg-opacity-10 text-sm text-gray-700 px-3 py-1 rounded-full"
+                    className="bg-gray-950 bg-opacity-5 text-sm text-gray-700 px-3 py-1 rounded-full"
                   >
                     {sub.name}
                   </span>
@@ -190,7 +190,7 @@ const ManageCategories = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="mt-2 p-2 w-full border rounded-md shadow-sm"
+                    className="mt-2 p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
                     placeholder="Enter category name"
                     required
                   />
@@ -202,14 +202,14 @@ const ManageCategories = () => {
                     Subcategories
                   </label>
                   {formData.subcategories.map((sub, index) => (
-                    <div key={index} className="flex items-center space-x-2 mt-2">
+                    <div key={index} className="flex items-center space-x-2 mt-2 ">
                       <input
                         type="text"
                         value={sub}
                         onChange={(e) =>
                           handleSubcategoryChange(index, e.target.value)
                         }
-                        className="p-2 w-full border rounded-md shadow-sm"
+                        className="p-2 w-full border rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
                         placeholder={`Subcategory ${index + 1}`}
                       />
                       <button

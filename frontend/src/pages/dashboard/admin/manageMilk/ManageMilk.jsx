@@ -1,78 +1,75 @@
 import React, { useState } from "react";
 import {
-  useDeleteProductMutation,
-  useFetchAllProductsQuery,
-} from "../../../../redux/features/products/productsApi";
+  useDeleteMilkMutation,
+  useFetchAllMilksQuery,
+} from "../../../../redux/features/milks/milksApi"; // Adjust according to your redux slice
 import { Link } from "react-router-dom";
-import { formatDate } from "../../../../util/formatDate";
 
-const ManageProduct = () => {
+const ManageMilk = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(12);
+  const [milksPerPage] = useState(12);
 
   const {
-    data: { products = [], totalPages, totalProducts } = {},
+    data: { milks = [], totalPages, totalMilks } = {},
     isLoading,
     error,
     refetch,
-  } = useFetchAllProductsQuery({
+  } = useFetchAllMilksQuery({
     category: "",
-    subcategory: "",
     minPrice: "",
     maxPrice: "",
     page: currentPage,
-    limit: productsPerPage,
+    limit: milksPerPage,
   });
 
-  // pagination
-  const startProduct = (currentPage - 1) * productsPerPage + 1;
-  const endProduct = startProduct + products.length - 1;
+  // Pagination
+  const startMilk = (currentPage - 1) * milksPerPage + 1;
+  const endMilk = startMilk + milks.length - 1;
   const handlePageChange = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
     }
   };
 
-  const [deleteProduct] = useDeleteProductMutation();
-  const handleDeleteProduct = async (id) => {
+  const [deleteMilk] = useDeleteMilkMutation();
+  const handleDeleteMilk = async (id) => {
     try {
       const confirmDelete = window.confirm(
-        "Are you sure you want to delete this product?"
+        "Are you sure you want to delete this milk product?"
       );
       if (confirmDelete) {
-        const response = await deleteProduct(id).unwrap();
-        alert("Product deleted successfully");
+        const response = await deleteMilk(id).unwrap();
+        alert("Milk product deleted successfully");
         await refetch();
       }
     } catch (error) {
-      console.error("Error deleting product", error);
+      console.error("Error deleting milk product", error);
     }
   };
 
   return (
     <>
       {isLoading && <div>Loading...</div>}
-      {error && <div>Error loading products.</div>}
+      {error && <div>Error loading milks.</div>}
       <section className="overflow-hidden rounded-lg-md m-5">
         <div className="w-full mb-12 xl:mb-0 px-4 mx-auto">
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
             <div className="rounded-t mb-0 px-4 py-3 border-0">
               <div className="flex flex-wrap items-center">
                 <div className="relative w-full px-4 max-w-full flex-grow flex-1">
-                  <h2 className="text-2xl font-bold mb-6">All Products</h2>
+                  <h2 className="text-2xl font-bold mb-6">All Milks</h2>
                 </div>
                 <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
                   <Link
-                    to={`/dashboard/add-product`}
+                    to={`/dashboard/add-milk`}
                     className="bg-primary text-white py-2 px-4 rounded-md shadow-md"
                   >
-                    Add New Product
+                    Add New Milk
                   </Link>
                 </div>
               </div>
               <h3 className="my-4 text-sm">
-                Showing {startProduct} to {endProduct} of {totalProducts}{" "}
-                products
+                Showing {startMilk} to {endMilk} of {totalMilks} milks
               </h3>
             </div>
 
@@ -82,19 +79,16 @@ const ManageProduct = () => {
                   <tr>
                     <th className="px-6 py-4 font-medium text-gray-900">ID</th>
                     <th className="px-6 py-4 font-medium text-gray-900">
-                      Product
+                      Milk
                     </th>
                     <th className="px-6 py-4 font-medium text-gray-900">
                       Category
                     </th>
                     <th className="px-6 py-4 font-medium text-gray-900">
-                      Brand
+                      Price
                     </th>
                     <th className="px-6 py-4 font-medium text-gray-900">
                       Weight
-                    </th>
-                    <th className="px-6 py-4 font-medium text-gray-900">
-                      Price
                     </th>
                     <th className="px-6 py-4 font-medium text-gray-900">
                       Actions
@@ -102,8 +96,8 @@ const ManageProduct = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100 border-t border-gray-100">
-                  {products &&
-                    products.map((product, index) => (
+                  {milks &&
+                    milks.map((milk, index) => (
                       <tr key={index} className="hover:bg-gray-50">
                         <th className="px-6 py-4 font-normal ">
                           #ID:{index + 1}
@@ -112,35 +106,32 @@ const ManageProduct = () => {
                           <div className="relative h-10 w-10">
                             <img
                               className="h-full w-full object-contain ring-gray-300 ring-1 rounded-lg object-center"
-                              src={product.image || "default-image-url"} // Replace with actual image URL
-                              alt={product.name}
+                              src={milk.image || "default-image-url"} // Replace with actual image URL
+                              alt={milk.name}
                             />
                           </div>
-                          <div>{product.name}</div>
+                          <div>{milk.name}</div>
                         </td>
                         <td className="px-6 py-4 items-center">
-                          {product.category || "-"}
-                        </td>
-                        <td className="px-6 py-4 items-center ">
-                          {product.brand || "-"}
+                          {milk.category || "-"}
                         </td>
                         <td className="px-6 py-4 text-center">
-                          {product.weight || "-"}
+                          ₹{milk.price || "-"}
                         </td>
                         <td className="px-6 py-4 text-center">
-                          ₹{product.price || "-"}
+                          {milk.weight || "-"}
                         </td>
 
                         <td className="px-6 py-4 space-x-2 cursor-pointer hover:text-primary">
                           <Link
-                            to={`/dashboard/update-product/${product._id}`}
+                            to={`/dashboard/update-milk/${milk._id}`}
                             className="text-gray-700 hover:text-gray-900"
                           >
                             <i className="ri-edit-box-line ri-lg"></i>
                           </Link>
 
                           <button
-                            onClick={() => handleDeleteProduct(product._id)}
+                            onClick={() => handleDeleteMilk(milk._id)}
                             className="hover:text-primary-dark text-primary"
                           >
                             <i className="ri-delete-bin-line ri-lg"></i>
@@ -188,4 +179,4 @@ const ManageProduct = () => {
   );
 };
 
-export default ManageProduct;
+export default ManageMilk;

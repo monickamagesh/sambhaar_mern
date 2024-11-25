@@ -9,7 +9,7 @@ const generateToken = async (userId) => {
     if (!user) {
       throw new Error("User not found.");
     }
-    const token = jwt.sign({ user: user._id, role: user.role }, JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ user: user._id, role: user.role }, JWT_SECRET);
     return token;
   } catch (error) {}
 };

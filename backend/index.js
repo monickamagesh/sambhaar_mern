@@ -35,7 +35,8 @@ const productRoutes = require("./src/products/products.route");
 const orderRoutes = require("./src/orders/orders.route");
 const statsRoutes = require('./src/stats/stats.route');
 const reviewRoutes = require('./src/reviews/reviews.router');
-const categoryRoutes = require('./src/category/categories.route')
+const categoryRoutes = require('./src/category/categories.route');
+const milkRoutes = require('./src/milkOptions/milks.route');
 
 
 app.use("/api/auth", authRoutes);
@@ -44,6 +45,7 @@ app.use("/api/reviews", reviewRoutes);
 app.use("/api/orders", orderRoutes);
 app.use('/api/stats', statsRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use("/api/milks",milkRoutes);
 
 main()
   .then(() => console.log("mongodb is successfully connected."))
