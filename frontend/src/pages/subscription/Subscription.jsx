@@ -1,132 +1,111 @@
 import React, { useState } from "react";
 import { useFetchAllMilksQuery } from "../../redux/features/milks/milksApi";
+import TextInput from "../dashboard/admin/addProduct/TextInput";
 
 const Subscription = () => {
-    const [subscriptions, setSubscriptions] = useState([]);
-    const [selectedDuration, setSelectedDuration] = useState(); // Default selected duration
-    const [startDate, setStartDate] = useState(""); // Calendar picker date
-    const [userDetails, setUserDetails] = useState({
-      name: "",
-      email: "",
-      phone: "",
-      street: "",
-      city: "",
-      state: "",
-      postalCode: "",
-      country: "",
-    });
-  
-    const { data, error, isLoading } = useFetchAllMilksQuery();
-    console.log(data)
+  const [subscriptions, setSubscriptions] = useState([]);
+  const [selectedDuration, setSelectedDuration] = useState(null); // Default selected duration
+  const [startdate, setStartdate] = useState(""); // Calendar picker date
+  const [userDetails, setUserDetails] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    street: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    country: "",
+  });
 
-    const handleAddMilk = (milk) => {
-      setSubscriptions((prev) => {
-        const existing = prev.find((item) => item.milkId === milk._id);
-        if (existing) {
-          return prev.map((item) =>
-            item.milkId === milk._id
-              ? { ...item, quantity: item.quantity + 1 }
-              : item
-          );
-        }
-        return [
-          ...prev,
-          {
-            milkId: milk._id,
-            quantity: 1,
-            name: milk.name,
-            category: milk.category,
-            price: milk.price,
-            weight: milk.weight,
-            image: milk.image,
-          },
-        ];
-      });
-    };
-  
-    const handleIncrement = (milkId) => {
-      setSubscriptions((prev) =>
-        prev.map((item) =>
-          item.milkId === milkId ? { ...item, quantity: item.quantity + 1 } : item
+  const { data, error, isLoading } = useFetchAllMilksQuery();
+
+  const handleAddMilk = (milk) => {
+    setSubscriptions((prev) => {
+      const existing = prev.find((item) => item.milkId === milk._id);
+      if (existing) {
+        return prev.map((item) =>
+          item.milkId === milk._id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      return [
+        ...prev,
+        {
+          milkId: milk._id,
+          quantity: 1,
+          name: milk.name,
+          category: milk.category,
+          price: milk.price,
+          weight: milk.weight,
+          image: milk.image,
+        },
+      ];
+    });
+  };
+
+  const handleIncrement = (milkId) => {
+    setSubscriptions((prev) =>
+      prev.map((item) =>
+        item.milkId === milkId ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
+
+  const handleDecrement = (milkId) => {
+    setSubscriptions((prev) =>
+      prev
+        .map((item) =>
+          item.milkId === milkId
+            ? { ...item, quantity: Math.max(0, item.quantity - 1) }
+            : item
         )
-      );
+        .filter((item) => item.quantity > 0)
+    );
+  };
+
+  const calculateAmountForDuration = (duration) => {
+    const totalAmount = subscriptions.reduce(
+      (total, milk) => total + milk.price * milk.quantity,
+      0
+    );
+    return totalAmount * 30 * (duration || 0); // 30 days per month
+  };
+
+  const handleSubmit = () => {
+
+    if (
+      !userDetails.name ||
+      !userDetails.email ||
+      !userDetails.phone ||
+      !userDetails.street ||
+      !userDetails.city ||
+      !userDetails.state ||
+      !userDetails.postalCode ||
+      !userDetails.country ||
+      !calculateAmountForDuration(selectedDuration) ||
+      subscriptions.length === 0 ||
+      !startdate
+    ) {
+      alert("Please fill all the required fields");
+      return;
+    }
+
+    const subscriptionData = {
+      ...userDetails,
+      duration: selectedDuration,
+      startDate: new Date(startdate),
+      subscriptionId: `SUB-${Date.now()}`,
+      milks: subscriptions,
+      amount: calculateAmountForDuration(selectedDuration),
+      subscriptionStatus: "Active",
+      paymentMethod: "Cash",
+      paymentStatus: "Pending",
     };
-  
-    const handleDecrement = (milkId) => {
-      setSubscriptions((prev) =>
-        prev
-          .map((item) =>
-            item.milkId === milkId
-              ? { ...item, quantity: Math.max(0, item.quantity - 1) }
-              : item
-          )
-          .filter((item) => item.quantity > 0)
-      );
-    };
-  
-    const calculateAmountForDuration = (duration) => {
-      const totalAmount = subscriptions.reduce(
-        (total, milk) => total + milk.price * milk.quantity,
-        0
-      );
-      return totalAmount * 30 * duration; // 30 days per month
-    };
-  
-    // Form Validation
-    const validateForm = () => {
-      if (!userDetails.name || !userDetails.email || !userDetails.phone || !userDetails.street || !userDetails.city || !userDetails.state || !userDetails.postalCode || !userDetails.country) {
-        alert("Please fill all the user details.");
-        return false;
-      }
-  
-      if (subscriptions.length === 0) {
-        alert("Please add at least one milk option.");
-        return false;
-      }
-  
-      if (!selectedDuration) {
-        alert("Please select a subscription duration.");
-        return false;
-      }
-  
-      if (!startDate) {
-        alert("Please select a start date.");
-        return false;
-      }
-  
-      const selectedStartDate = new Date(startDate);
-      if (selectedStartDate <= new Date()) {
-        alert("Start date should be in the future.");
-        return false;
-      }
-  
-      return true;
-    };
-  
-    const handleSubmit = (e) => {
-      e.preventDefault(); // Prevent form from submitting
-  
-      // If all validations pass
-      if (!validateForm()) {
-        return; // Stop if validation fails
-      }
-  
-      const subscriptionData = {
-        ...userDetails,
-        duration: selectedDuration,
-        startDate: new Date(startDate),
-        subscriptionId: `SUB-${Date.now()}`,
-        milks: subscriptions,
-        amount: calculateAmountForDuration(selectedDuration),
-        subscriptionStatus: "Active",
-        paymentMethod: "Cash",
-        paymentStatus: "Pending",
-      };
-  
-      console.log("Submitted Subscription:", subscriptionData);
-  
-      // Submit logic here (e.g., API call)
-    };
+
+    console.log("Submitted Subscription:", subscriptionData);
+    // Implement API call to submit subscriptionData here
+  };
 
   return (
     <section className="section__container">
@@ -153,7 +132,7 @@ const Subscription = () => {
         </p>
 
         <div className="grid grid-cols-3 sm:grid-cols-5 gap-4">
-          {data?.milks.map((milk) => (
+          {data?.milks?.map((milk) => (
             <div
               key={milk._id}
               className="bg-white p-4 border rounded-lg shadow-md flex flex-col "
@@ -304,15 +283,15 @@ const Subscription = () => {
         </p>
         <div>
           {/* user details */}
-          <form className="max-w-2xl mx-auto bg-white p-8 shadow-lg rounded-lg">
+          <form
+            
+            className="max-w-2xl mx-auto bg-white p-8 shadow-lg rounded-lg"
+          >
             {/* Name */}
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Name
-              </label>
-              <input
-                type="text"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+              <TextInput
+                label="Name"
+                name="name"
                 placeholder="Enter your full name"
                 value={userDetails.name}
                 onChange={(e) =>
@@ -323,12 +302,9 @@ const Subscription = () => {
 
             {/* Email */}
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email
-              </label>
-              <input
-                type="email"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+              <TextInput
+                label="Email"
+                name="email"
                 placeholder="Enter your email"
                 value={userDetails.email}
                 onChange={(e) =>
@@ -339,12 +315,9 @@ const Subscription = () => {
 
             {/* Phone */}
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Phone
-              </label>
-              <input
-                type="text"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+              <TextInput
+                label="Phone"
+                name="phone"
                 placeholder="Enter your phone number"
                 value={userDetails.phone}
                 onChange={(e) =>
@@ -354,73 +327,60 @@ const Subscription = () => {
             </div>
 
             {/* Address */}
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Address
-              </label>
-              <input
-                type="text"
+            <div className="mb-6 space-y-6">
+              <TextInput
+                label="Address"
+                name="street"
                 placeholder="Flat no, Street"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary mb-4"
                 value={userDetails.street}
                 onChange={(e) =>
                   setUserDetails({ ...userDetails, street: e.target.value })
                 }
               />
-              <input
-                type="text"
+              <TextInput
+                name="city"
                 placeholder="City"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary mb-4"
                 value={userDetails.city}
                 onChange={(e) =>
                   setUserDetails({ ...userDetails, city: e.target.value })
                 }
               />
-              <input
-                type="text"
+              <TextInput
+                name="state"
                 placeholder="State"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary mb-4"
                 value={userDetails.state}
                 onChange={(e) =>
                   setUserDetails({ ...userDetails, state: e.target.value })
                 }
               />
-              <input
-                type="text"
+              <TextInput
+                name="postalCode"
                 placeholder="Postal Code"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                 value={userDetails.postalCode}
                 onChange={(e) =>
                   setUserDetails({ ...userDetails, postalCode: e.target.value })
                 }
               />
             </div>
-
             {/* Start Date */}
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700">
                 Start Date
               </label>
               <input
                 type="date"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                value={startDate}
+                value={startdate}
                 min={
                   new Date(Date.now() + 24 * 60 * 60 * 1000)
                     .toISOString()
                     .split("T")[0]
                 }
-                onChange={(e) => setStartDate(e.target.value)}
+                onChange={(e) => setStartdate(e.target.value)}
               />
             </div>
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="w-full py-3 px-6 bg-primary text-white font-bold rounded-lg shadow-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-            >
-              Submit
-            </button>
+            
           </form>
 
           {/* payment summary*/}
