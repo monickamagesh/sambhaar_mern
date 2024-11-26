@@ -30,6 +30,7 @@ import ManageCategories from "../pages/dashboard/admin/categories/ManageCategori
 import ManageMilk from "../pages/dashboard/admin/manageMilk/ManageMilk";
 import AddMilk from "../pages/dashboard/admin/manageMilk/addMilk";
 import UpdateMilk from "../pages/dashboard/admin/manageMilk/UpdateMilk";
+import Subscription from "../pages/subscription/Subscription";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,7 @@ const router = createBrowserRouter([
       { path: "/contact", element: <Contactpage /> },
       { path: "/order-summary", element: <OrderSummary /> },
       { path: "/order-success", element: <OrderSuccess /> },
+      { path: "/subscription", element: <Subscription />},
       {
         path: "/dashboard",
         element: (

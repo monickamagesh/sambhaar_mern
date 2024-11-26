@@ -123,7 +123,7 @@ const ManageOrders = () => {
                             className="text-gray-500 hover:text-gray-900"
                             onClick={() => handleEditOrder(order)}
                           >
-                            <i class="ri-edit-box-line "></i>
+                            <i className="ri-edit-box-line "></i>
                           </button>
                         </td>
                         <td className="px-6 py-4">
@@ -150,14 +150,14 @@ const ManageOrders = () => {
                             to={`/order-success?id=${order?.orderId}`}
                             className="text-gray-700 hover:text-gray-900"
                           >
-                            <i class="ri-eye-line ri-lg"></i>
+                            <i className="ri-eye-line ri-lg"></i>
                           </Link>
 
                           <button
                             className="hover:text-primary-dark text-primary"
                             onClick={() => handleDeleteOder(order?._id)}
                           >
-                            <i class="ri-delete-bin-line ri-lg"></i>
+                            <i className="ri-delete-bin-line ri-lg"></i>
                           </button>
                         </td>
                       </tr>

@@ -11,8 +11,9 @@ const navItems = [
   { path: "/dashboard/users", label: "Users" },
   { path: "/dashboard/manage-categories", label: "Categories"},
   { path: "/dashboard/manage-products", label: "Products" },
+  { path: "/dashboard/manage-milks", label: "Milks" },
   { path: "/dashboard/manage-orders", label: "Orders" },
-  { path: "/dashboard/manage-milks", label: "Milk options" },
+  
   
   
 ];

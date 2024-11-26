@@ -15,21 +15,10 @@ const UpdateMilk = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
 
-  const [fetchCategory, setFetchCategory] = useState([]);
-  const { data } = useFetchAllCategoriesQuery(); // If you are using categories for filtering milk
-
-  useEffect(() => {
-    if (data) {
-      // Assuming you have categories for milk products (Aavin, Arokya, etc.)
-      const formattedCategories = data.map((category) => ({
-        label: category.name,
-        value: category.name,
-      }));
-      setFetchCategory(formattedCategories); // Store the formatted categories
-    }
-  }, [data]);
-
-  const categories = fetchCategory;
+  const [categories] = useState([
+    { label: "Aavin", value: "aavin" },
+    { label: "Arokya", value: "arokya" },
+  ]);
 
   const [milk, setMilk] = useState({
     name: "",
