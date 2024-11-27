@@ -44,16 +44,15 @@ const HeroSection = () => {
         pagination={{ clickable: true }}
         autoplay={{ delay: 3000, disableOnInteraction: false }}
         loop
-        className="w-full h-[calc(100vh+4rem)]"
+        className="w-full h-[95vh]"
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
-            <div className="relative h-full">
+            <div className="relative w-full h-full">
               <img
-                style={{ objectFit: "fill" }}
+                style={{ objectFit: "fill", height: '800px'}}
                 src={slide.image}
                 alt={slide.title}
-                className="h-full min-h-140 w-full"
               />
             </div>
           </SwiperSlide>

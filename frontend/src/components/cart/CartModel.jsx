@@ -11,17 +11,31 @@ const CartModel = ({ products, isOpen, onClose }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Thresholds for rewards
+  const thresholds = [
+    { value: 499, reward: "Free Product A" },
+    { value: 799, reward: "Free Product B" },
+    { value: 999, reward: "Free Product C" },
+    { value: 1499, reward: "Free Product D" },
+  ];
+
+  // Calculate total cart value
+  const totalValue = products.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+  // Get the next reward based on the cart value
+  const nextReward = thresholds.find((t) => totalValue < t.value);
+
+  // Get the current unlocked rewards
+  const unlockedReward = thresholds.filter((t) => totalValue >= t.value);
+
   const handleQuantity = (type, id) => {
     if (type === "increment") {
       dispatch(updateQuantity({ type, id }));
     } else if (type === "decrement") {
-      // Find the product to check its current quantity
       const item = products.find((product) => product._id === id);
       if (item.quantity === 1) {
-        // If quantity is 1, remove the item from the cart
         dispatch(removeFromCart({ id }));
       } else {
-        // Otherwise, decrement the quantity
         dispatch(updateQuantity({ type, id }));
       }
     }
@@ -37,10 +51,6 @@ const CartModel = ({ products, isOpen, onClose }) => {
     navigate("/order-summary");
   };
 
-  const calculateTotal = () => {
-    return products.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  };
-
   return (
     <div
       className={`fixed z-[100] inset-0 bg-black bg-opacity-50 flex justify-center transition-opacity ${
@@ -53,11 +63,12 @@ const CartModel = ({ products, isOpen, onClose }) => {
         }`}
       >
         <div className="flex justify-start flex-col">
+          {/* Header */}
           <div className="sticky top-0 px-6 border-b border bg-white w-full py-4 z-[120]">
-            <div className="flex justify-between  items-center">
+            <div className="flex justify-between items-center">
               <div className="text-primary">
-                <i className="ri-shopping-cart-fill ri-xl "></i>
-                <span className="inline-block text-medium pl-2 font-semibold ">
+                <i className="ri-shopping-cart-fill ri-xl"></i>
+                <span className="inline-block text-medium pl-2 font-semibold">
                   {products.length} {products.length > 1 ? "Items" : "Item"}
                 </span>
               </div>
@@ -70,6 +81,64 @@ const CartModel = ({ products, isOpen, onClose }) => {
             </div>
           </div>
 
+          {/* Reward Pipe */}
+          <div className="p-4 border-b">
+            <h5 className="text-sm font-semibold mb-4">Rewards Progress</h5>
+            <div className="relative w-full h-3 bg-gray-200 rounded-full overflow-hidden">
+              {/* Pipe (Progress) */}
+              <div
+                className="absolute top-0 left-0 h-full bg-green-600 transition-all"
+                style={{ width: `${(totalValue / thresholds[thresholds.length - 1].value) * 100}%` }}
+              ></div>
+            </div>
+
+            {/* Free Product Icons and Rewards */}
+            <div className="flex justify-between mt-4">
+              {thresholds.map((threshold, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col items-center text-xs"
+                  style={{
+                    width: `${(threshold.value / thresholds[thresholds.length - 1].value) * 100}%`,
+                    position: "relative",
+                  }}
+                >
+                  {/* Icon for product unlocked */}
+                  <div
+                    className={`w-6 h-6 rounded-full flex items-center justify-center mb-2 ${
+                      totalValue >= threshold.value
+                        ? "bg-green-600 text-white"
+                        : "bg-white text-gray-400 border-2 border-gray-400"
+                    }`}
+                  >
+                    <i className={`ri-check-line text-xs`}></i>
+                  </div>
+                  {/* Reward Description */}
+                  <p
+                    className={`text-center ${totalValue >= threshold.value ? "text-green-600" : "text-gray-400"}`}
+                  >
+                    {totalValue >= threshold.value ? threshold.reward : `₹${threshold.value}`}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Reward Message */}
+            {nextReward ? (
+              <p className="text-sm text-gray-600 mt-4">
+                Add ₹{nextReward.value - totalValue} more to get{" "}
+                <span className="font-semibold text-green-600">
+                  {nextReward.reward}
+                </span>!
+              </p>
+            ) : (
+              <p className="text-sm text-green-600 mt-4 font-semibold">
+                You’ve unlocked all rewards!
+              </p>
+            )}
+          </div>
+
+          {/* Cart Items */}
           <div className="p-4">
             <div className="cart-items space-y-4">
               {products.length === 0 ? (
@@ -88,7 +157,7 @@ const CartModel = ({ products, isOpen, onClose }) => {
                         >
                           +
                         </button>
-                        <span className="">{item.quantity}</span>
+                        <span>{item.quantity}</span>
                         <button
                           onClick={() => handleQuantity("decrement", item._id)}
                           className="flex justify-center items-center"
@@ -121,7 +190,7 @@ const CartModel = ({ products, isOpen, onClose }) => {
 
                       <button
                         onClick={() => handleRemove(item._id)}
-                        className=""
+                        className="text-gray-500 hover:text-primary"
                       >
                         <i className="ri-close-fill"></i>
                       </button>
@@ -141,7 +210,7 @@ const CartModel = ({ products, isOpen, onClose }) => {
             >
               <p>Checkout</p>
               <p className="bg-white text-sm font-semibold px-4 py-3.5 flex justify-center rounded-full text-primary">
-                ₹{calculateTotal().toFixed(2)}
+                ₹{totalValue.toFixed(2)}
               </p>
             </div>
           </div>

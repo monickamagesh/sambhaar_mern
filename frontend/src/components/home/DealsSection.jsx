@@ -12,8 +12,6 @@ import prodbanner6 from "../../assets/productbanner/Bakery.png";
 import { Link } from "react-router-dom";
 
 const DealsSection = () => {
-
-  
   const productImages = [
     { src: prodbanner1, alt: "prodbanner1" },
     { src: prodbanner2, alt: "prodbanner2" },
@@ -25,17 +23,11 @@ const DealsSection = () => {
 
   return (
     <>
-      <div className="grid grid-cols-2 md:grid-cols-3 mx-10 gap-6">
+      <div className="product-grid">
         {productImages.map((image, index) => (
-          <div key={index} className="relative">
-            <img
-              src={image.src}
-              alt={image.alt}
-              className="w-full h-auto rounded-md"
-            />
-            <button className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-primary text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:bg-orange-600 transition-all duration-300">
-              Get now
-            </button>
+          <div key={index} className="image-container">
+            <img src={image.src} alt={image.alt} />
+            <button className="get-it-now-btn">Get now</button>
           </div>
         ))}
       </div>
@@ -80,14 +72,15 @@ const DealsSection = () => {
           </ul>
 
           <div className="mt-8 flex flex-col lg:flex-row items-center gap-4">
-            
-            <Link to={`/subscription`} className="bg-primary text-white px-6 py-3 rounded-lg text-md font-semibold shadow-md hover:bg-orange-600 transition-all duration-300">
-            Subscribe Now
-          </Link>
+            <Link
+              to={`/subscription`}
+              className="bg-primary text-white px-6 py-3 rounded-lg text-md font-semibold shadow-md hover:bg-orange-600 transition-all duration-300"
+            >
+              Subscribe Now
+            </Link>
           </div>
         </div>
       </section>
-
     </>
   );
 };

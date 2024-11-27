@@ -20,8 +20,8 @@ const Home = () => {
   return (
     <div>
         <HeroSection />
+        <Categories />
         <PromotionSlider />
-        {/* <Categories /> */}
         {/* <Trending /> */}
         <Products />
         <DealsSection />

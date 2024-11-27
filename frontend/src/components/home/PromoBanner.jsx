@@ -95,9 +95,20 @@ const PromoBanner = () => {
       <div className="content-banners">
         <Swiper
           spaceBetween={20}
-          slidesPerView={5}
+          slidesPerView={5} // Default slides per view
           pagination={{
             clickable: true,
+          }}
+          breakpoints={{
+            0: {
+              slidesPerView: 2, // 1 slide for mobile screens
+            },
+            768: {
+              slidesPerView: 4, // 2 slides for tablets
+            },
+            1024: {
+              slidesPerView: 5, // 5 slides for larger screens
+            },
           }}
           modules={[Pagination]}
           className="mySwiper"
@@ -115,8 +126,19 @@ const PromoBanner = () => {
           spaceBetween={30}
           slidesPerView={7}
           autoplay={{
-            delay: 2500,
+            delay: 500,
             disableOnInteraction: false,
+          }}
+          breakpoints={{
+            0: {
+              slidesPerView: 2, // 1 slide for mobile screens
+            },
+            768: {
+              slidesPerView: 5, // 2 slides for tablets
+            },
+            1024: {
+              slidesPerView: 7, // 5 slides for larger screens
+            },
           }}
           modules={[Autoplay]}
           className="mySwiper"
