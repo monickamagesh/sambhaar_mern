@@ -78,14 +78,22 @@ function Navbar() {
   };
 
   return (
+    <div>
+      <section className="bg-primary-dark  h-8 w-full fixed top-0  z-50">
+          <div className="flex space-x-10 text-white font-medium text-sm pt-1 ">
+            <div>Get Extra 10% Off* on Your 1st Order 🤯</div>
+            <div>FREE* SHIPPING🚚 for all orders - BUY NOW</div>
+            <div>Enjoy Same Day Delivery* across Chennai ! ❤️|</div>
+          </div>
+      </section>
     <header
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-8 w-full z-50 transition-all duration-300 ${
         isScrolled
           ? "bg-white shadow-md text-gray-700 "
-          : "bg-blend-saturation text-gray-700 "
+          : "bg-transparent  text-gray-700  "
       }`}
     >
-      <nav className="flex items-center justify-between px-10 py-4 max-w-full">
+      <nav className="flex items-center justify-between px-10 py-3 max-w-full">
         {/* Left Section */}
         <div className="flex items-center">
           <Link to="/">
@@ -295,6 +303,7 @@ function Navbar() {
         </span>
       </div>
     </header>
+    </div>
   );
 }
 
