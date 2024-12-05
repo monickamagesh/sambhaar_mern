@@ -73,7 +73,6 @@ const Subscription = () => {
   };
 
   const handleSubmit = () => {
-
     if (
       !userDetails.name ||
       !userDetails.email ||
@@ -143,14 +142,17 @@ const Subscription = () => {
                   alt={milk.name}
                   className="w-36 h-36 block object-contain product-image transform transition-transform duration-300 group-hover:scale-110"
                 />
-                {milk.category === "aavin" && (
-                  <div className="absolute top-0 right-1 rounded-full bg-blue-950 px-2 text-xs font-semibold leading-6 text-light text-white">
-                    Aavin
-                  </div>
-                )}
-                {milk.category === "arokya" && (
-                  <div className="absolute top-0 right-1 rounded-full bg-blue-950 px-2 text-xs font-semibold leading-6 text-light text-white">
-                    Arokya
+
+                {/* Category Badge */}
+                {milk.category && (
+                  <div className="absolute top-0 left-0 bg-yellow-400 text-white rounded-br-lg px-2 py-1 text-center w-16 z-10">
+                    <span className="block text-xs font-bold">
+                      {milk.category === "aavin"
+                        ? "Aavin"
+                        : milk.category === "arokya"
+                        ? "Arokya"
+                        : ""}
+                    </span>
                   </div>
                 )}
               </div>
@@ -283,10 +285,7 @@ const Subscription = () => {
         </p>
         <div>
           {/* user details */}
-          <form
-            
-            className="max-w-2xl mx-auto bg-white p-8 shadow-lg rounded-lg"
-          >
+          <form className="max-w-2xl mx-auto bg-white p-8 shadow-lg rounded-lg">
             {/* Name */}
             <div className="mb-6">
               <TextInput
@@ -379,8 +378,6 @@ const Subscription = () => {
                 onChange={(e) => setStartdate(e.target.value)}
               />
             </div>
-
-            
           </form>
 
           {/* payment summary*/}

@@ -5,12 +5,7 @@ import { useFetchAllProductsQuery } from "../../redux/features/products/products
 import CategoryList from "./Categories";
 import { useFetchAllCategoriesQuery } from "../../redux/features/categories/categoriesApi";
 
-
-
-
 const Products = () => {
-  
-
   const [categories, setCategories] = useState([]);
 
   // Fetch categories
@@ -22,21 +17,21 @@ const Products = () => {
       const formattedCategories = data.map((category) => ({
         label: category.name,
         value: category.name,
-        subcategories: category.subcategories.map(subcategory => ({
-            label: subcategory.name,
-            value: subcategory.name
-        }))
+        subcategories: category.subcategories.map((subcategory) => ({
+          label: subcategory.name,
+          value: subcategory.name,
+        })),
       }));
 
-      console.log(formattedCategories)
-      
-      setCategories(formattedCategories);  // Store the formatted categories in state
+      console.log(formattedCategories);
+
+      setCategories(formattedCategories); // Store the formatted categories in state
     }
   }, [data]);
 
   const filters = {
-    categories:  categories,
-    
+    categories: categories,
+
     priceRanges: [
       { label: "Under $50", min: 0, max: 250 },
       { label: "$50 - $100", min: 250, max: 500 },
@@ -44,7 +39,6 @@ const Products = () => {
       { label: "$150 and above", min: 1000, max: Infinity },
     ],
   };
-
 
   const [filtersState, setFiltersState] = useState({
     category: "all",
@@ -101,7 +95,7 @@ const Products = () => {
       <section className="py-12">
         <div className="flex flex-col md:flex-row gap-4">
           {/* Left side - Filter options */}
-          
+
           <ShopFiltering
             filters={filters}
             filtersState={filtersState}
@@ -117,34 +111,63 @@ const Products = () => {
             <ProductCards products={products} />
 
             {/* Pagination */}
-        <div className="mt-6 mr-4 flex items-center justify-end">
-          <button
-            disabled={currentPage === 1}
-            onClick={() => handlePageChange(currentPage - 1)}
-            className="py-1 px-2 rounded-md text-gray-400 ring-1 ring-gray-400 m-2"
-          >
-            <i className="ri-arrow-left-s-line"></i>
-          </button>
-          {[...Array(totalPages)].map((_, index) => (
-            <button
-              onClick={() => handlePageChange(index + 1)}
-              className={`px-[14px] py-1 ${
-                currentPage === index + 1
-                  ? "bg-primary text-white"
-                  : "bg-gray-300 text-gray-700"
-              } rounded-md mx-1`}
-            >
-              {index + 1}
-            </button>
-          ))}
-          <button
-            disabled={currentPage === totalPages}
-            onClick={() => handlePageChange(currentPage + 1)}
-            className="py-1 px-2 rounded-md text-gray-400 ring-1 ring-gray-400 m-2"
-          >
-            <i className="ri-arrow-right-s-line"></i>
-          </button>
-        </div>
+            <div className="mt-6 mr-4 flex items-center justify-center sm:justify-end flex-wrap">
+              {/* Previous Page Button */}
+              <button
+                disabled={currentPage === 1}
+                onClick={() => handlePageChange(currentPage - 1)}
+                className="py-1 px-2 rounded-md text-gray-400 ring-1 ring-gray-400 m-2"
+              >
+                <i className="ri-arrow-left-s-line"></i>
+              </button>
+
+              {/* Show a limited number of page numbers on smaller screens */}
+              <div className="hidden sm:flex">
+                {[...Array(totalPages)].map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handlePageChange(index + 1)}
+                    className={`px-[14px] py-1 ${
+                      currentPage === index + 1
+                        ? "bg-primary text-white"
+                        : "bg-gray-300 text-gray-700"
+                    } rounded-md mx-1`}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
+              </div>
+
+              {/* Show only the previous and next buttons on smaller screens */}
+              <div className="sm:hidden flex">
+                {currentPage > 1 && (
+                  <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    className="px-4 py-1 rounded-md text-gray-700"
+                  >
+                    Prev
+                  </button>
+                )}
+                <span className="px-2 py-1">{currentPage}</span>
+                {currentPage < totalPages && (
+                  <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    className="px-4 py-1 rounded-md text-gray-700"
+                  >
+                    Next
+                  </button>
+                )}
+              </div>
+
+              {/* Next Page Button */}
+              <button
+                disabled={currentPage === totalPages}
+                onClick={() => handlePageChange(currentPage + 1)}
+                className="py-1 px-2 rounded-md text-gray-400 ring-1 ring-gray-400 m-2"
+              >
+                <i className="ri-arrow-right-s-line"></i>
+              </button>
+            </div>
           </div>
         </div>
       </section>

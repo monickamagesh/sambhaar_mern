@@ -68,7 +68,20 @@ router.get("/", async (req, res) => {
 // Get all products
 router.get("/search", async (req, res) => {
   try {
-    const products = await Products.find();
+    const { query } = req.query; // Retrieve the search query
+    const regex = new RegExp(query, "i"); // Case-insensitive regex for partial matching
+
+    const filter = {
+      $or: [
+        { name: regex },
+        { description: regex },
+        { category: regex },
+        { subcategory: regex },
+        { brand: regex },
+      ],
+    };
+
+    const products = await Products.find(filter);
     res.status(200).send(products);
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -87,7 +100,7 @@ router.get("/:id", async (req, res) => {
     if (!product) {
       return res.status(404).send({ message: "Product not found" });
     }
-    
+
     res.status(200).send({ product });
   } catch (error) {
     console.log("Error fetching single product", error);
@@ -96,28 +109,33 @@ router.get("/:id", async (req, res) => {
 });
 
 //update a product
-router.patch("/update-product/:id", verifyToken, verifyAdmin, async (req, res) => {
-  try {
-    const productId = req.params.id;
-    const updatedProduct = await Products.findByIdAndUpdate(
-      productId,
-      { ...req.body },
-      { new: true }
-    );
+router.patch(
+  "/update-product/:id",
+  verifyToken,
+  verifyAdmin,
+  async (req, res) => {
+    try {
+      const productId = req.params.id;
+      const updatedProduct = await Products.findByIdAndUpdate(
+        productId,
+        { ...req.body },
+        { new: true }
+      );
 
-    if (!updatedProduct) {
-      return res.status(400).send({ message: "Product not found" });
+      if (!updatedProduct) {
+        return res.status(400).send({ message: "Product not found" });
+      }
+
+      res.status(200).send({
+        message: "Product updated successfully",
+        product: updatedProduct,
+      });
+    } catch (error) {
+      console.log("Error updating the product", error);
+      res.status(500).send({ message: "Error updating the product" });
     }
-
-    res.status(200).send({
-      message: "Product updated successfully",
-      product: updatedProduct,
-    });
-  } catch (error) {
-    console.log("Error updating the product", error);
-    res.status(500).send({ message: "Error updating the product" });
   }
-});
+);
 
 //delete a product
 router.delete("/:id", async (req, res) => {
@@ -161,18 +179,41 @@ router.get("/related/:id", async (req, res) => {
     );
 
     const relatedProducts = await Products.find({
-      _id: {$ne: id},//Exclude the current product
+      _id: { $ne: id }, //Exclude the current product
       $or: [
-        {name: {$regex: titleRegex}},//match similar names
-        {category: product.category}, //match the same category
+        { name: { $regex: titleRegex } }, //match similar names
+        { category: product.category }, //match the same category
       ],
     });
 
-    res.status(200).send( relatedProducts );
+    res.status(200).send(relatedProducts);
   } catch (error) {
     console.log("Error fetching the related products", error);
     res.status(500).send({ message: "Error fetching the related products" });
   }
 });
+
+// Get all products that are reward eligible
+// Router for rewarded products
+router.get("/rewarded-products", async (req, res) => {
+  try {
+    console.log("Fetching reward-eligible products...");
+    
+    // Fetch reward-eligible products
+    const rewardedProducts = await Products.find({ isRewardEligible: true });
+
+    if (rewardedProducts.length === 0) {
+      console.log("No reward-eligible products found.");
+    } else {
+      console.log("Rewarded products fetched successfully:", rewardedProducts);
+    }
+
+    res.status(200).json({ rewardedProducts });
+  } catch (error) {
+    console.error("Error fetching rewarded products:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 
 module.exports = router;

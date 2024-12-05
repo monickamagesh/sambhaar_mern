@@ -120,37 +120,40 @@ const PromoBanner = () => {
           ))}
         </Swiper>
       </div>
-      <div className="brands-banners">
-        <p className="banner-p">South Special, Favourite Brands</p>
-        <Swiper
-          spaceBetween={30}
-          slidesPerView={7}
-          autoplay={{
-            delay: 500,
-            disableOnInteraction: false,
-          }}
-          breakpoints={{
-            0: {
-              slidesPerView: 2, // 1 slide for mobile screens
-            },
-            768: {
-              slidesPerView: 5, // 2 slides for tablets
-            },
-            1024: {
-              slidesPerView: 7, // 5 slides for larger screens
-            },
-          }}
-          modules={[Autoplay]}
-          className="mySwiper"
-          style={{ marginTop: "50px" }}
-        >
-          {brandImages.map((image, index) => (
-            <SwiperSlide key={index} className="banner-slide">
-              <img src={image.src} alt={image.alt} className="banner-image" />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+      <div className="bg-white pt-32 text-center">
+        <h2 className="text-2xl lg:text-5xl font-extrabold text-gray-800 leading-tight">
+          South Special, <span className="text-primary">Favourite</span> Brands
+        </h2>
+        <p className="text-text-light mt-4 text-sm lg:text-lg">
+          Trusted by millions, these brands bring quality and tradition to your
+          home.
+        </p>
+
+        <div className="relative overflow-hidden mt-10">
+          <div className="flex space-x-14 animate-loop-scroll group-hover:paused">
+            {brandImages.map((image, index) => (
+              <img
+                key={`brand-main-${index}`}
+                src={image.src}
+                alt={image.alt}
+                className="max-w-none h-20"
+              />
+            ))}
+            {brandImages.map((image, index) => (
+              <img
+                key={`brand-duplicate-${index}`}
+                src={image.src}
+                alt={image.alt}
+                className="max-w-none h-20"
+              />
+            ))}
+          </div>
+          <br/><br/>
+          {/* <div className="brands-banners"></div> */}
+        </div>
       </div>
+
+      
       <div className="architect"></div>
     </>
     // </section>

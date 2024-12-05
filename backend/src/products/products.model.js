@@ -5,10 +5,12 @@ const ProductSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
+      index: true,
     },
     category: {
       type: String,
       required: true,
+      index: true,
     },
     subcategory: {
       type: String,
@@ -43,8 +45,12 @@ const ProductSchema = new mongoose.Schema(
     },
     rating: {
       type: Number,
-      default: 0
+      default: 0,
     },
+    isRewardEligible: { 
+      type: Boolean, 
+      default: false 
+    }, 
     author: {
       type: mongoose.Types.ObjectId,
       ref: "User",

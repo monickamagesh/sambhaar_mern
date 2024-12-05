@@ -27,24 +27,28 @@ const Search = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const handleSearch = () => {
-    const query = searchQuery.toLowerCase();
-    const filtered = products.filter(
-      (product) =>
-        product.name.toLowerCase().includes(query) ||
-        product.description.toLowerCase().includes(query) ||
-        product.category.toLowerCase().includes(query) ||
-        product.subcategory.toLowerCase().includes(query) ||
-        product.quantity.toLowerCase().includes(query) ||
-        product.brand.toLowerCase().includes(query)
-    );
-    setFilteredProducts(filtered);
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(
+        `${getBaseUrl()}/api/products/search?query=${searchQuery}`
+      );
+      setFilteredProducts(response.data);
+    } catch (error) {
+      console.error("Error fetching filtered products:", error);
+    }
   };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+  
 
   return (
     <>
       <section className=" ">
-        <div className="w-full mb-12 flex fixed top-0 left-0 z-50 py-5 bg-opacity-50 backdrop-blur-xl  flex-col border border-b-1  border-primary md:flex-row items-center justify-center gap-4">
+      <div className="w-full mb-12 flex fixed top-8 left-0 z-51 py-5 bg-opacity-50 backdrop-blur-xl flex-col border border-b-1 border-primary md:flex-row items-center justify-center gap-4">
         <span className="search-bar w-[50%] p-2 border border-primary active:border-1 rounded-lg outline-none ">
         <button
             onClick={handleSearch}
@@ -56,7 +60,8 @@ const Search = () => {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-5/6 outline-none"
+            onKeyDown={handleKeyDown} 
+            className="w-5/6 outline-none bg-transparent"
             placeholder="Search for products.."
           />
         </span>

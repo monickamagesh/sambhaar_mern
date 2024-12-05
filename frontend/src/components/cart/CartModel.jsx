@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   clearCart,
@@ -6,27 +6,44 @@ import {
   updateQuantity,
 } from "../../redux/features/cart/cartSlice";
 import { useNavigate } from "react-router-dom";
+import JSConfetti from "js-confetti";
+import empty from "../../assets/cards/empty-cart.avif";
 
 const CartModel = ({ products, isOpen, onClose }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Thresholds for rewards
   const thresholds = [
-    { value: 499, reward: "Free Product A" },
-    { value: 799, reward: "Free Product B" },
-    { value: 999, reward: "Free Product C" },
-    { value: 1499, reward: "Free Product D" },
+    { value: 495, reward: "₹15 Vim pouch" },
+    { value: 995, reward: "500g Sugar" },
+    { value: 1995, reward: "2kg Aashirvaad Atta" },
+    { value: 2995, reward: "1lts Goldwinner Oil" },
   ];
 
-  // Calculate total cart value
-  const totalValue = products.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const [lastUnlockedReward, setLastUnlockedReward] = useState(null);
 
-  // Get the next reward based on the cart value
+  const jsConfetti = new JSConfetti();
+
+  const totalValue = products.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
+
   const nextReward = thresholds.find((t) => totalValue < t.value);
-
-  // Get the current unlocked rewards
   const unlockedReward = thresholds.filter((t) => totalValue >= t.value);
+
+  useEffect(() => {
+    if (isOpen && unlockedReward.length > 0) {
+      const latestReward = unlockedReward[unlockedReward.length - 1];
+      if (
+        !lastUnlockedReward ||
+        latestReward.value !== lastUnlockedReward.value
+      ) {
+        setLastUnlockedReward(latestReward);
+        jsConfetti.addConfetti({});
+      }
+    }
+  }, [totalValue, unlockedReward, lastUnlockedReward]);
 
   const handleQuantity = (type, id) => {
     if (type === "increment") {
@@ -58,13 +75,13 @@ const CartModel = ({ products, isOpen, onClose }) => {
       }`}
     >
       <div
-        className={`fixed right-0 top-0 w-[29%] flex justify-between flex-col text-gray-600 bg-white h-full overflow-y-auto transition-transform ${
+        className={`fixed right-0 top-0 w-full sm:w-[60%] md:w-[50%] lg:w-[40%] text-gray-600 bg-white h-full overflow-y-auto transition-transform ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex justify-start flex-col">
-          {/* Header */}
-          <div className="sticky top-0 px-6 border-b border bg-white w-full py-4 z-[120]">
+        <div className="flex flex-col h-full">
+          {/* Cart Header */}
+          <div className="sticky top-0 px-6 border-b bg-white w-full py-4 z-[120]">
             <div className="flex justify-between items-center">
               <div className="text-primary">
                 <i className="ri-shopping-cart-fill ri-xl"></i>
@@ -81,140 +98,134 @@ const CartModel = ({ products, isOpen, onClose }) => {
             </div>
           </div>
 
-          {/* Reward Pipe */}
+          {/* Rewards Progress */}
           <div className="p-4 border-b">
-            <h5 className="text-sm font-semibold mb-4">Rewards Progress</h5>
-            <div className="relative w-full h-3 bg-gray-200 rounded-full overflow-hidden">
-              {/* Pipe (Progress) */}
+            <h5 className="text-xs font-semibold mb-2 text-primary">
+              🎉 Rewards Progress
+            </h5>
+            <div className="relative w-full h-3 bg-gray-200 rounded-full overflow-hidden shadow-sm">
               <div
-                className="absolute top-0 left-0 h-full bg-green-600 transition-all"
-                style={{ width: `${(totalValue / thresholds[thresholds.length - 1].value) * 100}%` }}
+                className="absolute top-0 left-0 h-full bg-gradient-to-r from-green-400 to-green-600 transition-all"
+                style={{
+                  width: `${
+                    (totalValue / thresholds[thresholds.length - 1].value) * 100
+                  }%`,
+                }}
               ></div>
             </div>
+            <div className="flex justify-between mt-2">
+              {thresholds.map((threshold, index) => {
+                const isHighestUnlocked =
+                  unlockedReward.length > 0 &&
+                  threshold.value ===
+                    unlockedReward[unlockedReward.length - 1].value;
 
-            {/* Free Product Icons and Rewards */}
-            <div className="flex justify-between mt-4">
-              {thresholds.map((threshold, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col items-center text-xs"
-                  style={{
-                    width: `${(threshold.value / thresholds[thresholds.length - 1].value) * 100}%`,
-                    position: "relative",
-                  }}
-                >
-                  {/* Icon for product unlocked */}
+                return (
                   <div
-                    className={`w-6 h-6 rounded-full flex items-center justify-center mb-2 ${
-                      totalValue >= threshold.value
-                        ? "bg-green-600 text-white"
-                        : "bg-white text-gray-400 border-2 border-gray-400"
-                    }`}
+                    key={index}
+                    className="text-center"
+                    style={{ width: `${100 / thresholds.length}%` }}
                   >
-                    <i className={`ri-check-line text-xs`}></i>
+                    {isHighestUnlocked ? (
+                      <div className="text-green-600 font-semibold text-xs">
+                        <i className="ri-check-line"></i>
+                        <p>{threshold.reward}</p>
+                      </div>
+                    ) : (
+                      <p className="text-gray-400 text-xs">
+                        ₹{threshold.value}
+                      </p>
+                    )}
                   </div>
-                  {/* Reward Description */}
-                  <p
-                    className={`text-center ${totalValue >= threshold.value ? "text-green-600" : "text-gray-400"}`}
-                  >
-                    {totalValue >= threshold.value ? threshold.reward : `₹${threshold.value}`}
-                  </p>
-                </div>
-              ))}
+                );
+              })}
             </div>
-
-            {/* Reward Message */}
-            {nextReward ? (
-              <p className="text-sm text-gray-600 mt-4">
-                Add ₹{nextReward.value - totalValue} more to get{" "}
-                <span className="font-semibold text-green-600">
-                  {nextReward.reward}
-                </span>!
-              </p>
-            ) : (
-              <p className="text-sm text-green-600 mt-4 font-semibold">
-                You’ve unlocked all rewards!
-              </p>
-            )}
           </div>
 
           {/* Cart Items */}
-          <div className="p-4">
-            <div className="cart-items space-y-4">
-              {products.length === 0 ? (
-                <p>Your cart is empty.</p>
-              ) : (
-                products.map((item) => (
-                  <div
-                    key={item._id}
-                    className="flex items-center justify-between border-b pb-4"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center w-[28px] border flex-col rounded-full bg-slate-50">
-                        <button
-                          onClick={() => handleQuantity("increment", item._id)}
-                          className="flex justify-center items-center"
-                        >
-                          +
-                        </button>
-                        <span>{item.quantity}</span>
-                        <button
-                          onClick={() => handleQuantity("decrement", item._id)}
-                          className="flex justify-center items-center"
-                        >
-                          -
-                        </button>
-                      </div>
-
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-16 h-16 p-2 object-fill rounded-md"
-                      />
-
-                      <div className="items-start flex flex-col gap-1">
-                        <h5 className="text-sm font-semibold">{item.name}</h5>
-                        <p className="text-primary font-semibold text-sm">
-                          ₹{item.price.toFixed(2)}
-                        </p>
-                        <p className="text-gray-600 text-xs">
-                          {item.quantity} x {item.weight}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="ml-5 flex gap-4 items-center">
-                      <p className="text-sm text-gray-700 font-semibold">
-                        ₹{(item.price * item.quantity).toFixed(2)}
-                      </p>
-
+          <div className="flex-1 p-4 overflow-y-auto">
+            {products.length === 0 ? (
+              <div className="flex flex-col items-center space-y-4">
+                <img
+                  src={empty}
+                  alt="Cart is empty"
+                  className="w-40 h-40 mt-20 object-contain"
+                />
+                <p className="text-lg font-semibold text-gray-600">
+                  Your cart is empty.
+                </p>
+                <p className="text-sm text-gray-500">
+                  Add items to your cart and they will appear here.
+                </p>
+              </div>
+            ) : (
+              products.map((item) => (
+                <div
+                  key={item._id}
+                  className="flex items-center justify-between border-b pb-4"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center w-[28px] flex-col bg-slate-50 rounded-full">
                       <button
-                        onClick={() => handleRemove(item._id)}
-                        className="text-gray-500 hover:text-primary"
+                        onClick={() => handleQuantity("increment", item._id)}
+                        className="text-primary"
                       >
-                        <i className="ri-close-fill"></i>
+                        +
+                      </button>
+                      <span>{item.quantity}</span>
+                      <button
+                        onClick={() => handleQuantity("decrement", item._id)}
+                        className="text-primary"
+                      >
+                        -
                       </button>
                     </div>
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-16 h-16 object-cover rounded-md"
+                    />
+                    <div>
+                      <h5 className="text-sm font-semibold">{item.name}</h5>
+                      <p className="text-primary font-semibold text-sm">
+                        ₹{item.price.toFixed(2)}
+                      </p>
+                      <p className="text-gray-600 text-xs">
+                        {item.quantity} x {item.weight}
+                      </p>
+                    </div>
                   </div>
-                ))
-              )}
-            </div>
+                  <div className="flex gap-4 items-center">
+                    <p className="text-sm text-gray-700 font-semibold">
+                      ₹{(item.price * item.quantity).toFixed(2)}
+                    </p>
+                    <button
+                      onClick={() => handleRemove(item._id)}
+                      className="text-gray-500 hover:text-primary"
+                    >
+                      <i className="ri-close-fill"></i>
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
-        </div>
 
-        {products.length > 0 && (
-          <div className="sticky bottom-0 bg-white w-full py-4 z-[120]">
-            <div
-              onClick={handleCheckout}
-              className="flex justify-between items-center bg-primary hover:bg-primary-dark text-sm font-semibold text-white py-1 px-1 pl-8 mx-8 rounded-full transition"
-            >
-              <p>Checkout</p>
-              <p className="bg-white text-sm font-semibold px-4 py-3.5 flex justify-center rounded-full text-primary">
-                ₹{totalValue.toFixed(2)}
-              </p>
+          {/* Checkout Section */}
+          {products.length > 0 && (
+            <div className="sticky bottom-0 bg-white w-full py-4 z-[120]">
+              <div
+                onClick={handleCheckout}
+                className="flex justify-between items-center bg-gradient-to-br from-orange-600 to-orange-400 hover:from-primary-dark hover:to-orange-600 duration-200 text-gray-50  text-sm font-semibold  py-1 px-1 pl-8 mx-8 rounded-full transition"
+              >
+                <p>Checkout</p>
+                <p className="bg-white text-sm font-semibold px-4 py-3.5 flex justify-center rounded-full text-primary">
+                  ₹{totalValue.toFixed(2)}
+                </p>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

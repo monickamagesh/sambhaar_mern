@@ -3,7 +3,17 @@ import ContactFormpage from "./ContactForm";
 import { Link } from "react-router-dom";
 import contactimg from "../assets/contact-illustration.png";
 // Import React Icons
-import { FaInstagram, FaFacebookF, FaTwitter, FaYoutube, FaLinkedin, FaPinterest, FaGlobe } from "react-icons/fa";
+import {
+  FaInstagram,
+  FaFacebookF,
+  FaTwitter,
+  FaYoutube,
+  FaLinkedin,
+  FaPinterest,
+  FaGlobe,
+  FaWhatsapp,
+} from "react-icons/fa";
+import Footer from "./Footer";
 
 const Contactpage = () => {
   return (
@@ -42,11 +52,11 @@ const Contactpage = () => {
             className="order-2 w-full shrink-0 rounded-lg bg-light p-5 md:order-1 md:w-72 lg:w-96"
             style={{ backgroundColor: "white" }}
           >
-            <div className="mb-8 flex w-full items-center justify-center overflow-hidden">
+            <div className="mb-4 flex w-full items-center justify-center overflow-hidden">
               <img src={contactimg} alt="Contact" className="h-auto w-full" />
             </div>
 
-            <div className="mb-8 flex flex-col">
+            <div className="mb-4 flex flex-col">
               <span className="mb-3 font-semibold text-heading">Address</span>
               <span className="text-sm text-body">
                 <Link title={"address"} target="_blank" href={""}>
@@ -55,82 +65,22 @@ const Contactpage = () => {
               </span>
             </div>
 
-            <div className="mb-8 flex flex-col">
+            <div className="mb-4 flex flex-col">
               <span className="mb-3 font-semibold text-heading">Phone</span>
               <span className="text-sm text-body">
-                +91 818181 7556 <br />+91 818181 7558
+                +91 818181 7556 <br />
+                +91 818181 7558
               </span>
             </div>
 
-            <div className="mb-8 flex flex-col">
+            <div className="mb-4 flex flex-col">
               <span className="mb-3 font-semibold text-heading">
                 Email Address
               </span>
               <span className="text-sm text-body">support@sambhaar.com</span>
             </div>
 
-            <div className="mb-8 flex flex-col">
-              <span className="mb-4 font-semibold text-heading">Follow Us</span>
-              <div className="flex items-center justify-start gap-4">
-                {/* Social Media Icons */}
-                <Link
-                  to="https://instagram.com"
-                  target="_blank"
-                  title="Instagram"
-                  className="text-muted transition-colors duration-300 focus:outline-none hover:text-[#EA580C]"
-                >
-                  <FaInstagram size={20} />
-                </Link>
-                <Link
-                  to="https://facebook.com"
-                  target="_blank"
-                  title="Facebook"
-                  className="text-muted transition-colors duration-300 focus:outline-none hover:text-[#EA580C]"
-                >
-                  <FaFacebookF size={20} />
-                </Link>
-                <Link
-                  to="https://twitter.com"
-                  target="_blank"
-                  title="Twitter"
-                  className="text-muted transition-colors duration-300 focus:outline-none hover:text-[#EA580C]"
-                >
-                  <FaTwitter size={20} />
-                </Link>
-                <Link
-                  to="https://youtube.com"
-                  target="_blank"
-                  title="YouTube"
-                  className="text-muted transition-colors duration-300 focus:outline-none hover:text-[#EA580C]"
-                >
-                  <FaYoutube size={20} />
-                </Link>
-                <Link
-                  to="https://linkedin.com"
-                  target="_blank"
-                  title="LinkedIn"
-                  className="text-muted transition-colors duration-300 focus:outline-none hover:text-[#EA580C]"
-                >
-                  <FaLinkedin size={20} />
-                </Link>
-                <Link
-                  to="https://pinterest.com"
-                  target="_blank"
-                  title="Pinterest"
-                  className="text-muted transition-colors duration-300 focus:outline-none hover:text-[#EA580C]"
-                >
-                  <FaPinterest size={20} />
-                </Link>
-                <Link
-                  to="/"
-                  target="_blank"
-                  title="Website"
-                  className="text-muted transition-colors duration-300 focus:outline-none hover:text-[#EA580C]"
-                >
-                  <FaGlobe size={20} />
-                </Link>
-              </div>
-            </div>
+            
           </div>
 
           {/* Contact Form */}
@@ -139,8 +89,8 @@ const Contactpage = () => {
             style={{ backgroundColor: "white" }}
           >
             <h1
-              className="mb-7 font-body text-xl font-bold text-heading md:text-2xl"
-              style={{ display: "flex", justifyContent: "center"}}
+              className="my-7 font-body text-xl font-bold text-heading md:text-2xl"
+              style={{ display: "flex", justifyContent: "center" }}
             >
               How can we improve your experience?
             </h1>
@@ -148,6 +98,7 @@ const Contactpage = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

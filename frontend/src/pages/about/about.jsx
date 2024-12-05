@@ -10,6 +10,7 @@ import ecoimg4 from "../../assets/about/electric-vehicle.png";
 import Grocery from "../../assets/GroceryBag.jpg";
 import "./../../App.css";
 import { Link } from "react-router-dom";
+import Footer from "../../components/Footer";
 
 const AboutContent = () => {
   const aboutSectionRef = useRef(null);
@@ -34,33 +35,32 @@ const AboutContent = () => {
 
   return (
     <>
-      <div className="flex w-full justify-center bg-slate-200 py-20 md:min-h-[250px] lg:min-h-[288px]">
+      <div className="about-banner relative flex w-full justify-center bg-slate-200 md:min-h-[250px] lg:min-h-[288px]">
         <div className="relative flex w-full flex-col items-center justify-center">
-          <h1 className="text-brand-dark text-center text-xl font-bold md:text-2xl lg:text-3xl 2xl:text-[40px]">
+          <h1 className="text-white text-center text-xl font-bold md:text-2xl lg:text-3xl 2xl:text-[40px]">
             <span className="font-manrope mb-3 block font-bold md:mb-4 lg:mb-5 2xl:mb-7">
               About Us
             </span>
           </h1>
           <div className="flex items-center">
             <ul className="flex w-full items-center overflow-hidden">
-              <li className="px-2.5 text-sm text-heading transition duration-200 ease-in hover:text-accent ltr:first:pl-0 ltr:last:pr-0 rtl:first:pr-0 rtl:last:pl-0">
+              <li className="px-2.5 text-sm text-white transition duration-200 ease-in hover:text-accent ltr:first:pl-0 ltr:last:pr-0 rtl:first:pr-0 rtl:last:pl-0">
                 <Link href={""} className="inline-flex items-center">
                   {/* <HomeIconNew className="ltr:mr-1.5 rtl:ml-1.5" /> */}
                   Home
                 </Link>
               </li>
-              <>
-                <li className="mt-[1px] text-base text-muted">
-                  {/* <ArrowNext className="h-4 w-4" /> */}
-                </li>
-                <li className="px-2.5 text-sm text-body transition duration-200 ease-in ltr:first:pl-0 ltr:last:pr-0 rtl:first:pr-0 rtl:last:pl-0">
-                  About Us
-                </li>
-              </>
+              <li className="mt-[1px] text-base text-white">
+                <i className="ri-arrow-right-s-line"></i>
+              </li>
+              <li className="px-2.5 text-sm text-white transition duration-200 ease-in ltr:first:pl-0 ltr:last:pr-0 rtl:first:pr-0 rtl:last:pl-0">
+                About Us
+              </li>
             </ul>
           </div>
         </div>
       </div>
+
       <div className="aboutpage">
         <Box
           className="about-1"
@@ -492,6 +492,7 @@ const AboutContent = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

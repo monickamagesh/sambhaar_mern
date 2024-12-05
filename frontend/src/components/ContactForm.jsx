@@ -1,98 +1,114 @@
-import React, { useState } from "react";
-import {
-  Button,
-  TextField,
-  Checkbox,
-  FormControlLabel,
-  Grid,
-} from "@mui/material";
+import React, { useState, useRef } from "react";
+import emailjs from "@emailjs/browser";
+import { TextField, Grid } from "@mui/material";
 
-const ContactFormpage = () => {
-  const [isLoading, setIsLoading] = useState(false);
+const ContactFormPage = () => {
+  const form = useRef();
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
+    user_name: "",
+    user_email: "",
     subject: "",
-    description: "",
-    isChecked: false,
+    message: "",
   });
+  const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const [errors, setErrors] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    description: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value, checked, type } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+  const validateField = (name, value) => {
+    switch (name) {
+      case "user_name":
+        return value.trim() ? "" : "Name is required.";
+      case "user_email":
+        if (!value.trim()) return "Email is required.";
+        if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value))
+          return "Invalid email format.";
+        return "";
+      case "subject":
+        return value.trim() ? "" : "Subject is required.";
+      case "message":
+        return value.trim() ? "" : "Message is required.";
+      default:
+        return "";
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    let isValid = true;
-    const newErrors = {};
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
-    if (!formData.name) {
-      newErrors.name = "Name is required";
-      isValid = false;
-    }
-    if (!formData.email) {
-      newErrors.email = "Email is required";
-      isValid = false;
-    }
-    if (!formData.subject) {
-      newErrors.subject = "Subject is required";
-      isValid = false;
-    }
-    if (!formData.description) {
-      newErrors.description = "Description is required";
-      isValid = false;
-    }
+    // Update form data
+    setFormData({ ...formData, [name]: value });
+
+    // Validate the specific field
+    const error = validateField(name, value);
+    setErrors({ ...errors, [name]: error });
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    Object.keys(formData).forEach((key) => {
+      newErrors[key] = validateField(key, formData[key]);
+    });
 
     setErrors(newErrors);
+    return Object.keys(newErrors).every((key) => !newErrors[key]);
+  };
 
-    if (isValid) {
-      console.log(formData);
-    }
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+
+    emailjs
+      .sendForm("service_24skmup", "template_1wkp3pp", form.current, {
+        publicKey: "jE8-xTHgDQ4kU95-u",
+      })
+      .then(
+        () => {
+          console.log("SUCCESS!");
+          setSuccessMessage("Message sent successfully!");
+          form.current.reset(); // Reset the form
+          setFormData({
+            user_name: "",
+            user_email: "",
+            subject: "",
+            message: "",
+          }); // Reset the state
+          setErrors({});
+        },
+        (error) => {
+          console.log("FAILED...", error.text);
+        }
+      );
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form ref={form} onSubmit={sendEmail}>
       <Grid container spacing={3}>
-
         <Grid item xs={12} sm={6}>
           <TextField
             label="Name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
+            name="user_name"
             variant="outlined"
-            error={!!errors.name}
-            helperText={errors.name}
-            disabled={isLoading}
             fullWidth
             placeholder="Your Name"
+            value={formData.user_name}
+            onChange={handleChange}
+            error={!!errors.user_name}
+            helperText={errors.user_name}
           />
         </Grid>
 
         <Grid item xs={12} sm={6}>
           <TextField
             label="Email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
+            name="user_email"
             type="email"
             variant="outlined"
-            error={!!errors.email}
-            helperText={errors.email}
-            disabled={isLoading}
             fullWidth
             placeholder="Your Email"
+            value={formData.user_email}
+            onChange={handleChange}
+            error={!!errors.user_email}
+            helperText={errors.user_email}
           />
         </Grid>
 
@@ -100,68 +116,54 @@ const ContactFormpage = () => {
           <TextField
             label="Subject"
             name="subject"
-            value={formData.subject}
-            onChange={handleChange}
             variant="outlined"
-            error={!!errors.subject}
-            helperText={errors.subject}
-            disabled={isLoading}
             fullWidth
             placeholder="Subject"
+            value={formData.subject}
+            onChange={handleChange}
+            error={!!errors.subject}
+            helperText={errors.subject}
           />
         </Grid>
 
         <Grid item xs={12}>
           <TextField
-            label="Description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
+            label="Message"
+            name="message"
             variant="outlined"
-            error={!!errors.description}
-            helperText={errors.description}
-            disabled={isLoading}
             fullWidth
             placeholder="Message"
             multiline
             rows={4}
-            maxLength={150}
-          />
-        </Grid>
-
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                name="isChecked"
-                checked={formData.isChecked}
-                onChange={handleChange}
-                color="primary"
-                disabled={isLoading}
-              />
-            }
-            label="I'd like to hear from Sambhaar in the future. (You can unsubscribe at any time)"
-            className="text-[#1F2937] text-base font-medium"
+            value={formData.message}
+            onChange={handleChange}
+            error={!!errors.message}
+            helperText={errors.message}
           />
         </Grid>
 
         <Grid item xs={12}>
           <div className="text-center mt-8">
-            <Button
+            <input
               type="submit"
+              value="Send Message"
               variant="contained"
               size="large"
-              className="text-sm font-bold uppercase"
-              disabled={isLoading}
-              style={{backgroundColor:'#EA580C', borderRadius: '10px'}}
-            >
-              Send Message
-            </Button>
+              className="text-sm font-bold uppercase subscribe-btn w-40"
+            />
           </div>
         </Grid>
+
+        {successMessage && (
+          <Grid item xs={12}>
+            <div style={{ color: "green", textAlign: "center" }}>
+              {successMessage}
+            </div>
+          </Grid>
+        )}
       </Grid>
     </form>
   );
 };
 
-export default ContactFormpage;
+export default ContactFormPage;

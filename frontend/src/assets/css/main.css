@@ -341,70 +341,63 @@
 @import './custom-plugins.css';
 @import './rich-text-editor.css';
 
-.list-box .content h3 {
-  display: block;
-  line-height: 22px;
-  font-size: 18px;
-  margin-bottom: 4px;
-}
-
-.list-box .content p {
-  margin-bottom: 0px;
-  opacity: 0.75;
-}
-
-.list-box .list-icon i {
-  display: block;
-  font-size: 24px;
-  margin-right: 15px;
-  color: #c74227;
-  width: 65px;
-  height: 65px;
-  text-align: center;
-  line-height: 60px;
-  border: 2px #c74227 dotted;
-  border-radius: 999px;
-}
-
 .list-section {
   background-color: #ffffff;
-  overflow-x: hidden;
-}
-
-.list-section {
   padding: 80px 0;
+  overflow-x: hidden;
 }
 
 .features-row {
   display: flex;
-  flex-wrap: wrap; /* Ensures responsiveness */
+  flex-wrap: wrap;
+  justify-content: center; /* Center items horizontally */
+  gap: 20px; /* Space between items */
 }
 
 .list-box {
   display: flex;
   align-items: center;
-  justify-content: center; /* Centers the content inside the box */
-  flex: 1 1 30%;
-  margin-bottom: 20px;
+  justify-content: flex-start; /* Align items at the start */
+  flex: 1 1 calc(30% - 20px); /* Adjusted to include spacing */
   padding: 20px;
-  overflow: hidden;
+  background-color: #f9f9f9; /* Subtle background */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow */
+  transition: transform 0.3s, box-shadow 0.3s; /* Smooth hover effects */
+}
+
+.list-box:hover {
+  transform: translateY(-5px); /* Hover effect */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
 }
 
 .list-icon {
-  font-size: 40px;
-  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px; /* Fixed size */
+  height: 70px; /* Fixed size */
+  border: 2px solid #c74227; /* Updated border */
+  border-radius: 50%; /* Rounded border */
+  background-color: #ffe5e3; /* Light background */
+  margin-right: 15px;
+  font-size: 28px; /* Adjusted for readability */
+  color: #c74227;
 }
 
 .content h3 {
-  font-size: 1.5rem;
+  font-size: 1.25rem; /* Slightly smaller for a balanced look */
   font-weight: 700;
-  margin-bottom: 10px;
+  margin-bottom: 8px; /* Reduced space */
+  color: #333; /* Darker color for better contrast */
 }
 
 .content p {
   font-size: 1rem;
   color: #666;
+  opacity: 0.85; /* Slightly more opaque */
 }
+
 
 .cart-banner {
   background-color: #f5f5f5;

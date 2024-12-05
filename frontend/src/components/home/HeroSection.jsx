@@ -39,20 +39,24 @@ const HeroSection = () => {
   ];
 
   return (
-    <section className="relative pt-[105px] ">
+    <section className="relative pt-[105px]">
       <Swiper
         spaceBetween={2000}
         effect={"fade"}
         modules={[EffectFade, Navigation, Pagination, Autoplay]}
         autoplay={{ delay: 3000, disableOnInteraction: false }}
         loop
-        className=" w-[94%]  rounded-[36px]"
+        className="w-[94%] rounded-[10px]"
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
             <div className="relative w-full h-full overflow-hidden">
               <img
-                style={{ objectFit: "fill", height: "510px" }}
+                style={{
+                  objectFit: "cover",
+                  width: "100%",
+                  height: "100%",
+                }}
                 src={slide.image}
                 alt={slide.title}
               />
@@ -61,7 +65,7 @@ const HeroSection = () => {
         ))}
         <div
           style={{
-            display: "none", // Hide the pagination bullets
+            display: "none",
           }}
           className="swiper-pagination"
         ></div>
