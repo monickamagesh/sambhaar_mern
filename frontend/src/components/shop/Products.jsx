@@ -122,7 +122,7 @@ const Products = () => {
               </button>
 
               {/* Show a limited number of page numbers on smaller screens */}
-              <div className="hidden sm:flex">
+              <div className="hidden">
                 {[...Array(totalPages)].map((_, index) => (
                   <button
                     key={index}
@@ -139,7 +139,7 @@ const Products = () => {
               </div>
 
               {/* Show only the previous and next buttons on smaller screens */}
-              <div className="sm:hidden flex">
+              <div className=" flex">
                 {currentPage > 1 && (
                   <button
                     onClick={() => handlePageChange(currentPage - 1)}
@@ -148,7 +148,7 @@ const Products = () => {
                     Prev
                   </button>
                 )}
-                <span className="px-2 py-1">{currentPage}</span>
+                <span className="px-2 py-1 text-primary">{currentPage}</span>
                 {currentPage < totalPages && (
                   <button
                     onClick={() => handlePageChange(currentPage + 1)}

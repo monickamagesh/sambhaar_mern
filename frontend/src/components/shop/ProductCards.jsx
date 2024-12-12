@@ -9,7 +9,6 @@ import {
 } from "../../redux/features/cart/cartSlice";
 
 const ProductCards = ({ products }) => {
-  // Redux
   const dispatch = useDispatch();
 
   // Handle Add to Cart
@@ -19,16 +18,13 @@ const ProductCards = ({ products }) => {
 
   // Handle Quantity Update (Increment / Decrement)
   const handleQuantity = (type, id) => {
-    const itemInCart = findProductInCart(id); // Find the product in the cart
-
+    const itemInCart = findProductInCart(id);
     if (type === "increment") {
       dispatch(updateQuantity({ type, id }));
     } else if (type === "decrement") {
       if (itemInCart && itemInCart.quantity === 1) {
-        // If quantity is 1, remove the item from the cart
         dispatch(removeFromCart({ id }));
       } else {
-        // Otherwise, decrement the quantity
         dispatch(updateQuantity({ type, id }));
       }
     }
@@ -37,12 +33,12 @@ const ProductCards = ({ products }) => {
   // Get products in the cart from the Redux store
   const productIn = useSelector((state) => state.cart.products);
 
-  // Find product in cart helper function
+  // Helper function to find a product in the cart
   const findProductInCart = (id) => {
     return productIn.find((product) => product._id === id) || null;
   };
 
-  // Popup product modal state
+  // Modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
@@ -55,21 +51,25 @@ const ProductCards = ({ products }) => {
 
   return (
     <>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 p-2 sm:p-4">
         {products.map((product, index) => {
           const cartItem = findProductInCart(product._id);
 
           return (
             <article
               key={index}
-              className="product-card cart-type-krypton h-full cursor-pointer overflow-hidden rounded-md border border-border-200 bg-white transition-shadow duration-200 hover:shadow-sm flex flex-col"
+              className="product-card h-full cursor-pointer overflow-hidden rounded-md border border-border-200 bg-white transition-shadow duration-200 hover:shadow-sm flex flex-col"
               onClick={() => openModal(product)}
             >
               {/* Product Image */}
-              <div className="relative flex h-40 w-auto sm:px-10 items-center justify-center sm:h-48 group overflow-hidden">
-                {/* Discount Badge - Display Only If Discount Exists */}
+              <div className="relative flex items-center justify-center h-40 sm:h-48 md:h-56 lg:h-52 group overflow-hidden">
                 {product.oldPrice && product.price && (
-                  <div className="absolute top-0 left-0 bg-gradient-to-br from-orange-600 to-orange-400 text-white rounded-br-lg px-2 py-1 text-center w-10 z-10">
+                  <div
+                    className="absolute top-0 left-0 text-white rounded-br-lg px-2 py-1 text-center w-10 z-10"
+                    style={{
+                      background: "linear-gradient(135deg, #ff5722, #ffa726)",
+                    }}
+                  >
                     <span className="block text-xs font-bold">
                       {Math.round(
                         ((product.oldPrice - product.price) /
@@ -81,12 +81,11 @@ const ProductCards = ({ products }) => {
                     <p className="text-[10px] leading-tight">Off</p>
                   </div>
                 )}
-
-                {/* Product Image */}
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="block object-contain product-image transform transition-transform duration-300 group-hover:scale-110"
+                  className="block h-full w-full object-contain transition-transform duration-300 group-hover:scale-110"
+                  loading="lazy"
                 />
               </div>
 

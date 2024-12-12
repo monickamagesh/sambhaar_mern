@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import CartModel from "./cart/CartModel";
@@ -10,9 +10,37 @@ function Navbar() {
   const products = useSelector((state) => state.cart.products);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const [logoutUser] = useLogoutUserMutation();
+  const navigate = useNavigate();
+
   const handleCartToggle = () => {
     setIsCartOpen(!isCartOpen);
   };
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleDropDownToggle = () => {
+    setIsDropDownOpen(!isDropDownOpen);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logoutUser().unwrap();
+      dispatch(logout());
+      navigate("/");
+    } catch (error) {
+      console.error("Failed to log out", error);
+    }
+  };
+
+  const dropdownRef = useRef(null); // Ref for dropdown
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,27 +50,24 @@ function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  //show user if logged in
-  const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
-  //console.log(user)
-  const [logoutUser] = useLogoutUserMutation();
-  const navigate = useNavigate();
+  // Detect click outside of dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropDownOpen(false); // Close dropdown
+      }
+    };
 
-  //mobile Toggle
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+    if (isDropDownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!isMobileMenuOpen);
-  };
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDropDownOpen]);
 
-  //dropdown menu
-  const [isDropDownOpen, SetIsDropDownOpen] = useState(false);
-  const handleDropDownToggle = () => {
-    SetIsDropDownOpen(!isDropDownOpen);
-  };
-
-  // admin dropdown menus
+  // Admin dropdown menus
   const adminDropDownMenus = [
     { path: "/dashboard/admin", label: "Dashboard" },
     { path: "/dashboard/profile", label: "My Profile" },
@@ -54,7 +79,7 @@ function Navbar() {
     { path: "/dashboard/manage-orders", label: "Orders" },
   ];
 
-  // user dropdown menus
+  // User dropdown menus
   const userDropDownMenus = [
     { path: "/dashboard", label: "Dashboard" },
     { path: "/dashboard/orders", label: "My orders" },
@@ -65,17 +90,6 @@ function Navbar() {
 
   const dropDownMenus =
     user?.role === "admin" ? [...adminDropDownMenus] : [...userDropDownMenus];
-
-  //logout
-  const handleLogout = async () => {
-    try {
-      await logoutUser().unwrap();
-      dispatch(logout());
-      navigate("/");
-    } catch (error) {
-      console.error("Failed to log out", error);
-    }
-  };
 
   return (
     <div>
@@ -170,7 +184,7 @@ function Navbar() {
                       )}
 
                       {isDropDownOpen && (
-                        <div className="absolute right-10 mt-1 p-4 w-48 bg-white border border-gray-200 rounded-md shadow-2xl z-50">
+                        <div ref={dropdownRef} className="absolute right-10 mt-1 p-4 w-48 bg-white border border-gray-200 rounded-md shadow-2xl z-50">
                           <ul className="font-medium space-y-4 p-2">
                             {dropDownMenus.map((menu, index) => (
                               <li key={index}>
@@ -272,14 +286,43 @@ function Navbar() {
                       <>
                         {user.profileImage ? (
                           <img
+                            onClick={handleDropDownToggle}
                             src={user.profileImage}
                             alt="User Avatar"
                             className="size-7 rounded-full cursor-pointer"
                           />
                         ) : (
-                          <Link className="bg-gray-200 text-primary hover:text-primary-dark hover:bg-gray-300 p-2 rounded-full">
+                          <Link
+                            onClick={handleDropDownToggle}
+                            className="bg-gray-200 text-primary hover:text-primary-dark hover:bg-gray-300 p-2 rounded-full"
+                          >
                             <i className="ri-user-line ri-lg"></i>
                           </Link>
+                        )}
+                        {isDropDownOpen && (
+                          <div ref={dropdownRef} className="absolute right-10 mt-1 p-4 w-48 bg-white border border-gray-200 rounded-md shadow-2xl z-50">
+                            <ul className="font-medium space-y-4 p-2">
+                              {dropDownMenus.map((menu, index) => (
+                                <li key={index}>
+                                  <Link
+                                    onClick={() => SetIsDropDownOpen(false)}
+                                    className="dropdown-items text-gray-700 hover:text-primary"
+                                    to={menu.path}
+                                  >
+                                    {menu.label}
+                                  </Link>
+                                </li>
+                              ))}
+                              <li>
+                                <Link
+                                  onClick={handleLogout}
+                                  className="dropdown-items text-gray-700 hover:text-primary"
+                                >
+                                  Logout
+                                </Link>
+                              </li>
+                            </ul>
+                          </div>
                         )}
                       </>
                     ) : (

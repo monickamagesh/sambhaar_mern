@@ -29,6 +29,12 @@ const UserDashboard = () => {
         
     }
 
+    const handleLinkClick = () => {
+      if (toggleSidebar) {
+        toggleSidebar(); // Close the sidebar on mobile when a link is clicked
+      }
+    };
+
   return (
     <div className=" space-y-5  bg-white p-8 flex flex-col justify-between h-[88%]">
       <div>
@@ -42,6 +48,7 @@ const UserDashboard = () => {
                 }
                 end
                 to={item.path}
+                onClick={handleLinkClick}
               >
                 {item.label}
               </NavLink>

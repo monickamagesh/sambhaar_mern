@@ -20,13 +20,9 @@ const AdminDMain = () => {
         </p>
 
         <div className="p-6 mt-6 bg-white w-full  shadow-xl rounded-md">
-        <AdminStats stats={stats} />
-        <AdminStatsChart stats={stats} className="" />
-        
+          <AdminStats stats={stats} />
+          <AdminStatsChart stats={stats} className="" />
         </div>
-
-        
-        
 
         <div className="p-6 mt-6 bg-white w-full  shadow-xl rounded-md">
           <h2 className="text-xl font-bold mb-4 mt-4">Order Summary</h2>

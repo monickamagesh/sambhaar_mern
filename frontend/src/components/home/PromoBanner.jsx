@@ -31,7 +31,7 @@ const PromoBanner = () => {
     {
       icon: "fas fa-shipping-fast",
       title: "Free Shipping",
-      description: "When order over $75",
+      description: "When order over ₹75",
     },
     {
       icon: "fas fa-phone-volume",
@@ -148,12 +148,12 @@ const PromoBanner = () => {
               />
             ))}
           </div>
-          <br/><br/>
+          <br />
+          <br />
           {/* <div className="brands-banners"></div> */}
         </div>
       </div>
 
-      
       <div className="architect"></div>
     </>
     // </section>

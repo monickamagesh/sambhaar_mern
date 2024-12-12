@@ -14,12 +14,15 @@ const Footer = () => {
   ];
 
   const shopNowLinks = [
-    { name: "Fresh Vegetables & Fruits", path: "/shop/vegetables-fruits" },
-    { name: "Indian Grocery", path: "/shop/indian-grocery" },
-    { name: "Puja Needs & Idols", path: "/shop/puja-needs" },
-    { name: "Personal Care", path: "/shop/personal-care" },
-    { name: "Cleaning & Household", path: "/shop/cleaning-household" },
-    { name: "Handlooms", path: "/shop/handlooms" },
+    { name: "Grocery Essentials", path: "" },
+    { name: "Dairy & Fresh Foods", path: "" },
+    { name: "Oils & Condiments", path: "" },
+    { name: "Sweets & Savouries", path: "" },
+    { name: "Beverages & Frozen Foods", path: "" },
+    { name: "Health & Personal Care", path: "" },
+    { name: "Cleaning & Household", path: "" },
+    { name: "Pooja Essentials", path: "" },
+    { name: "Stationery", path: "" },
   ];
 
   const accountLinks = [
@@ -133,35 +136,49 @@ const Footer = () => {
                   icon: "whatsapp",
                   style:
                     "bg-white duration-500 w-10 h-10 border-2 rounded-full border-green-600 transform hover:-translate-y-2 text-green-500 hover:bg-green-600 hover:text-white",
+                  link: "https://wa.me/8428980630", // Replace with your actual WhatsApp link
                 },
                 {
                   id: "instagram",
                   icon: "instagram",
                   style:
                     "bg-white sticky duration-500 border-2 border-pink-500 bg-gradient-to-b fixed w-10 h-10 transform hover:-translate-y-2 text-pink-600 hover:from-indigo-600 hover:via-pink-600 hover:to-yellow-500 hover:text-white rounded-full duration-500",
+                  link: "https://www.instagram.com/sambhaaronline?igsh=c2w5anRpNjMzYmIx",
                 },
                 {
                   id: "facebook",
                   icon: "facebook-f",
                   style:
                     "bg-white sticky duration-500 border-2 border-blue-600 fixed w-10 h-10 transform hover:-translate-y-2 text-blue-600 hover:bg-blue-600 hover:text-white rounded-full",
+                  link: "https://www.facebook.com/share/1MwKbFjXBe/?mibextid=JRoKGi",
                 },
                 {
                   id: "linkedin",
                   icon: "linkedin",
                   style:
                     "bg-white transform hover:-translate-y-2 border-2 w-10 h-10 rounded-full duration-500 text-blue-500 border-blue-500 hover:bg-blue-500 hover:text-white",
+                  link: "https://www.linkedin.com", // Replace with your actual LinkedIn link
                 },
                 {
                   id: "youtube",
                   icon: "youtube",
                   style:
                     "bg-white transform hover:-translate-y-2 border-2 w-10 h-10 rounded-full duration-500 text-red-600 border-red-600 hover:bg-red-600 hover:text-white",
+                  link: "http://www.youtube.com/@SAMBHAAROnlineSupermarket", // Replace with your actual YouTube link
                 },
-              ].map(({ id, icon, style }) => (
-                <button key={id} id={id} className={style}>
-                  <i className={`fab fa-${icon} text-lg`}></i>
-                </button>
+              ].map(({ id, icon, style, link }) => (
+                <a
+                  key={id}
+                  id={id}
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={style}
+                >
+                  <button className="w-full h-full">
+                    <i className={`fab fa-${icon} text-lg`}></i>
+                  </button>
+                </a>
               ))}
             </div>
             <p className="text-sm text-gray-600">

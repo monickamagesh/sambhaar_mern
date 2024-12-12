@@ -37,7 +37,7 @@ const DealsSection = () => {
               className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300"></div>
-            <button className="absolute bottom-4 left-1/2 transform -translate-x-1/2 rounded-full shadow-md transition-all duration-500 group-hover:scale-110 flex items-center justify-center px-6 py-3 text-sm font-semibold border-2 border-orange-600 bg-transparent bg-gradient-to-br from-[#c74227] to-[#edbb1c] hover:from-[#edbb1c] hover:to-[#c74227] hover:shadow-lg hover:shadow-orange-500/50 text-gray-50">
+            <button className="absolute bottom-0 left-0 mb-4 ml-4 transform translate-x-0 rounded-full shadow-md transition-all duration-500 group-hover:scale-110 flex items-center justify-center px-4 py-2 text-xs sm:text-sm md:text-base lg:text-lg font-semibold border-2 border-orange-600 bg-transparent bg-gradient-to-br from-[#c74227] to-[#edbb1c] hover:from-[#edbb1c] hover:to-[#c74227] hover:shadow-lg hover:shadow-orange-500/50 text-gray-50">
               Get now
             </button>
           </div>
@@ -106,7 +106,7 @@ const DealsSection = () => {
               className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300"></div>
-            <button className="absolute bottom-4 left-1/2 transform -translate-x-1/2 rounded-full shadow-md transition-all duration-500 group-hover:scale-110 flex items-center justify-center px-6 py-3 text-sm font-semibold border-2 border-orange-600 bg-transparent bg-gradient-to-br from-[#c74227] to-[#edbb1c] hover:from-[#edbb1c] hover:to-[#c74227] hover:shadow-lg hover:shadow-orange-500/50 text-gray-50">
+            <button className="absolute bottom-0 left-0 mb-4 ml-4 transform translate-x-0 rounded-full shadow-md transition-all duration-500 group-hover:scale-110 flex items-center justify-center px-4 py-2 text-xs sm:text-sm md:text-base lg:text-lg font-semibold border-2 border-orange-600 bg-transparent bg-gradient-to-br from-[#c74227] to-[#edbb1c] hover:from-[#edbb1c] hover:to-[#c74227] hover:shadow-lg hover:shadow-orange-500/50 text-gray-50">
               Get now
             </button>
           </div>

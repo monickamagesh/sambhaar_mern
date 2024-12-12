@@ -37,8 +37,8 @@ const OrderSummary = () => {
       products: products,
       selectedItems: selectedItems,
       GrandTotal: grandTotal.toFixed(2),
-      MUID: "MUIDW" + Date.now(),
-      transaction: "T" + Date.now(),
+      MUID: "MUIDW" + Date.now() + user._id,
+      transaction: "T" + Date.now() + user._id,
       paymentMethod: paymentMethod,
     };
 
