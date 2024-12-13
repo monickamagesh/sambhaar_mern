@@ -10,14 +10,24 @@ const salt_key = process.env.SALT_KEY;
 // Create PhonePe checkout session
 router.post("/create-checkout-session", async (req, res) => {
   try {
-    let { user, MUID, GrandTotal, products, selectedItems, transaction } =
-      req.body;
+    let {
+      user,
+      MUID,
+      GrandTotal,
+      products,
+      selectedItems,
+      transaction,
+      phoneNumber,
+      address,
+    } = req.body;
 
     const data = {
       merchantId: merchant_id,
       merchantTransactionId: transaction,
       userId: user._id,
       product: products,
+      phoneNumber: phoneNumber,
+      address: address,
       selectedItems: selectedItems,
       amount: GrandTotal * 100,
       redirectUrl: `http://localhost:5000/api/orders/status?id=${transaction}`,
@@ -65,6 +75,8 @@ router.post("/create-checkout-session", async (req, res) => {
         })),
         amount: GrandTotal,
         email: user.email,
+        address: address,
+        phoneNumber: phoneNumber,
         orderStatus: "Ordered",
         paymentMethod: "Phonepe",
         paymentStatus: "Pending",
@@ -94,9 +106,8 @@ router.post("/create-cod-order", async (req, res) => {
     const { user, MUID, GrandTotal, products, selectedItems, transaction } =
       req.body;
 
-
     const newOrder = new Order({
-      userId: user._id ,
+      userId: user._id,
       orderId: transaction,
       products: products.map((item) => ({
         productId: item._id,
@@ -111,6 +122,8 @@ router.post("/create-cod-order", async (req, res) => {
       })),
       amount: GrandTotal,
       email: user.email,
+      address: address,
+      phoneNumber: phoneNumber,
       orderStatus: "Ordered",
       paymentMethod: "Cash",
       paymentStatus: "Pending", // Will change once the order is delivered
@@ -121,7 +134,7 @@ router.post("/create-cod-order", async (req, res) => {
     // Send a response with the success status and a custom URL for frontend redirection
     return res.json({
       message: "COD Order placed successfully",
-      redirectUrl: `http://localhost:5173/order-success?id=${transaction}`
+      redirectUrl: `http://localhost:5173/order-success?id=${transaction}`,
     });
   } catch (error) {
     console.log(error);
@@ -160,7 +173,9 @@ router.post("/status", async (req, res) => {
         { orderId: merchantTransactionId },
         { orderStatus: "Ordered", paymentStatus: "Success" }
       );
-      return res.redirect(`http://localhost:5173/order-success/?id=${merchantTransactionId}`);
+      return res.redirect(
+        `http://localhost:5173/order-success/?id=${merchantTransactionId}`
+      );
     } else {
       await Order.findOneAndUpdate(
         { orderId: merchantTransactionId },
@@ -191,23 +206,25 @@ router.get("/order-success/:orderId", async (req, res) => {
 });
 
 //get order by email address
-router.get("/:email", async(req, res) => {
+router.get("/:email", async (req, res) => {
   const email = req.params.email;
-  if(!email){
-    return res.status(400).send({message: "Email is required"});
+  if (!email) {
+    return res.status(400).send({ message: "Email is required" });
   }
 
   try {
-    const orders = await Order.find({email: email});
-    if(orders.length === 0 || !orders){
-      return res.status(400).send({orders:0, message: "No order found for this email"});
+    const orders = await Order.find({ email: email });
+    if (orders.length === 0 || !orders) {
+      return res
+        .status(400)
+        .send({ orders: 0, message: "No order found for this email" });
     }
-    res.status(200).send({orders});
+    res.status(200).send({ orders });
   } catch (error) {
     console.log("Error fetching orders by email", error);
-    res.status(500).send({message: "Failed to fetching orders by email"});
+    res.status(500).send({ message: "Failed to fetching orders by email" });
   }
-})
+});
 
 // get order by id
 router.get("/order/:id", async (req, res) => {
@@ -259,15 +276,14 @@ router.patch("/update-order-status/:id", async (req, res) => {
       }
     );
 
-    if(!updatedOrder) {
+    if (!updatedOrder) {
       return res.status(404).send({ message: "Order not found" });
     }
 
     res.status(200).json({
       message: "Order status updated successfully",
-      order: updatedOrder
-    })
-
+      order: updatedOrder,
+    });
   } catch (error) {
     console.error("Error updating order status", error);
     res.status(500).send({ message: "Failed to update order status" });
@@ -275,7 +291,7 @@ router.patch("/update-order-status/:id", async (req, res) => {
 });
 
 // delete order
-router.delete('/delete-order/:id', async( req, res) => {
+router.delete("/delete-order/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -285,13 +301,12 @@ router.delete('/delete-order/:id', async( req, res) => {
     }
     res.status(200).json({
       message: "Order deleted successfully",
-      order: deletedOrder
-    })
-    
+      order: deletedOrder,
+    });
   } catch (error) {
     console.error("Error deleting order", error);
     res.status(500).send({ message: "Failed to delete order" });
   }
-} )
+});
 
 module.exports = router;

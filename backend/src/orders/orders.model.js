@@ -44,6 +44,22 @@ const orderSchema = new mongoose.Schema(
     ],
     amount: { type: Number, required: true },
     email: { type: String, required: true },
+    address: {
+      street: { type: String },
+      city: { type: String },
+      state: { type: String },
+      postalCode: { type: String },
+      country: { type: String },
+    },
+    phoneNumber: {
+      type: String,
+      validate: {
+        validator: function (v) {
+          return /^\d{10}$/.test(v); // Basic validation for a 10-digit phone number
+        },
+        message: (props) => `${props.value} is not a valid phone number!`,
+      },
+    },
     orderStatus: {
       type: String,
       enum: ["Ordered", "Processing", "Shipped", "Completed"],
