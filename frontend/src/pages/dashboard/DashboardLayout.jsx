@@ -29,7 +29,7 @@ const DashboardLayout = () => {
   };
 
   return (
-    <div className="mx-auto mt-20">
+    <div className="mx-auto pt-20">
       {/* Mobile Layout */}
       <div className="md:hidden">
         {/* Hamburger Menu for Mobile */}

@@ -44,9 +44,10 @@ const DealsSection = () => {
         ))}
       </div>
       <br />
-
+      {/* 
+      
       <section className="bg-white shadow-lg rounded-2xl overflow-hidden flex flex-col lg:flex-row items-center gap-2 p-6 lg:py-8 lg:px-12 max-w-7xl mx-auto">
-        {/* Left Image Section */}
+       
         <div className="relative lg:w-1/2">
           <img
             src={dealsImg}
@@ -58,7 +59,7 @@ const DealsSection = () => {
           </div>
         </div>
 
-        {/* Right Content Section */}
+        
         <div className="lg:w-1/2 text-center lg:text-left">
           <h2 className="text-4xl lg:text-5xl font-extrabold text-gray-800 leading-tight">
             Get <span className="text-primary">Fresh Milk</span> Daily
@@ -92,6 +93,8 @@ const DealsSection = () => {
           </div>
         </div>
       </section>
+      */}
+      
 
       <br />
       <div className="product-grid">
