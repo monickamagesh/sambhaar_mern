@@ -1,3 +1,3 @@
 export const getBaseUrl = () => {
-    return "http://localhost:5000"
+    return "http://82.112.226.220:4000"
 }

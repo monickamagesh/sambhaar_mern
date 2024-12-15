@@ -31,17 +31,17 @@ const PromoBanner = () => {
     {
       icon: "fas fa-shipping-fast",
       title: "Free Shipping",
-      description: "When order over ₹75",
+      description: "When order over ₹495",
     },
     {
       icon: "fas fa-phone-volume",
-      title: "24/7 Support",
-      description: "Get support all day",
+      title: "Best Quality",
+      description: "Quality which you can trust",
     },
     {
       icon: "fas fa-sync",
-      title: "Refund",
-      description: "Get refund within 3 days!",
+      title: "Best Price",
+      description: "Buy Groceries Online in Chennai",
     },
   ];
 

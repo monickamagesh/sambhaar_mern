@@ -35,28 +35,28 @@ const Login = () => {
     <div className="h-screen flex flex-col md:flex-row">
       {/* Left Side */}
       <div
-        className="relative overflow-hidden md:flex w-full md:w-1/2 justify-around items-center bg-gradient-to-r from-orange-600 to-orange-400 md:block hidden"
+        className="relative overflow-hidden md:flex w-full md:w-1/2 justify-around items-center bg-gradient-to-r from-orange-600 to-orange-400"
       >
-        <Link to="/" className="absolute top-6 left-6">
+        <Link to="/" className="absolute top-7 left-6">
           <img src="/sambhaar.png" alt="Logo" className="h-8 md:h-12" />
         </Link>
         <div className="flex flex-col justify-center items-center">
-          <h1 className="text-white font-bold text-4xl md:text-5xl mb-4">Sambhaar</h1>
-          <p className="text-white font-normal text-lg text-center md:text-left">
+        <h1 className="text-white font-bold text-3xl sm:text-4xl md:text-5xl mb-4">Sambhaar</h1>
+          <p className="text-white font-normal text-lg text-center md:text-left mt-2 mb-2">
             Fresh Finds for Your Pantry and Home
           </p>
         </div>
-        <div className="absolute -bottom-32 -left-40 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
-        <div className="absolute -bottom-40 -left-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
-        <div className="absolute -top-40 -right-0 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
-        <div className="absolute -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
+        <div className="absolute -bottom-32 -left-40 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8 md:block hidden"></div>
+        <div className="absolute -bottom-40 -left-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8 md:block hidden"></div>
+        <div className="absolute -top-40 -right-0 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8 md:block hidden"></div>
+        <div className="absolute -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8 md:block hidden"></div>
       </div>
 
       {/* Right Side (Login Form) */}
       <div className="flex w-full md:w-1/2 justify-center py-10 items-center bg-white">
         <form onSubmit={handleLogin} className="space-y-5 max-w-sm mx-auto pt-8 w-full px-4">
-          <h1 className="text-gray-800 font-bold text-2xl mb-1">Hello Again!</h1>
-          <p className="text-sm font-normal text-gray-600 mb-7">Welcome Back</p>
+          <h1 className="text-gray-800 font-bold text-2xl mb-1 text-center">Hello Again!</h1>
+          <p className="text-sm font-normal text-gray-600 mb-7 text-center">Welcome Back</p>
           <input
             onChange={(e) => setEmail(e.target.value)}
             type="email"

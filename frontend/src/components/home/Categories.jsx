@@ -31,9 +31,11 @@ const Categories = () => {
       </h2>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 px-4 py-8 mx-auto max-w-screen-xl justify-center ite">
         {categories.map((category) => (
-          < div
+          <Link
+            key={category.name}
+            to={`/shop`}
             className="flex flex-col  items-center group bg-white border border-gray-300 rounded-lg shadow-md p-4 transition-transform duration-300 ease-in-out hover:translate-y-[-8px] hover:shadow-lg"
-            
+            aria-label={`Explore ${category.name}`}
           >
             <img
               src={category.image}
@@ -43,7 +45,7 @@ const Categories = () => {
             <p className="font-bold text-gray-800 group-hover:text-primary text-sm mt-2 text-center">
               {category.name}
             </p>
-          </div>
+          </Link>
         ))}
       </div>
     </section>

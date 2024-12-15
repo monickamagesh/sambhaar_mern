@@ -1,5 +1,5 @@
 import React from "react";
-import dealsImg from "../../assets/milk/banner-2.jpg";
+import dealsImg from "../../assets/milk/Banner-2.jpg";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -44,10 +44,9 @@ const DealsSection = () => {
         ))}
       </div>
       <br />
-      {/* 
-      
+
       <section className="bg-white shadow-lg rounded-2xl overflow-hidden flex flex-col lg:flex-row items-center gap-2 p-6 lg:py-8 lg:px-12 max-w-7xl mx-auto">
-       
+        {/* Left Image Section */}
         <div className="relative lg:w-1/2">
           <img
             src={dealsImg}
@@ -59,7 +58,7 @@ const DealsSection = () => {
           </div>
         </div>
 
-        
+        {/* Right Content Section */}
         <div className="lg:w-1/2 text-center lg:text-left">
           <h2 className="text-4xl lg:text-5xl font-extrabold text-gray-800 leading-tight">
             Get <span className="text-primary">Fresh Milk</span> Daily
@@ -84,17 +83,14 @@ const DealsSection = () => {
           </ul>
 
           <div className="mt-6 flex flex-col lg:flex-row items-center gap-4">
-            <Link
-              to={`/subscription`}
+            <div
               className="subscribe-btn text-md font-semibold shadow-md transition-all duration-300"
             >
-              Subscribe Now
-            </Link>
+              Coming Soon
+            </div>
           </div>
         </div>
       </section>
-      */}
-      
 
       <br />
       <div className="product-grid">

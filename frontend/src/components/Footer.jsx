@@ -113,16 +113,23 @@ const Footer = () => {
             Download Our App
           </h4>
           <div className="flex flex-col gap-3 items-center sm:items-start sm:justify-start">
-            <a href="#">
+            {/* <a href="#" className="flex flex-col items-center sm:items-start"> */}
               <img
                 src={GooglePlay}
                 alt="Google Play"
-                className="w-28 md:w-32"
+                className="w-28 md:w-32 blur-sm opacity-80"
               />
-            </a>
-            <a href="#">
-              <img src={ApplePlay} alt="App Store" className="w-28 md:w-32" />
-            </a>
+            {/* </a> */}
+            {/* <a href="#" className="flex flex-col items-center sm:items-start"> */}
+              <img
+                src={ApplePlay}
+                alt="App Store"
+                className="w-28 md:w-32 blur-sm opacity-80"
+              />
+              <span className="text-sm md:text-base font-semibold text-gray-600 mt-2">
+                Coming Soon...!
+              </span>
+            {/* </a> */}
           </div>
         </div>
 
