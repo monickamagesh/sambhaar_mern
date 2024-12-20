@@ -30,7 +30,7 @@ router.post("/create-checkout-session", async (req, res) => {
       address: address,
       selectedItems: selectedItems,
       amount: GrandTotal * 100,
-      redirectUrl: `http://localhost:5000/api/orders/status?id=${transaction}`,
+      redirectUrl: `http://82.112.226.220:4000/api/orders/status?id=${transaction}`,
       redirectMode: "POST",
       paymentInstrument: {
         type: "PAY_PAGE",
@@ -134,7 +134,7 @@ router.post("/create-cod-order", async (req, res) => {
     // Send a response with the success status and a custom URL for frontend redirection
     return res.json({
       message: "COD Order placed successfully",
-      redirectUrl: `http://localhost:5173/order-success?id=${transaction}`,
+      redirectUrl: `https://sambhaar.com/order-success?id=${transaction}`,
     });
   } catch (error) {
     console.log(error);
@@ -174,14 +174,14 @@ router.post("/status", async (req, res) => {
         { orderStatus: "Ordered", paymentStatus: "Success" }
       );
       return res.redirect(
-        `http://localhost:5173/order-success/?id=${merchantTransactionId}`
+        `https://sambhaar.com/order-success/?id=${merchantTransactionId}`
       );
     } else {
       await Order.findOneAndUpdate(
         { orderId: merchantTransactionId },
         { orderStatus: "Ordered", paymentStatus: "Pending" }
       );
-      return res.redirect("http://localhost:5173/failure");
+      return res.redirect("https://sambhaar.com/failure");
     }
   } catch (error) {
     console.log(error);

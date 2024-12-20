@@ -9,7 +9,7 @@ import prodbanner3 from "../../assets/productbanner/Dals-Pulses.png";
 import prodbanner4 from "../../assets/productbanner/Indian-Masala.png";
 import prodbanner5 from "../../assets/productbanner/Dry-fruits-nuts.png";
 import prodbanner6 from "../../assets/productbanner/Bakery.png";
-import { Link } from "react-router-dom";
+
 
 const DealsSection = () => {
   const productImages1 = [

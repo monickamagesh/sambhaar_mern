@@ -9,7 +9,7 @@ const crypto = require("crypto");
 const axios = require("axios");
 const Order = require("./src/orders/orders.model"); // Adjust path as needed
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 const merchant_id = process.env.MERCHANT_ID;
 const salt_key = process.env.SALT_KEY;
 
@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://sambhaar.com",
     credentials: true,
   })
 );
