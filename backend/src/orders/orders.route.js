@@ -30,7 +30,7 @@ router.post("/create-checkout-session", async (req, res) => {
       address: address,
       selectedItems: selectedItems,
       amount: GrandTotal * 100,
-      redirectUrl: `http://82.112.226.220:4000/api/orders/status?id=${transaction}`,
+      redirectUrl: `https://82.112.226.220:4000/api/orders/status?id=${transaction}`,
       redirectMode: "POST",
       paymentInstrument: {
         type: "PAY_PAGE",
